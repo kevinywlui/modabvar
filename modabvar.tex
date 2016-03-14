@@ -1,0 +1,1347 @@
+\documentclass{article}
+\bibliographystyle{amsalpha}
+\usepackage{url}
+\usepackage{hyperref}
+\include{macros}
+\usepackage{color}
+\usepackage[all]{xy}
+
+
+\newcommand{\Hao}[1]{\textcolor{blue}{\textsf{Hao: #1}}}
+\newcommand{\wstein}[1]{\textcolor{blue}{\textsf{William: #1}}}
+
+\CompileMatrices
+
+
+
+%\title{Deciding Whether Two Simple Modular Abelian
+%Varieties are Isomorphic}
+\title{Computing with Isogenies Between Abelian Varieties of $\GL_2$-type}
+\author{Hao Chen \and William Stein}
+\begin{document}
+\maketitle
+\tableofcontents
+\begin{abstract}
+  We lay the foundations for a computational theory of abelian
+  varieties over $\Q$ of $\GL_2$-type, or equivalently, with factors
+  of modular Jacobians $J_1(N)$.  This will make it possible to
+  generalize Cremona's tables of elliptic curves to higher dimension.
+  We describe algorithms for enumerating and decomposing $\GL_2$-type
+  abelian varieties, isomorphism testing, computation of endomorphism
+  and homomorphism rings, arithmetic with finite subgroups, computing
+  the modular degree, computing special values of $L$-functions, and
+  computing Tamagawa numbers.  None of our algorithms use defining
+  equations for varieties, and as such they work in a great degree of
+  generality allowing us to treat all dimensions uniformly.
+\end{abstract}
+
+
+\section{Introduction}
+In this paper, we lay the foundations for a computational theory of
+abelian varieties over $\Q$ of $\GL_2$-type.  This will support
+generalizing Cremona's highly influential tables \cite{cremona:algs}
+of elliptic curves to higher dimension.  We describe algorithms for
+enumerating and decomposing $\GL_2$-type abelian varieties,
+isomorphism testing, computation of endomorphism and homomorphism
+rings, arithmetic with finite subgroups, computation of the modular
+degree, computing special values of $L$-functions, and computing
+Tamagawa numbers.  None of our algorithms use defining equations for
+varieties, and as such they work in a great degree of generality
+allowing us to treat all dimensions uniformly.  There are also several
+open problems that are suggested by this paper [[give
+cross-references]].
+
+As mentioned above, a distinctive feature of our approach is that we
+do not use explicit defining equations. This is in stark contrast to the
+approach taken by many previous papers and theses \cite{empirical}
+that treat only small dimensions.  We also hope that some of the ideas
+in this paper may be applicable to \cite{MR2282913} and
+\cite{jordiquer}.  The methods in this paper are also used in the
+forthcoming paper \cite{calegari-stein:eisenstein}.  The author has
+implemented all of the algorithms described here, and they are
+included in Sage (which is free open source software \cite{sage}).
+[[Cite that whole French paper that does via ad hoc methods something
+like we do just for $J_0(125)$.]]
+
+In this paper we mostly ignore issues of computational complexity,
+since our goal is to describe how it is {\em practical at all} to
+compute explicitly with modular abelian varieties.  Except for [[...??
+norm equations]], the algorithm discussed in this paper mostly amount
+to linear algebra and have complexity that is polynomial time in the
+level $N$ of the abelian variety.
+
+
+\vspace{2em}
+\noindent{}{\bf Acknowledgement:} A very early draft of this paper was
+co-authored with Tseno Tselkov when he was an undergraduate at Harvard
+University.  We thank Clement Pernet and Allan Steel for discussions
+about computation of Hermite and Smith normal form and saturation.
+Frank Calegari had many helpful ideas related to enumerating all
+abelian varieties in an isogeny class (see Section~\ref{sec:clgp}).
+We discussed solving norm equations with Claus Fieker.
+
+\subsection{$\GL_2$-type and Modular Abelian Varieties}
+A simple abelian variety $A$ over $\Q$ is of \defn{$\GL_2$-type} if
+$\End(A)\tensor\Q$ is a number field of degree equal to $\dim(A)$.
+More generally an abelian variety is of $\GL_2$-type if it is
+isogenous to a product of copies of simple abelian varieties of
+$\GL_2$-type.  Let $X_1(N)$ be the modular curve that parametrizes
+isomorphism classes of pairs $(E,P)$, where $E$ is an elliptic curve
+and $P$ is a point of order $N$, and let $J_1(N)$ be the Jacobian of
+$X_1(N)$, which is an abelian variety over $\Q$.  An abelian variety
+$A$ over $\QQ$ is \defn{modular} if there is a homomorphism $A \to
+J_1(N)$ with finite kernel.
+
+Ribet observed in \cite[\S3]{ribet:abvars} that every modular abelian
+variety is of $\GL_2$-type.  His paper also shows
+\cite[Thm.~4.4]{ribet:abvars} that Serre's conjectures
+\cite{serre:conjectures} on modularity of odd irreducible
+two-dimensional mod~$p$ Galois representations imply the converse.
+Since Khare and Wintenberger have now completely proved Serre's
+conjecture, we have the following theorem.
+
+\begin{theorem}[Khare, Wintenberger]\label{conj:ribmod}
+Every $\GL_2$-type abelian variety over $\Q$ is modular.
+\end{theorem}
+Thus to explicitly compute with abelian varieties of $\GL_2$-type it
+suffices to consider modular abelian varieties, which we do for the
+rest of this paper.
+
+
+
+\begin{remark}
+  In this paper we only consider modular abelian varieties defined
+  over~$\Q$.  It would be interesting to use similar methods to treat
+  the general case of modular abelian varieties over a number field
+  $K$, by which we mean abelian varieties $A$ over $K$ for which there
+  exists a finite degree morphism $A\to J_1(N)$ over $K$ for some
+  $N$. The main complication is that the endomorphism ring over
+  $\Qbar$ of a simple modular abelian variety $A$ over $\Q$ need not
+  be commutative.  Fortunately much is known about its structure (see
+  \cite{ribet:twistsendoalg}).
+
+  Also many of the algorithms in this paper naturally generalize to
+  the context of Grothendieck motives attached to modular forms.  This
+  is also a topic for future investigation.
+\end{remark}
+
+
+
+\subsection{Explicit Defining Data for Modular Abelian Varieties}
+We represent modular abelian varieties over $\QQ$ {\em explicitly} as
+follows. Let $J$ be an arbitrary finite product of modular Jacobians
+$J_H(N)=\Jac(X_H(N))$ for subgroups $H\subset (\Z/N\Z)^*$, where
+$N$ is a positive integer (see, e.g, \cite{} for the definition
+of $J_H(N)$).   We will refer to $J$ as an \emph{ambient modular abelian
+variety}.
+Fix a modular abelian variety $A$ and a
+finite degree homomorphism $\vphi: A\to J$.  Then there is an isogeny
+from the image $B$ of $A$ in $J$ back to $A$ whose kernel we denote by
+$G$, so $A$ is isomorphic to $B/G$ and $B\subset J$:
+$$
+\xymatrix{
+   & & J & & \\
+   0\ar[r]& G \ar[r]& B\ar@{^(->}[u] \ar[r]& A\ar[r] \ar@/^/[l]\ar[ul]_{f} & 0
+}
+$$
+In other words we can represent any modular abelian variety by giving
+$G\subset B\subset J$, all defined over $\QQ$.  It remains to explain
+how we explicitly specify $B$ and $G$.
+
+{\em We specify $B$ as follows.}  The inclusion $B \hookrightarrow J$
+induces an inclusion of rational homology $\H_1(B, \Q) \hookrightarrow
+\H_1(J, \Q)$ and $B$ is determined by the image $V$ of $\H_1(B,\Q)$ in
+the $\Q$-vector space $\H_1(J,\Q)$.  We explicitly compute a basis for
+$\H_1(J,\Z)$ and $\H_1(J,\Q)=\H_1(J,\Z)\tensor \QQ$ using modular
+symbols \cite{stein:modform}, and specify $B$ by giving a basis in
+reduced echelon form for a subspace $V \subset \H_1(J, \Q)$.  Of
+course, not every subspace corresponds to a modular abelian variety,
+but we can determine whether or not a given $V$ corresponds to a valid
+abelian subvariety (see \ref{}).
+
+{\em We specify $G$ as follows.}
+Suppose $V$ defines an abelian subvariety $B$ of $J$ as above.
+By the Abel-Jacobi theorem, we have
+$$
+ J(\C) \cong \H_1(J, \R) / \H_1(J,\Z),
+$$
+and letting $\Lambda = \H_1(J,\Z) \cap V$ we have
+$B(\C) \cong (V\tensor\R) / \Lambda$.
+In particular,
+$$
+  B(\C)_{\tor} \cong V/\Lambda,
+$$
+and we specify $G\subset B(\C)_{\tor}$ by giving the lattice $L$ with
+$\Lambda \subset L\subset V$ such that $L/\Lambda \isom G$.
+
+%giving a finite list $g_i$ of
+%elements of $V$ that generate the elementary factors.  More precisely,
+%$G \isom \bigoplus \Z/n_i\Z$ can be written uniquely (up to choice of
+%generators for cyclic factors) as a direct sum of cyclic abelian groups with
+%$n_1\mid n_2\ldots$, and we choose the $g_i$ to correspond to the
+%vectors $(1,0,\ldots,0), \ldots, (0,0,\ldots,1)$ of elements in $\bigoplus
+%\Z/n_i\Z$. [[possibly make unique somehow??]]
+
+For brevity, henceforth we use the term {\em modular abelian variety}
+to mean a modular (or equivalently $\GL_2$-type) abelian variety $A$
+that has been given explicitly by a triple $(V,L,J)$ where $V\subset
+\H_1(J,\QQ)$, the lattice $L\subset V$ contains $\Lambda = V\cap
+\H_1(J,\ZZ)$, and $J$ is specified by a finite ordered list of
+congruence subgroups $\Gamma_0(N)$, $\Gamma_1(N)$, and $\Gamma_H(N)$.
+We use the notation $(V,J)$ as a shorthand for $L=\Lambda$.
+
+
+
+\section{Computing with Modular Abelian Varieties}
+
+\subsection{Ambient Modular Abelian Varieties}
+modular symbols; $\Gamma_H(N)$.
+
+\Hao{What does this mean? what is the question?}
+
+\wstein{There is no question mark and no question.  It can
+probably be resolved via a reference to my modular forms book,
+which didn't exist when I wrote this paper.}
+
+
+\subsection{Enumerating New Simple Modular Abelian Varieties}
+
+\begin{algorithm}{Enumerate Modular Abelian Varieties}
+  Given a modular Jacobian $J$ this algorithm outputs a list of
+  abelian subvarieties of $J$ in each isogeny class of simple modular
+  abelian varieties of level $N$.
+\end{algorithm}
+
+
+\subsection{Decomposition}
+\subsubsection{New and Old Subvarieties and Quotients}
+
+\subsubsection{Decomposition as a Product of Simples}
+[[there is a very interesting algorithm here -- this is related
+to verifying defining data]]
+
+\Hao{what is the algorithm?}
+
+\wstein{Will have to write it up.  It is basically to turn this into a problem about Hecke modules and homology.  It is really the same as
+writing a module a sum of irreducible submodules (up to finite index).
+Use modular forms to find a simple subvariety, then find another not
+contained in the ones found so far, etc.}
+
+\begin{algorithm}{Decompose as Product}
+Given a modular abelian variety $A$,
+this algorithm finds simple abelian varieties
+$B_i$ and an isogeny $A\to \prod B_i$.
+\end{algorithm}
+
+\subsubsection{Verifying Defining Data of a Modular Abelian Variety}
+
+\subsection{Arithmetic with Modular Abelian Varieties}
+
+\subsubsection{Sums and Products}
+
+[[problem -- the input here should be $A=(V,L,J)$ and $A'=(V',L',J)$
+in a common ambient $B=(V_2,L_2,J)$, where we need not assume $B\subset J$]]
+
+Suppose $A = (V,J)$ and $A' = (V',J)$ are abelian subvarieties of a common ambient $J$.
+Then the $A + A' \subset J$ is given by $(V+V', J)$.
+
+Suppose $A=(V,L,J)$ and $A'=(V',L',J')$ are modular abelian varieties.
+Then $A\times A' = (V\oplus V', L\oplus L', J \cross J')$, where
+$V\oplus V'$ and $L\oplus L'$ embed diagonally into $J\cross J'$.
+
+\subsubsection{Intersection}
+Suppose $A = (V,J)$ and $A' = (V', J)$ are abelian subvarieties of a
+common ambient $J$.  Then $A\cap A'$ is an extension of the abelian
+variety $(A\cap A')^0 = (V\cap V', J)$ by a finite component group:
+$$
+\xymatrix{
+   & & J & & \\
+   0\ar[r]& (A\cap A')^0 \ar[r]&  A\cap A'\ar@{^(->}[u] \ar[r]& \Phi\ar[r] & 0,
+}
+$$
+The component group is isomorphic to the torsion subgroup of kernel of
+the map $A \times A' \to J$ sending $(x,y)\to x-y$, which we compute
+using Section~\ref{sec:kernelmodabvar}; in particular, we have
+$$
+   \Phi \isom \left( \Lambda_J/(\Lambda_A + \Lambda_A')\right)_{\tor}.
+$$
+[[this requires proof]]
+If $A$ and $A'$ are preserved by $\End(J)$, then $\End(J)$ also
+acts on $\Phi$ via its action on $\Lambda_J$.
+
+\subsubsection{Complements (Poincare Reducibility)}\label{sec:poincare}
+
+[[look in magma code to see how to do this.  probably intersection
+pairing;]]
+
+\Hao{This seems interesting. How do we do this? since Magma is closed-source now.}
+
+\wstein{I wrote all of that code in Magma.  It's written in the Magma interpreter language so the source is visible with any copy of Magma; just
+look at it.  There is a paper by Merel on how to compute the
+intersection pairing.  I implemented it in Magma, but never in Sage.}
+
+\subsubsection{Quotients by Subgroups and Subvarieties}
+
+Suppose $A = (V, L, J)$ is a modular abelian variety and $A' = (V',
+L', J)$ is an abelian subvariety of $A$, so $V\subset V'$ and $L' =
+L\cap V'$.  Using Section~\ref{sec:poincare}, we compute $A/A'$ by
+finding a complement $B=(V_B,L_B,J)$ of $A'$ in $A$ along with
+surjective projection maps $\pi_{A'}: A \to A'$ and $\pi_B: A\to B$.
+Then the identity component of $A/A'$ is isomorphic to $B$.  The
+component group $\Phi$ of $A/A'$ is isomorphic to the identity
+component of the kernel of the natural map $A \to B$, which we compute
+using Section~\ref{sec:kernelmodabvar}.
+
+\subsection{Finite Subgroups}
+
+\Hao{Will you be expanding this section William?}
+
+\wstein{I haven't thought about this paper in over 10 years,
+so I don't know.  I guess operations like intersection, sum, etc.
+of finite subgroups of a modular abelian variety. That's all implemented
+in Sage already.}
+
+\subsubsection{Defining Data}
+ data: $(L\supset \Lambda, K, A)$.
+
+morphisms between
+
+\subsubsection{The $n$-Torsion Subgroup}
+
+\subsubsection{Intersection of Finite Subgroups}
+$G\cap H$
+
+\subsubsection{The Cuspidal Subgroup}
+
+\subsubsection{The Rational Cuspidal Subgroup}
+i.e. $C(\Q)$,
+which we can compute by getting $G_\Q$ action on $C(\Qbar)$.
+
+arithmetic with: $G+H$, $G\cap H$, $G/H$.
+
+\subsubsection{The Torsion Subgroup}
+point counting over finite fields
+
+divisor, multiple of order
+
+
+\subsubsection{The Shimura Subgroup}
+
+\subsection{Morphisms Between Modular Abelian Varieties}
+
+
+
+\subsubsection{Defining Data for Morphisms}
+
+\subsubsection{Natural Maps}
+
+\subsubsection{Morphisms Defined by Finite Subgroups}
+
+\subsubsection{Kernels of Morphisms}\label{sec:kernelmodabvar}
+
+\subsubsection{Images of Morphisms}
+
+\subsubsection{The Universal Property of the Cokernel}
+
+\subsubsection{The Projection Morphism}
+
+\subsubsection{Left and Right Inverses}
+
+\subsection{Endomorphism Rings and Hom Spaces}
+
+\subsubsection{Computing End and Hom}
+
+The following saturation algorithm will be important
+when computing $\End(A)$ and $\Hom(A,B)$.
+
+[[insert very quick summary of Hermite and smith forms]]
+
+[[this should go in paper on hnf, etc. writing with
+Clement Pernet]]
+
+\begin{algorithm}{Saturate}
+Given a subgroup $L$ of $\Z^n$, this algorithm computes
+the saturation $(\Q L) \cap \Z^n$ of $L$ in $\Z^n$.
+Let $M$ be a matrix whose rows are a $\Z$-basis for $L$.
+
+\begin{enumerate}
+\item{} [Hermite Normal Form] Find the Hermite Normal Form $H$ of $M^t$.
+\item{} [Inverse] Compute $S = (H^t)^{-1} M$ using the ``last big row'' trick.
+Then output $S$ whose rows are a basis for the saturation of $L$.
+\end{enumerate}
+\end{algorithm}
+\begin{proof}
+It suffices to prove that $(H^t)^{-1}M$ has rows that span the
+saturation of the row span of $M$.
+[...]
+\end{proof}
+
+Note that one could instead replace $H$ by an LLL reduced basis for
+the rowspace of $M^t$, but this is usually much slower because the
+$p$-adic/modular algorithm \cite{blah} for computing Hermite normal
+form is fast.
+
+
+If $A$ is an abelian variety of dimension $2$ then after chosing a basis for
+$\Lambda = \H_1(A,\Z)$, we have
+$$
+  \End(\Lambda)\isom \Mat_{2d\times 2d}(\Z) \ncisom \Z^{(2d)^2}.
+$$
+
+\begin{proposition}\label{prop:end}
+Let $A$ be a simple abelian variety over a number field $K$,
+let $\Lambda = \H_1(A,\Z)$ and
+embed $\End(A/K)$ in $\End(\Lambda)$
+by the action of endomorphisms on homology.   Then
+$$
+  \End(A/K) = (\End(A/K)\tensor \Q)\cap \End(\Lambda),
+$$
+where  the intersection takes place in $\End(\Lambda)\tensor\Q$.
+\end{proposition}
+We will use the following lemma in the proof of Proposition~\ref{prop:end}.
+\begin{lemma}\label{lem:gal}
+  Let $K$ be a number field.  If an element $x\in \C$ is fixed by
+  every element of $\Aut(\C/K)$, then $x\in K$.
+\end{lemma}
+\begin{proof}
+  If $x\in\Kbar$, this is standard Galois theory.  If $x\not\in
+  \Kbar$, then $x$ is transcendental.  Since $x+1$ is also transcendental,
+the fields $\Kbar(x)$ and $\Kbar(x+1)$ are isomorphic via a map $\sigma$
+sending $x$ to $x+1$.  Every automorphism of a subfield of $\C$
+extends to $\C$, so $\sigma$ extends to an automorphism of $\C$
+that does not fix~$x$.
+\end{proof}
+
+\begin{proof}[Proof of Proposition~\ref{prop:end}]
+An element of $\End(A/\C)$ is just
+a complex linear map on $\Tan(A_\C)$  that preserves $\Lambda$.
+The inclusion of $\End(A/K)$ in the right hand side is obvious,
+so suppose $\vphi \in (\End(A/K)\tensor \Q)\cap \End(\Lambda)$.
+Then there is a positive integer $n$ such that $n\vphi\in \End(A/K)$.
+Thus $n\vphi\in \End(A/K)\tensor\Q$ induces a complex-linear endomorphism of $\Tan(A_\C)$,
+so $\vphi = (1/n)n\vphi $ also induces a complex-linear endomorphism of $\Tan(A_\C)$;
+also, by hypothesis $\vphi$ preserves $\Lambda$.
+Thus $\vphi\in\End(A/\C)$.
+
+There is a nonzero integer $n$ such that $n\vphi$ is defined over $K$,
+so for any $\sigma\in\Gal(\C/K)$, we have $\sigma([n]\vphi) - [n]\vphi
+= 0$.  But
+$$\sigma([n]\vphi) = \sigma([n])\sigma(\vphi) = [n]\sigma(\vphi),$$
+so
+$$[n](\sigma(\vphi) - \vphi) = 0,$$
+which implies $\sigma(\vphi)=\vphi$, since the kernel of $[n]$ is
+finite and the image of $\sigma(\vphi)-\vphi$ is either infinite or
+$0$.  By Lemma~\ref{lem:gal}, $\vphi\in \End(A/K)$.
+\end{proof}
+
+\begin{algorithm}{Endomorphism Algebra as Field}
+    Given a simple modular abelian variety $A$ over $\Q$,
+    this algorithm computes a number field $F$ and an
+    isomorphism $\End(A)\tensor\Q \to F$.
+\begin{enumerate}
+%\item{} [Field?] Check if $\End(A)$ is a field and quit if it is not.
+
+\item{} [Find $A_f$] Using Algorithm~\ref{} find an isogeny $\vphi:A\to A_f$,
+where $A_f$ is a newform abelian variety.
+
+\Hao{How is this step 1 done?}
+
+\wstein{By definition $A$ is given in terms of modular symbols, hence with an explicit map to $J_H(N)$ with finite kernel.  Since it is simple, its image in $J_H(N)$ is a contained in the abelian subvariety of $J_H(N)$ generated by images of $A_f$ under the degeneracy maps.  Using linear algebra to find some linear combination of degeneracy maps that sends $A_f$ to the image of $A$. Done.}
+
+\item{} [Choose random endomorphism] Randomly pick [[how??]] an endomorphism
+  $\varphi$ of $A_f$ and compute its minimal polynomial $g$.
+\item{} [Does endomorphism generate?]
+If $\deg g$ = $\dim(A_f)$, then let $F$ be the
+number field generated by a root~$\alpha$ of $g$.
+Otherwise, go to step 1.
+\item{} [Define an isomorphism] Let $\Psi$ be the unique field
+  homomorphism $\End(A_f)\tensor\Q \to F$ that sends~$\varphi$
+  to~$\alpha$.  Compose this with the isomorphism
+$\End(A)\tensor\Q \to \End(A_f)\tensor\Q$ induced by $\vphi$
+to obtain the desired isomorphism.
+
+\end{enumerate}
+\end{algorithm}
+\begin{proof}
+%"Most" choices of $\varphi$ will have characteristic polynomial of degree
+%$\dim(A)$, so in practice finding such $\varphi$ is easy. Then we build
+%$K$ using the primitive element theorem.
+
+By \cite[???]{ribet:abvars} because $A$ is simple, modular, and defined over $\Q$,
+we know that $\End(A)\tensor\Q$ is a number
+field of degree equal to $\dim(A)$.  (If we instead consider $\End(A/\Qbar)$,
+then $\End(A/\Qbar)\tensor\Q$ could be a non-commutative division algebra.
+Again we emphasize that by definition $\End(A)$ contains only the endomorphisms
+of $A$ that are defined over $\QQ$.)
+
+By the primitive element theorem, there exists a $\varphi$ such that
+if $f$ is the minimal polynomial of~$\varphi$, then
+$\deg(f) = \dim(A)$.
+Then since $\deg(f) = \dim(A)$ it follows that the
+map $\Psi$ is an isomorphism (a nonzero homomorphism between number
+fields of the same dimension is an isomorphism).
+\end{proof}
+% This is where probability of choosing a primitive
+%element at random comes in...  This is CERTAINLY already already
+%analyzed somewhere in the literature.
+%``ON DENSITY OF PRIMITIVE ELEMENTS FOR FIELD EXTENSIONS JOEL V. BRAWLEY AND SHUHONG GAO''
+%({\tt http://www.math.clemson.edu/faculty/Gao/papers/prim-ele.pdf})
+
+\begin{algorithm}{Compute $\End(A)$}
+Given a simple modular abelian variety $A$, this algorithm
+computes $\End(A)$.
+\begin{enumerate}
+\item{} [Find Modular Form] Since $A$ is simple we can use
+  Algorithm~\ref{} to find a newform $f$ such that $A$ is isogenous to
+  the abelian variety $A_f$.  It suffices to compute $\End(A)\tensor\Q
+  = \End(A_f)\tensor\Q$, since by Proposition~\ref{prop:end} this
+  yields $\End(A)$.  Thus it suffices to compute $\End(A_f)$.
+
+\Hao{Same question: how to find $f$? such that $A \sim A_f$?}
+\wstein{See previous answer.}
+
+\item{} [Initialize] Let $d=\dim(A_f)$, let $n=1$, and let $V$ be the
+  zero subspace of $\End(A_f)\tensor\Q$.
+\item{} [Compute Hecke operator]\label{step:heckeop} Using
+  Algorithm~\ref{}, compute the restriction of the Hecke operator
+  $T_n$ to $A_f$, as an element of $\End(A_f)\tensor\Q$.
+\item{} [Increase $V$] Replace $V$ by $V+\Q\cdot T_n$.
+\item{} [Finished?]  If $\dim(V) < d$, increase $n$ and go to
+  Step~\ref{step:heckeop}.
+\item{} [Saturate] Compute $\End(A_f/\Q) = V \cap \End(\Lambda_{A_f})$
+  using Algorithm~\ref{}.
+\end{enumerate}
+\end{algorithm}
+\begin{proof}
+  We need to show that the algorithm terminates, i.e., that the Hecke
+  algebra generates $\End(A_f/\Q) \tensor \Q$. But by
+  \cite[Thm.~1]{shimura:factors} the image of $T \tensor \Q$ in
+  $\End(A_f/\Q) \tensor \Q$ is a subfield of degree $\dim A_f$. But
+  $A_f$ is simple by \cite[Cor.~4.2]{ribet:twistsendoalg}, so
+  \cite[Thm.~2.1]{ribet:abvars} implies that $\End(A_f/\Q) \tensor \Q$
+  also has dimension $\dim(A_f)$. Thus the Hecke algebra generates
+  $\End(A_f/\Q) \tensor \Q$. By Proposition~\ref{prop:end} once we
+  have $\End(A_f/\Q) \tensor \Q$ we apply Algorithm~\ref{} to get
+  $\End(A_f/\Q)$.
+\end{proof}
+
+
+\begin{algorithm}{Compute $\Hom(A,B)$}
+Given  modular abelian varieties $A$ and $B$, we
+compute $\Hom(A,B)$ as follows.
+\begin{enumerate}
+\item{} [Factorizations]
+By Proposition~\ref{prop:end} it suffices to explain how
+to compute $\Hom(A,B)\tensor \Q$.
+For this, we compute using Algorithm~\ref{}
+  factorizations $\prod_{i \in I} C_i^{e_i}$ and $\prod_{i \in I}
+  C_i^{f_i}$ of $A$ and $B$ up to isogeny (with isogenies)
+respectively, where $I$ is some index set,
+  the $C_i's$ are non-isogenous simple abelian varieties, and $e_i,
+  f_i \geq 0$.  For the rest of this algorithm
+we replace $A$, $B$, by these products.
+\item{} [Simple case]\label{step:simplecase} When $A \sim C^e$ and $B \sim D^f$, where $C, D$ are simple
+abelian varieties we compute $\Hom(A,B)$ in the following way. If $C$ and
+$D$ are not isogenous $\Hom(A,B) = 0$. If $C$ and $D$ are isogenous,
+$$
+  \Hom(A,B)\tensor\Q = \Hom(C^e, D^f) \tensor \Q = \Mat_{e \times f} (\End(C) \tensor \Q).
+$$
+%Then we compute
+%$$
+%   \Hom(A,B) \subset \Hom(A,B) \tensor \Q
+%$$ using Algorithm~\ref{}.
+\item{} [General case] We compute each $\Hom(C_i^{e_i}, C_j^{f_j})\tensor\Q$ as in Step~\ref{step:simplecase}
+and obtain $\Hom(\prod C_i^{e_i}, \prod C_j^{f_j})\tensor\Q$ as a
+matrix with blocks $\Hom(C_i^{e_i},C_j^{f_j})\tensor\Q$ for each pair $(i,j)$.
+%Then we find $\Hom(A,B)$ inside $\Hom(\prod C_i^{e_i}, \prod C_j^{f_j})\tensor\Q$.
+\end{enumerate}
+\end{algorithm}
+\begin{proof}
+Suppose first that $A \sim C^e$, $B \sim D^f$ with $C,D$ simple abelian varieties.
+When $C$ and $D$ are not isogenous there is no morphism $A \to B$, so
+$\Hom(A,B) =  0$. When $C$ and $D$ are isogenous, a morphism $C^e \to D^f$
+over $\Q$ is given by an $e \times f$ matrix with entries from $\End(A) \tensor
+\Q$, where the $(i,j)$th entry represents the morphism between the $i$th
+component of $A$ and $j$th component of $B$. We get $\End(A) \tensor \Q$
+using Algorithm~\ref{}. Once we have $\Hom(A,B)
+\tensor \Q$, to get $\Hom(A,B)$ we only need to apply Proposition~\ref{prop:end}.
+
+In general, when $A = \prod_{i \in I} C_i^{e_i}$ and $B = \prod_{i \in I}
+C_i^{f_i}$ we get $\Hom(C_i^{e_i}, C_j^{f_j})$ as before and combining these
+blocks we obtain $\Hom(A,B)$.
+\end{proof}
+
+
+
+\subsubsection{Computing Discriminants of Endomorphism Rings}
+
+\subsubsection{The Hecke Subring}
+computing its index; structure of quotient in full ring.
+
+\subsubsection{Atkin-Lehner Operators}
+
+\subsubsection{The $I$-torsion Subgroup for any Ideal $I$}
+for $I\subset \T$ or $I\subset\End(A)$.
+
+\subsection{Isogenies and Isomorphisms of Modular Abelian Varieties}
+
+\subsubsection{Isogenies From $A$ to $B$}
+
+\begin{algorithm}{Test if Isogenous}
+    Given two modular abelian varieties $A$ and $B$, this
+    algorithm decides whether or not $A$ and $B$ are isogenous, and if
+    so returns an isogeny between them.
+
+\begin{enumerate}
+\item{} [$A$, $B$ both simple] When $A$ and $B$ are both simple they
+  are isogenenous to abelian varieties $A_f$ and $A_g$ attached to
+  newforms; we can find explicit isogenies using Algorithm~\ref{}.
+  Then $A$ is isogenous to $B$ if and only if $A_f = A_g$, i.e., $f$
+  and $g$ are Galois conjugate.
+
+\Hao{how do we find explicit isogenies? and does this only work over $\QQ$?}
+
+\wstein{First question answered already.  I'm only talking about over
+$\QQ$ here, but probably something like this could be made to work
+over any number field $F$, though that would require replacing
+$A_f$ (etc.) by building blocks over $F$... depending on the field.}
+
+
+\item{} [Pair off factors] When $A$ and $B$ are not simple we pair off
+  factors, i.e. for any $C$ in a factorization of $A$ we check if
+  there is an isogenous $D$ in a factorization of $B$. If such $D$
+  exists and the multiplicities of $C$ in $ A$ and $D$ in $B$ are the
+  same we remove $D$ and continue with another $C$. Otherwise, $A$ and
+  $B$ cannot be isogenous.
+\end{enumerate}
+\end{algorithm}
+\begin{proof}
+  When $A$ and $B$ are simple, by \cite[\S5]{faltings:finiteness}
+  $A\isog A_f$ and $B\isog A_g$ are isogenous if and only if the
+  corresponding newforms $f$ and $g$ are Galois conjugate,
+since $f$ and $g$ determine $L(A_f,s)$ ad $L(A_g,s)$.
+
+If $A \sim \prod_{i \in I} A_i^{e_i}$ and $B \sim \prod_{i \in I}
+B_i^{e_i}$, indexed so that $A_i \sim B_i$ for all $i \in I$, then we
+get that the products $\prod_{i \in I} A_i^{e_i}$ and $\prod_{i \in I}
+B_i^{e_i}$ are isogenous, so $A$ and $B$ are also isogenous.
+
+  Conversely, suppose that $A \sim B$ and $\varphi: A \to B$ is some
+  isogeny.  Let $A \sim \prod_{i \in I} A_i^{e_i}$ and $B \sim
+  \prod_{j \in J} B_j^{f_j}$ be factorizations of $A$ and $B$ into
+  products of powers of non-isogenous simple abelian varieties. Fix an
+  index $i \in I$.  Combining the maps from $A_i$ to $A$, from $A$ to
+  $B$, and the projection to $B_j$ for each $j$ we obtain morphisms
+  $\phi_{ij}: A_i \to B_j$ for all $j \in J$. Since the image of an
+  abelian variety is an abelian variety and all $B_j$'s are simple it
+  follows that $\varphi_{ij}(A_i)$ is either zero or all of $B_j$,
+  which means that $A_i$ and $B_j$ are isogenous. It is not possible
+  that all $\varphi_{ij}(A_i)$ are zero since that would imply that
+  $\varphi$ is the zero map, so we find a $B_j$ isogenous to
+  $A_i$. Removing $A_i$ and $B_j$ from the factorizations and
+  repeating this argument yields that $A$ and $B$ are isogenous if and
+  only if there is a bijection $\sigma:I\to J$ such that $A_i$ is
+  isogenous to $B_{\sigma(i)}$ for all $i$, and $e_i = f_{\sigma(i)}$.
+\end{proof}
+
+\subsubsection{Isomorphisms from $A$ to $B$}
+
+In this section we describe an algorithm to decide whether two simple
+modular abelian varieties are isomorphic, and if so to give an
+isomorphism.  We do not yet know an algorithm to decide whether two
+nonsimple modular abelian varieties are isomorphic (just need a way
+to enumerate elements in lattice of small norm -- might be straightforward
+if don't care about speed!).
+
+\begin{algorithm}{Norm Equation}
+Given an order $\O$ in a number field $K$ and an element $a\in \Q$,
+this algorithm finds all solutions in $\O$ to the norm equation
+$\Norm(x)=a$, up to units of $\O$.
+
+Replace the following by a reference to Henri Cohen's book, etc.
+[[Claus Fieker suggests the following algorithm (we should expand on that)
+\begin{enumerate}
+\item{} [Class Group] Find the class group of $K$.
+\item{} [Ideals of bounded norm] Use linear programming [[huh??]] to find all ideals of
+norm up to some bound.
+\item{} [Solve] Deduce all solutions to the norm equation up to units.
+\end{enumerate}
+\end{algorithm}
+]]
+
+
+\begin{algorithm}{Test if Isomorphic}\label{alg:isom}
+Given simple modular abelian varieties $A$ and $B$,
+this algorithm either proves that $A$ and $B$ are not isomorphic,
+or returns an isomorphism between them (or all isomorphisms,
+up to units).
+
+\begin{enumerate}
+\item{}[Equal?] If $A=B$, return ``yes'' and the identity map.
+\item{}[Isogenous?]  Determine whether $A$ and $B$ are isogenous using Algorithm~\ref{}.
+If $A$ and $B$ are not isogenous then return ``no'', and if
+$A$ and $B$ are isogenous, let $f: B \to A$ be an isogeny.
+\item{}[Degree of isogeny]  Compute $d = \deg(f)$. If $d$ is not a square, return ``no''.
+\item{}[Endomorphism algebra]
+Compute the number field $K=\End(A)\tensor\Q$, and
+an embedding of $\End(A)$ into $K$ using Algorithm~\ref{}.
+\item{}[Hom space] Compute $\Hom(A,B)$ using Algorithm~\ref{}.
+\item{}[Image of Hom space]  Compute the image $H_f$ of $\Hom(A,B)$ in $\End(A)$
+got by composing with $f$.
+\item{}[Endomorphism ring] Compute the order $\O$ in $K$ equal to $\End(A)$
+using Algorithm~\ref{}.
+\item{}[Solve norm equation] Find solutions (up to units of $\O$) of the norm equations
+$\Norm(x) = \pm \sqrt{d}$ in $\O$. If there are no solutions, return ``no''.
+\item{}[Lift to $H_f$?]   For each solution (up to units), check whether it lies in $H_f$.
+\item{}[Isomorphic?]   If a solution $x$ lies in $H_f$, then return ``yes'' and $x\circ f^{-1}$.
+(Note that at this point we could also output $x\circ f^{-1}$ and continue
+on to return representatives for all isomorphisms up to units.)
+
+\item{}[Not isomorphic?]   If none of the solutions lies in $H_f$, return ``no''.
+\end{enumerate}
+\end{algorithm}
+\begin{proof}
+  Let $f:B \to A$ be an isogeny and denote its degree by $d$. Define
+  $$H_f = \{f \circ g: g \in \Hom(A,B)\} \subset \End(A).$$
+  Since
+  degree is multiplicative, $A$ and $B$ are isomorphic if and only if
+  the subset $H_f$ of $\End(A)$ contains an element of degree $d$. Embed $\End(A)$ into the
+  number field $K =
+  \End(A) \otimes \Q$ and let $\O$ be the order in $K$ that is the image of
+  $\End(A)$. By \cite[Prop~12.12]{milne:abvars}, for
+  $x \in K$ we have $\Norm(x)^2 = \deg(x)$. Thus, finding an element
+  of degree $d$ in $H_f$ is equivalent to finding $x \in \O$ with
+  $\Norm(x) = \pm \sqrt{d}$, such that $x \in H_f$, where we view
+$H_f$ as a subset of~$K$ using the above inclusions.
+
+Using Algorithm~\ref{}, we find all $x$ such that $\Norm(x) = \pm
+\sqrt{d}$, up to units of $\O$.  There are may be infinitely many
+units, e.g., if $K$ is a real quadratic field, so there are often
+infinitely many solutions to the norm equation and we cannot directly
+check whether at least one of these infinitely many are in $H_f$.
+However, because there are only finitely many solutions up to units,
+it will suffice to show that $H_f$ is stable under units and to check
+whether each representative solution is in $H_f$.  Thus to finish
+the proof of correctness of the algorithm, we verify that $x\in H_f$ if
+and only if $xu \in H_f$, where $u$ is any unit of $\O$.  If $x = f
+\circ g$ for some $g \in \Hom(A,B)$, then $xu = f \circ (g \circ u)$
+is in $H_f$ since $g \circ u \in \Hom(A,B)$.  Conversely, if $xu\in
+H_f$, then by what we have just shown $x = xuu^{-1} \in H_f$.
+\end{proof}
+
+Discuss how non-simple case works.  Still just need to solve a norm
+equation but solving it is more complicated (?).
+
+\subsubsection{The Minimal Isogeny}
+
+A small extension of Algorithm~\ref{} gives us the minimal degree of any
+isogeny between two isogenous modular abelian varieties.
+[[delete below and just say that we run through all square multiples
+of $d$ instead of just $d$ in the algorithm above.  the below
+is riddled with errors anyways.]]
+
+\begin{algorithm}{Minimal Isogeny}
+Given simple modular abelian varieties $A$ and $B$,
+this algorithm checks if $A$ and $B$ are isogenous and if so returns the
+minimal degree of an isogeny $A \to B$ together with an isogeny of
+that degree.
+\begin{enumerate}
+\item{} [Equal?]  If $A=B$, return 1 and the identity map.
+\item{} [Isogenous?]  Determine whether $A$ and $B$ are isogenous using Algorithm~\ref{}.
+       If $A$ and $B$ are not isogenous then return ``not isogenous'', and if
+       $A$ and $B$ are isogenous, let $f : B \to A$ be some isogeny.
+\item{} [Degree of some isogeny] Compute $\deg(f)$ using Algorithm~\ref{}. Write $\deg(f)$ as $a b^2$, where
+          $a$ is squarefree.
+\item{} [Endomorphism algebra] Compute the number field $K=\End(A)\tensor\Q$, and
+      an embedding of $\End(A)$ into $K$ using Algorithm~\ref{}.
+\item{} [Hom space] Compute $\Hom(A,B)$ using Algorithm~\ref{}.
+\item{} [Image of Hom space] Compute the image $H_f$ of $\Hom(A,B)$ in $\End(A)$
+      got by composing with $f$...
+\item{} [Endomorphism ring] Compute the order $\O$ in $K$ generated by $\End(A)$
+Algorithm~\ref{}.
+\item{} [Initialize] Let $i = 0$.
+\item{} [Solve norm equation]\label{step:increasei} Increase $i$ by one and find the solutions (up to units of $\O$) of the norm equations
+$\Norm(x) = \pm a b i$ in $\O$. If there are no solutions, repeat this step.
+\item{} [Lift to $H_f$?] For each solution (up to units), check whether it lies in $H_f$.
+\item{} [Isogenous of degree $ai^2$?] If a solution $x$ lies in $H_f$, then return $a  i^2$ and $x\circ f^{-1}$.
+\item{} [Should try isogeny of higher degree] If none of the solutions lies in $H_f$, return
+to Step~\ref{step:increasei}.
+\end{enumerate}
+\end{algorithm}
+\begin{proof}
+Let $f:A \to B$ be an isogeny and denote its degree by $d = ab^2$, where $a$ is
+squarefree. Define $H_f = \{\phi \circ f: \phi \in
+\Hom(B,A)\} \subset \End(A)$. Since degree is multiplicative, $B$ and $A$ are
+isogenous via an isogeny of degree $d'$ if and only if $H_f$ contains an element
+of degree $d d'$. Embed
+$\End(A)$ into $K = \End(A) \otimes \Q$ and let $\O$ be the order in $K$
+generated by $\End(A)$. By Proposition 12.12. in Milne's "Abelian Varieties"
+for $x \in K$ we have $\Norm^2(x) = \deg(x)$. Thus, finding an element of
+degree $dd'$ in $H_f$ is equivalent to finding $x \in \O$ with $\Norm(x) =
+\pm \sqrt{dd'}$, such that $x$ actually comes from $H_f$. Hence, the possible
+values for $d'$ are $a i^2$ for $i \in \N$. We can find all $x$
+such that $\Norm(x) = \pm \sqrt{dd'}$ up to units of $\O$.
+The proof that this suffices is the same as the end of the
+proof of Algorithm~\ref{alg:isom}.
+\end{proof}
+
+
+\subsection{Complex Periods}
+
+\Hao{Can I get more info?}
+
+\wstein{There is a section or chapter about this in my Ph.D. thesis.
+I published a nontrivial paper with Helena Verrill that makes this algorithmically doable.  It's implemented in Magma, but not Sage.}
+
+\subsubsection{The Period Lattice}
+Compute period lattice numerically
+
+\subsubsection{The BSD Real Volume}
+BSD real volume $\Omega_A$ -- possibly just use Dokchitser and
+$L(A,1)/\Omega_A$ via modular symbols.  [[dokchitser no good -- not rigorous.]]
+
+\subsection{Component Groups}
+
+\Hao{Can I get more info?}
+
+\wstein{I wrote two papers and a chapter of my thesis about this.  Mostly
+in Sage and completely in Magma.  We'll just reference something published.}
+
+
+\subsubsection{Supersingular Curves}
+
+\subsubsection{Definite Quaternion Algebras}
+describe algorithm; will finally {\em have} to implement
+something in sage if I'm to compute the tables at the end.
+
+Basically this sec is just a quick reference to Pizer, Kohel, Dembelle.
+
+\subsubsection{The Component Group}
+cite my other papers on this topic and give some examples.
+
+\subsubsection{Tamagawa Numbers}
+
+\subsubsection{$J_1(N)$}
+include stuff about $J_1$ from conrad-edixhoven-stein.  generic
+bounds.  no real theory?
+
+Mention open problems.
+
+\subsection{Complex $L$-Series}
+
+\Hao{Can I get more info?}
+\wstein{There is a paper of Dokchitser on motivic L-functions and also
+Robert Bradshaw's Ph.D. thesis, which cover this.}
+
+
+\subsubsection{Local $L$-factors}
+ via characteristic poly of Frobenius in complete
+generality: factor as newform abvars, use Hecke polys
+
+
+\subsubsection{Numerical Evaluation at any Point}
+ anywhere (via Dokchitser)
+
+\subsubsection{The Rational Part of the Special Value}
+ (generalize Agashe-Stein?)
+
+\subsubsection{Order of Vanishing (Analytic Rank)}
+
+\subsubsection{Zeros in the Critical Strip}
+ (Rubinstein)
+
+\subsection{$p$-adic $L$-Series}
+
+\Hao{Can I get more info?}
+\wstein{I wrote a relevant paper with Jen Balakrishnan et al. about using this: http://arxiv.org/abs/1210.2739    There's no so much about how we compute, but it's pretty standard; we do address new subtle issues of
+normalization.  We can just cite that paper.}
+
+
+\subsubsection{The Definition}
+
+\subsubsection{Computing to Given Precision}
+Factor up to isogeny using newforms; compute series for that,
+except if there is a $p$ in isogeny degree, in which case give up (?) or?
+Generalize wuthrich-stein to dimension $>1$.  Help from Robert Bradshaw.
+
+[[Do the computation in $M[T]$ where $M$ is a modular symbols module, like
+in Mazur-Tate-Teitelbaum.  It's just that sum and projection.]]
+
+\subsubsection{Computing the Leading Coefficient and Order of Vanishing}
+
+
+\section{Computing the Isogeny Class}
+
+Discuss problem of finding lots of non-isomorphic $A$ in the isogeny
+class of $A_f$.
+
+Various ways to compute finite $\Gal(\Qbar/\Q)$-stable subgroups of
+$A$.  (I.e., kernel of maps to higher level $Np$.  Intersection with
+other $A_g$'s.  Intersection with (or image of) cuspidal subgroup,
+Shimura subgroup, cut out using Hecke operators when the dimension is
+bigger than $1$, etc.)
+
+\begin{example}
+We show that the $\Q$-isogeny class of {\bf 43B} contains at least three
+non-isomorphic abelian varieties.
+
+[[replace by sage]]
+
+\begin{verbatim}
+> J := JZero(43);
+> A := J(2);
+> A;
+Modular abelian variety 43B of dimension 2, level 43 and
+conductor 43^2 over Q
+> G := RationalCuspidalSubgroup(A);
+> G;
+Finitely generated subgroup of abelian variety with invariants [
+7 ]
+> B := A/G;
+> B;
+Modular abelian variety of dimension 2 and level 43 over Q
+> IsIsomorphic(A,B);
+false
+> Adual := Dual(A);
+> IsIsomorphic(Adual,A);
+true Homomorphism from modular abelian variety of dimension 2 to
+43B given on integral homology by:
+[ 1  0 -2 -1]
+[ 1  0 -3 -1]
+[ 0  2 -2 -1]
+[ 0  1 -1 -1]
+> Bdual := Dual(B);
+
+>> Bdual := Dual(B);
+                ^
+Runtime error in 'Dual': The modular embedding of argument 1 must
+be injective.
+> J2 := JZero(43*2);
+> phi := NaturalMap(J,J2,1);
+> phi2 := NaturalMap(J,J2,2);
+> H := Kernel(phi-phi2);
+> H := Kernel(phi-phi2);
+> H;
+Finitely generated subgroup of abelian variety with invariants [
+7 ]
+> A;
+Modular abelian variety 43B of dimension 2, level 43 and
+conductor 43^2 over Q
+> A/H;
+Modular abelian variety of dimension 2 and level 43 over Q
+Homomorphism from 43B to modular abelian variety of dimension 2
+given on integral homology by:
+[ 1  0  1  0]
+[ 1 -1  0 -1]
+[ 1 -1 -1  1]
+[ 1  1 -1  0]
+Homomorphism from modular abelian variety of dimension 2 to 43B
+given on integral homology by:
+[ 3  1  1  2]
+[ 1 -2 -2  3]
+[ 4 -1 -1 -2]
+[ 2 -4  3 -1]
+> C := A/H;
+> IsIsomorphic(A,C);
+false
+> IsIsomorphic(B,C);
+false
+> G;
+Finitely generated subgroup of abelian variety with invariants [
+7 ]
+> H;
+Finitely generated subgroup of abelian variety with invariants [
+7 ]
+> G eq H;
+false
+> G +H;
+Finitely generated subgroup of abelian variety with invariants [
+7, 7 ]
+\end{verbatim}
+
+\end{example}
+
+\subsection{The Class Group -- Noneisenstein Isogenies}
+\label{sec:clgp}
+Here we make this more precise. Suppose that $N$ is prime. Let $A$ be
+a simple modular abelian variety and let $f$ be the associated
+normalized newform. Denote by $\O$ the finite $\Z$-algebra generated
+by the coefficients of $f$ and consider $H = \Cl(\O)$.  Let $S =
+\{\mathfrak{q}_i \}$ be a set of representatives for $H$ such that
+$\mathfrak{q}_i$ has odd residual characteristic and is
+non-Eisenstein. Then the following proposition describes all possible
+simple abelian varieties that are isogenous to $A$ with an isogeny
+whose kernel has support outside the Eisenstein primes and primes of
+residual characteristic 2.
+
+\begin{proposition}\label{prop:noneis}
+Let $\varphi : A \to A'$ be an isogeny whose kernel has support outside the
+Eisenstein primes and primes of residual characteristic 2. Then $A' \simeq
+A/A[\mathfrak{q}]$ for some $\mathfrak{q} \in H$.
+\end{proposition}
+
+This method gives us at least part of the isogeny class.  [[Note that at the
+end of his notes Frank mentions a relation between the Eisenstein
+primes and non-trivial isogenies.]]
+
+
+\subsection{Eisenstein Isogenies}
+Quotient out by any subgroup of the cuspidal subgroup.
+
+Quotient out by any subgroup of the Shimura subgroup $\Sigma$.
+The Shimura subgroup is by definition the kernel of the natural
+map $J_0(N)\to J_1(N)$ induced by $X_1(N)\to X_0(N)$.
+Paper Ling and Oesterl\'e that describes $\Sigma$
+in computable terms directly at level $N$.
+
+Suppose $A, B\subset J_0(M)$ are simple and non-isogenous,
+for some $M$. Then $A/(A\cap{}B)$ is isogenous to $A$.
+
+Remark: Kernels of endomorphisms have square degree.
+So quotienting out by any rational subgroup of
+nonsquare order gives a nontrivial isogeny.  Get these from $C$.
+
+\subsection{Enumerating the Isogeny Class}
+
+Do all the  operations above suffice to enumerate all
+elements of {\em any} isogeny class?   If not, what do we miss.
+
+
+\section{Tables of Modular Abelian Varieties}
+\subsection{Contents}
+
+\Hao{For which of the table entries do we have known algorithms to compute? What else is to be done here? How much can we do for building blocks, knowing an endomorphism $w$ s.t. $w(A_f)$ is a building block?}
+
+\wstein{In general we can't compute anything in the BSD formula exactly,
+though we can often get bounds (divisor and multiple) of the given object.
+Everything below not in BSD we can pretty much compute, except enumerating
+the whole isogeny class -- we could enumerate some of it and might know
+we are likely done based on using the modular forms to tell when the
+Galois repn looks reducible, maybe.}
+
+For each $N\leq 125$ (say), compute all modabvars for $J_0(N)$.
+Also for each $N\leq 49$ (say), compute all modabvars for $J_H(N)$ for
+all $H$.  Also do $J_0(389)$, say.
+For each compute:
+\begin{enumerate}
+\item Field $F = \End(A)\tensor \Q)$; $disc(F)$; description of $O=\End(A) \subset F$ and of $\T'\subset \End(A)$.
+\item first few coefficients of $q$-expansion
+\item all non-isomorphic elements of the isogeny class (found using our methods),
+which we label
+\item a graph showing the isogenies with their structure (degree, etc.)
+\item the matrix showing structure of intersections between all simple new
+abvars of level $N$
+\item index of $\T$ in $\End(A_f)$
+\item discriminant of $\End(A_f)$
+\item modular degree; modular kernel with Hecke action (?)
+\item cuspidal subgroup
+\item rational cuspidal subgroup
+\item torsion subgroup (if possible)
+\item real volume to some precision
+\item component group orders (or bounds) -- this will require
+implementing quaternion algebra ideal arithmetic.
+\item tamagawa numbers
+\item analytic rank
+\item rational part of special value
+\item first 10 zeros in the critical strip
+\item leading coefficient of $p$-adic $L$-series
+for first $10$ good primes.
+\end{enumerate}
+
+\subsection{Factors of $J_0(N)$ for $N\leq 125$}
+
+\subsection{Factors of $J_H(N)$ for $N\leq 49$}
+
+\subsection{Minimal Isogenies}
+%For every factor $A_f$ of $J_0(N)$ for $N<1000$ and such that the
+%computation takes at most $n$ minutes, we used the first author's
+%MAGMA package ... to compute the minimal degree of an isogeny from
+%$A_f^{\vee}$ to $A_f$ (and structure of kernel).
+
+Connections with computing curves $X$ whose Jacobian is an $A_f$.
+
+[[Papers of people about this, and they care about whether $A_f$
+is isomorphic to its dual.  Frey students...]]
+
+\subsection{Birch and Swinnerton-Dyer}
+Connections with BSD.  Away from $2$ and minimal degree of isogeny,
+the order of $\Sha$ (mod maximal divisible subgroup) is a perfect
+square (reference [[william will find]]).  Our data is consistent
+with [[william will find]].
+
+
+\subsection{Other Examples}
+$J_0(389)$.
+
+[[move this into the paper itself]]
+
+\subsection{Level $35$}
+It's not obvious that $A_f$ is iso. to its dual.
+\begin{verbatim}
+[35, 2, 2, 1, 6, x^4 + 2*x^3 - 7*x^2 - 8*x + 16],
+\end{verbatim}
+
+Mention 6-author paper and Hasegawa, but that kernel of modular
+polarization is NOT kernel of multiplication by an integer,
+so Wang excludes.
+
+Kernel is $(\Z/2\Z)^2$, which is not $\ker([2])=(\Z/2\Z)^4$.
+
+\begin{verbatim}
+> J := JZero(35);
+> A := J(2);
+> Dual(A);
+Modular abelian variety of dimension 2 and level 5*7 over Q
+> Kernel(ModularPolarization(A));
+Finitely generated subgroup of abelian variety with
+invariants [ 2, 2 ]
+\end{verbatim}
+
+There is a solution, and it gives an iso.
+
+\subsection{Level $69$: The first $A_f$ that is not
+isomorphic to $A_f^{\vee}$}
+
+\Hao{What is the significance of this example? How is it relevant to the rest of the paper?}
+\wstein{For elliptic curves over $\QQ$ and for Jacobians of
+curves with a rational point, one always has
+$A_f$ isomorphic to $A_f^{\vee}$, and having this simplifies
+things (e.g., BSD).  It's hard to show that they aren't equal,
+and having them not equal means computing torsion/sha/etc. on each,
+etc., is more subtle.}
+
+Let $A$ be the second factor in the decomposition of $J_0(69)$.
+[[Say $\dim(A) = 2$, etc., which determines $A$.]]
+ Then $A$ is
+not isomorphic to its dual $A^\vee$ because there are no solutions to the norm
+equation [...].
+A minimal isogeny between $A$ and $A^\vee$ is of degree 4 and is given on the integral
+homology by
+\[ \left( \begin{matrix}
+\hfill 1 & \hfill 0 & \hfill 2 & -2 \\
+\hfill 0 & \hfill 1 & \hfill 0 & \hfill 0 \\
+-2 & \hfill 1 &\hfill  0 &\hfill  2 \\
+\hfill 4 & -2 & \hspace{1.2ex} 2 & -4 \end{matrix} \right)\]
+[[That's meaningless without a basis!]]
+
+
+\subsection{Level $195$: An $A_f$ not isomorphic to
+its dual, though there are solutions to the norm equation}
+
+$[195, 5, 3, [ 4, 4, 4, 4, 176, 176 ], 0, 6, x^6 - 14*x^4 - 4*x^3 + 49*x^2 +
+28*x + 4] $
+
+There are solutions to the norm equation, but none of them works.
+
+\bibliography{biblio}
+\end{document}
+
+\newpage
+
+\section*{[Diary (omit from final paper)]}
+\subsection*{06-21-2004}
+\begin{enumerate}
+\item [done] Modify MAGMA code to utilize norm equation in orders, so it
+will always answer ``yes'' or ``no''.
+\item [done] Make sure Tseno has easy access to this new code.
+\item [done] Try, using Tseno's account, to do some IsIsomorphic computations.
+\item [done] Set up computation of a table.
+\item [done] First draft of precise description of algorithm (high level).
+\end{enumerate}
+
+\subsection*{06-23-2004}
+\begin{enumerate}
+\item [ok] Show me result of trying to compute a table.
+\item [done] List what other algorithms the main algorithm depends on.
+Modify modabvar.m to output log info about how it makes its decision.
+
+Here is a list of various functions CanDetermineIsomorphism
+depends on (only in the case of two simple modular abelian
+varieties):
+\begin{itemize}
+\item IsIsogenous,
+\item IsSimple,
+\item NaturalMap,
+\item IsField,
+\item Hom,
+\item End,
+\item Generators,
+\item Degree,
+\item Dimension,
+\item NormEquation.
+\item Order
+\item Saturation of a submodule of $\Z^n$, which is basically
+how to compute the kernel of a matrix over Z.
+\end{itemize}
+
+I also modified modabvar.m to show us how it makes its decision.
+Here are the possible outcomes:
+\begin{itemize}
+\item 1 - not isogenous
+\item 2 - same variety
+\item 3 - endomorphism ring is not a field
+\item 4 - the degree is not a perfect square
+\item 5 - no solution to the norm equation
+\item 6 - alright, we got to the very end
+\end{itemize}
+
+\item [done] Precisely define ``explicit modular abelian variety''.
+
+
+
+\item [ok] Discuss examples in which interesting things happen.
+
+Today @ 1pm.
+
+\end{enumerate}
+\subsection*{06-23-2004}
+\begin{enumerate}
+\item Write more about the algorithm for computing $\End(A_f)$.
+\item [done] Figure out precisely why computation is getting stuck
+at level $173$, etc.
+
+I put various markers and it turned out that the computation is
+getting stuck exactly where we expected - in solving the norm
+equation for $[173, 2, 10]$ - probably the dimension is too big.
+
+\item [ok] Look at Ribet's paper.
+
+\item [done] Investigate the examples in more detail.
+
+Look at the file examples\_details.txt
+
+\item [ok] Run computation of table for levels up to $500$ and dimension
+at most $5$.
+
+Almost done but it is starting to look strange after some point.
+\end{enumerate}
+
+\subsection*{06-30-2004}
+\begin{enumerate}
+\item Saturation:  1. See if MAGMA says how they do it (NO).  2. Look in Cohen
+to see how to find integer kernels.  Answer: Here's algorithm.
+\begin{enumerate}
+\item Find echelon form of basis of lattice.
+\item Write down matrix over $\Z$ that has saturation of lattice
+as kernel.
+\item Find the kernel using algorithm 2.7.2 of Cohen's book (Kernel
+over $\Z$ using LLL).
+\end{enumerate}
+
+\item Investigate in detail what PARI can do regarding solving norm
+equations.  1. Start pari and type '?6'.  2. Looks in users.dvi and
+see what PARI can do.  Does it solve norm equations at all? Yes.
+3. Does it solve diophantine norm equation, i.e., solutions in $\O_K$?
+4. Does it solve diophantine norm equation, i.e., solutions in order $\O$?
+5. Does it give ALL solutions or just one?
+6. What algorithm?
+
+\item Decide on a computational goal for the project.
+(REMEMBER to use new version!!)\\
+(a) Determine what degree gets too difficult.\\
+(b) Determine whether $A$ is isomorphic to $A^{\vee}$ for factors
+$A=A_f$ of $J_0(N)$, for $N\leq 500$ and $\dim(A_f) < 10$.\\
+(c) Determine piece of isogeny class of $A$ for factors
+$A=A_f$ of $J_0(N)$, for $N\leq 100$.\\
+(d) Determine whether $A$ is isomorphic to $A^{\vee}$ for factors
+$A=A_f$ of $J_1(N)$, for $N\leq 50$ and $\dim(A_f) < 10$.
+
+\item Generating up isogeny class systematically.
+
+\begin{enumerate}
+\item How to compute the Shimura subgroup $\Sigma$?!:
+Definition: $\Sigma = \Ker(J_0(N)\to J_1(N))$.
+\begin{enumerate}
+\item kernel to higher level
+\item ling-oesterle (****)
+\item Compute kernel directly?
+\end{enumerate}
+\item Suppose $G$ is a subgroup of $J_0(N)$ defined over $\Q$.
+Then we get abelian varieties isogenous to $A$ from
+$A/(A[n]\intersect G)$ for any integer $n$.
+For example $A^{\dual}$ is got from $G=A\intersect B$, where
+$B$ is the Hecke-stable complement of $A$ in $J_0(N)$.
+\item Sources of $G$:
+\begin{enumerate}
+  \item Quotient by subgroups of cuspidal subgroup
+\item Shimura subgroup,
+\item intersecting with other abvars
+\item dual.
+\item Map to higher level then intersection with other abelian
+varieties of higher level.
+\end{enumerate}
+
+\item Specifying each element of the isogeny class.  Need notation.
+$A=A_f$ is the subvariety of $J_0(N)$.
+Examples: $B = A/C[3]$, where $C$ is cuspidal subgroup.
+$B = A/\langle (3)-(1/7)\rangle$, or
+$B = A/(A\cap A_g)$, where $g$ is another newform.
+$B = A/\Sigma[2]$.
+\end{enumerate}
+
+\item Write up something about finding minimal degree of isogeny.
+square free part business....
+
+\end{enumerate}
+
+\subsection*{07-24-2004}
+\begin{enumerate}
+\item Look over new proofs.
+\item Figure out how to compute saturations.
+     (1) prove Allan Steel's simple algorithm (why HNF?)
+         Try (1) in MAGMA.
+     (2) Look at what NTL does to compute kernels.
+\item Decide on and set up a systematic computation, write it and
+start it running.   Everything up to level 1000, but time out computations
+after 10 minutes.  (William.)
+\item Talk about your short talk on Monday (when? what?)
+
+ - solved the ``minimal degree problem''
+
+ - discuss some examples at length illustrating what's going on
+
+ - briefly explain future directions.
+
+ - more motivation (?)  e.g., enumerating isogeny classes to get a
+higher dimensional cremona; bsd sha order,...
+
+\item Norm equation -- how much to write up.  References.  Search MSN.
+      Look in book... ???
+
+\item Figure out {\em exactly} what else we need to do to completely
+      finish this paper.  Assign tasks:
+\begin{enumerate}
+\item (Stein) Write introduction.
+\item (Stein) Write enumerating section.
+\item (Stein) Say something about complexity somewhere???
+\item (Tseno) Rewrite proof of isogeny testing algorithm.
+
+\end{enumerate}
+\item Make a list of problems for future investigation: polarization,
+      enumerating the isogeny class, working over other number fields,
+      isomorphism testing in the non-simple case.
+
+\end{enumerate}
+
+\subsection*{02-20-2008}
+\begin{enumerate}
+\item(Done)  Read through paper and make corrections.
+\item (Done) Type in corrections.
+\end{enumerate}
+
+\subsection*{02-20-2008 to 02-24-2008}
+\begin{enumerate}
+\item (done) Investigate what sage does with modabvars now compared to
+what it needs to do.   Bring doctest coverage to 100\%.
+\end{enumerate}
+
+\subsection*{02-25-2008}
+\begin{enumerate}
+\item Another read through and markup.
+\item Make corrections.
+\item Structure contents of paper -- make sections
+for everything we need to do.
+\item Implement computing intersection groups.
+\item Implement solving norm equations in Sage.
+\end{enumerate}
+

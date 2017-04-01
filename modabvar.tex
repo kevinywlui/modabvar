@@ -10,6 +10,8 @@
 \newcommand{\Hao}[1]{\textcolor{blue}{\textsf{Hao: #1}}}
 \newcommand{\wstein}[1]{\textcolor{blue}{\textsf{William: #1}}}
 
+\newcommand{\Haonew}[1]{\textcolor{red}{\textsf{Hao: #1}}}
+
 \CompileMatrices
 
 
@@ -217,6 +219,9 @@ which didn't exist when I wrote this paper.}
 \subsubsection{New and Old Subvarieties and Quotients}
 
 \subsubsection{Decomposition as a Product of Simples}
+
+\Haonew{This is already in Sage.}
+
 [[there is a very interesting algorithm here -- this is related
 to verifying defining data]]
 
@@ -227,17 +232,25 @@ writing a module a sum of irreducible submodules (up to finite index).
 Use modular forms to find a simple subvariety, then find another not
 contained in the ones found so far, etc.}
 
+
 \begin{algorithm}{Decompose as Product}
 Given a modular abelian variety $A$,
 this algorithm finds simple abelian varieties
 $B_i$ and an isogeny $A\to \prod B_i$.
 \end{algorithm}
 
+
+
 \subsubsection{Verifying Defining Data of a Modular Abelian Variety}
+
+\Hao{What does this mean?}
 
 \subsection{Arithmetic with Modular Abelian Varieties}
 
 \subsubsection{Sums and Products}
+
+
+\Haonew{This is not in Sage yet.}
 
 [[problem -- the input here should be $A=(V,L,J)$ and $A'=(V',L',J)$
 in a common ambient $B=(V_2,L_2,J)$, where we need not assume $B\subset J$]]
@@ -250,6 +263,9 @@ Then $A\times A' = (V\oplus V', L\oplus L', J \cross J')$, where
 $V\oplus V'$ and $L\oplus L'$ embed diagonally into $J\cross J'$.
 
 \subsubsection{Intersection}
+
+\Haonew{This is in Sage.}
+
 Suppose $A = (V,J)$ and $A' = (V', J)$ are abelian subvarieties of a
 common ambient $J$.  Then $A\cap A'$ is an extension of the abelian
 variety $(A\cap A')^0 = (V\cap V', J)$ by a finite component group:
@@ -271,6 +287,9 @@ acts on $\Phi$ via its action on $\Lambda_J$.
 
 \subsubsection{Complements (Poincare Reducibility)}\label{sec:poincare}
 
+
+\Haonew{This is in sage.}
+
 [[look in magma code to see how to do this.  probably intersection
 pairing;]]
 
@@ -281,6 +300,8 @@ look at it.  There is a paper by Merel on how to compute the
 intersection pairing.  I implemented it in Magma, but never in Sage.}
 
 \subsubsection{Quotients by Subgroups and Subvarieties}
+
+\Haonew{We can define quotients in Sage. But then calling the endomorphism ring of the quotient generates an error.}
 
 Suppose $A = (V, L, J)$ is a modular abelian variety and $A' = (V',
 L', J)$ is an abelian subvariety of $A$, so $V\subset V'$ and $L' =
@@ -308,14 +329,24 @@ morphisms between
 
 \subsubsection{The $n$-Torsion Subgroup}
 
+\Haonew{In Sage.}
+
+
 \subsubsection{Intersection of Finite Subgroups}
 $G\cap H$
 
+\Haonew{Don't know if it is in Sage}
+
+
 \subsubsection{The Cuspidal Subgroup}
+
+\Haonew{In Sage.}
 
 \subsubsection{The Rational Cuspidal Subgroup}
 i.e. $C(\Q)$,
 which we can compute by getting $G_\Q$ action on $C(\Qbar)$.
+
+\Haonew{In Sage.}
 
 arithmetic with: $G+H$, $G\cap H$, $G/H$.
 
@@ -324,8 +355,11 @@ point counting over finite fields
 
 divisor, multiple of order
 
+\Haonew{In Sage.}
 
 \subsubsection{The Shimura Subgroup}
+
+\Haonew{In Sage.}
 
 \subsection{Morphisms Between Modular Abelian Varieties}
 
@@ -348,6 +382,9 @@ divisor, multiple of order
 \subsubsection{Left and Right Inverses}
 
 \subsection{Endomorphism Rings and Hom Spaces}
+
+\Haonew{It is important to know how endomorphisms
+and homomorphisms are represented.}
 
 \subsubsection{Computing End and Hom}
 
@@ -740,6 +777,8 @@ isogeny between two isogenous modular abelian varieties.
 of $d$ instead of just $d$ in the algorithm above.  the below
 is riddled with errors anyways.]]
 
+\Haonew{The logic of the argument below seems okay. Is there anything riddled with errors that I missed?}
+
 \begin{algorithm}{Minimal Isogeny}
 Given simple modular abelian varieties $A$ and $B$,
 this algorithm checks if $A$ and $B$ are isogenous and if so returns the
@@ -793,8 +832,12 @@ proof of Algorithm~\ref{alg:isom}.
 \wstein{There is a section or chapter about this in my Ph.D. thesis.
 I published a nontrivial paper with Helena Verrill that makes this algorithmically doable.  It's implemented in Magma, but not Sage.}
 
+\Haonew{It seems that the algorithm work only for $A_f$? By integrating along modular symbols?}
+
 \subsubsection{The Period Lattice}
 Compute period lattice numerically
+
+\Haonew{This is entirely analogous to the situation of computing the periods of modular elliptic curves. And it is a little different than period lattices of elliptic curve with equations, where one uses AGM, etc.}
 
 \subsubsection{The BSD Real Volume}
 BSD real volume $\Omega_A$ -- possibly just use Dokchitser and

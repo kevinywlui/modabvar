@@ -331,11 +331,20 @@ morphisms between
 
 \Haonew{In Sage.}
 
+Let $\{l_1,\ldots, l_d\}$ be a lattice basis for $L$. The torsion subgroup of
+$V/L$ is $\Q L/L$ so the $n$-torsion subgroup is $\frac{1}{n}L/L$. Hence, the
+image of $\{\frac{1}{n} l_1, \ldots, \frac{1}{n} l_d\}$ in $\Q L/L$
+generates the $n$-torsion subgroup.
+
 
 \subsubsection{Intersection of Finite Subgroups}
 $G\cap H$
 
 \Haonew{Don't know if it is in Sage}
+
+
+Let $G = L_G/\Lambda$ and $H = L_H/\Lambda$ be finite subgroups. Then $G\cap H
+= L_G\cap L_H/\Lambda$.
 
 
 \subsubsection{The Cuspidal Subgroup}
@@ -357,9 +366,46 @@ divisor, multiple of order
 
 \Haonew{In Sage.}
 
+A divisor of the $K$-rational torsion order is given by the rational cuspidal
+subgroup.
+
+Let $p$ be an odd prime not dividing $N$. Using the theory of formal groups, we
+can show reduction map $A_f(K)\to A_f(\FF_p)$ is injective on torsion points.
+Hence, for any set, $P$, of odd primes not dividing $N$,
+$\GCD(\{\#A_f(\FF_p):p\in P\})$ is a multiple of the $K$-rational torsion order. To
+compute $\#A_f(\FF_p)$, we compute frobenius at $1$...
+
+(insert a statistic on how effective this is?)
+
 \subsubsection{The Shimura Subgroup}
 
 \Haonew{In Sage.}
+
+Since $\Gamma_1(N)\subseteq \Gamma_0(N)$, there is a natural covering $\pi:X_1(N) \to
+X_0(N)$. By functoriality, this induces a map $\pi^*:J_0(N) \to J_1(N)$. The Shimura
+subgroup, $\Sigma_N$, is the kernel of $\pi^*$.
+
+Let $p$ be a prime number that is coprime to $N$. Then there exists two
+degeneracy maps $\alpha,\beta:X_0(pN) \to X_0(N)$. Again, by functoriality,
+these induce maps $\alpha^*,\beta^*:J_0(N)\to J_0(pN)$. By Ribet's paper on
+Congruence Relations between Modular Forms?, $\Sigma_N=(\ker \alpha^*) \cap
+(\ker \beta^*)$.
+
+\begin{algorithm}{Shimura Subgroup}
+Given a modular abelian subvariety $A=(V,L)$ in an ambient Jacobian $J_0(N)$,
+this algorithm outputs the Shimura subgroup of $A$.
+\begin{enumerate}
+    \item{} [Pick a prime]
+        Find a prime $p$ coprime to $N$.
+    \item{} [Degeneracy maps]
+        Use (some algorithm to be cited?) to compute the degeneracy maps
+        $\alpha^*,\beta^*:J_0(N)\to J_0(pN)$.
+    \item{} [$\Sigma_N$]
+        Compute $\Sigma_N=(\ker \alpha^*) \cap (\ker \beta^*)$.
+    \item{} [Intersect with $V$]
+        Output $\Sigma_N\cap V$.
+\end{enumerate}
+\end{algorithm}
 
 \subsection{Morphisms Between Modular Abelian Varieties}
 

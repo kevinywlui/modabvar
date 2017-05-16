@@ -457,15 +457,22 @@ the saturation $(\Q L) \cap \Z^n$ of $L$ in $\Z^n$.
 Let $M$ be a matrix whose rows are a $\Z$-basis for $L$.
 
 \begin{enumerate}
-\item{} [Hermite Normal Form] Find the Hermite Normal Form $H$ of $M^t$.
+\item{} [Hermite Normal Form] Find the Hermite Normal Form $H'$ of $M^t$. Let
+    $H$ be the submatrix of the nonzero rows of $H'$.
 \item{} [Inverse] Compute $S = (H^t)^{-1} M$ using the ``last big row'' trick.
 Then output $S$ whose rows are a basis for the saturation of $L$.
 \end{enumerate}
 \end{algorithm}
 \begin{proof}
-It suffices to prove that $(H^t)^{-1}M$ has rows that span the
-saturation of the row span of $M$.
-[...]
+    Let $L$ be a rank $M$ subgroup of $\Z^n$ and $M$ be a matrix whose rows are
+    a $\Z$-basis for $L$. Let $H'=UM^t$ be the Hermite Normal Form of $M^t$ and
+    $H$ be the submatrix of the nonzero rows of $H'$. It suffices to prove that
+    the rows of $H^{-t} M$ is a $\Z$-basis for the saturation.
+
+    Since $H^{-t}$ is invertible, the $\Q$-span of the rows $H^{-t}M$ is the
+    same as $M$. We can write $[I_m \enspace  0] U^{-t}=H^{-t}M$. Since $U$ is
+    unimodular, the $\Z$-span of the rows of $H^{-t}M$ is exactly the
+    saturation.
 \end{proof}
 
 Note that one could instead replace $H$ by an LLL reduced basis for

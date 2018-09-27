@@ -218,7 +218,47 @@ which didn't exist when I wrote this paper.}
 \subsection{Decomposition}
 \subsubsection{New and Old Subvarieties and Quotients}
 
+
+\begin{algorithm}{Decompositon of jacobians}
+    Let $J=J_1(N)$. This algorithm will give a sequence of abelian subvarieties
+    $A_i$ with finite intersection and sums to $J$.
+\begin{enumerate}
+    \item{} [Compute divisors of $N$]
+        Let $L_1,\ldots, L_r$ be the divisors $N$.
+    \item{} [Compute new modular symbols]
+        For each divisor $L_i$, compute the new modular symbol space
+        $\mathbb{M}_2(L_i)_\mathrm{new}$.
+    \item{} [Factor the new modular symbols]
+        For each divisor, decompose the new modular symbol space under the
+        Hecke algebra by computing the eigenspace decomposition of a suitably
+        ``generic'' element of the Hecke algebra:
+        \begin{enumerate}
+            \item{} [Randomly pick from Hecke Algebra]
+                Randomly pick $T\in \mathbf{T}$.
+            \item{} [Factor characteristic polynomial]
+                Let $\prod f_j ^{e_j}$ be a factorization of the characteristic
+                polynomial of $T$ so that each term is irreducible and
+                distinct.
+            \item{} [Check?]
+                If any $e_j \geq 3$, return to step (a). Otherwise, proceed.
+            \item{} [Compute eigenspaces]
+                Compute the eigenspace decomposition $\{W_{ik}\}$ of
+                $\mathbb{M}_2(L_i)_\mathrm{new}$
+        \end{enumerate}
+    \item{} [Compute image under degeneracy maps]
+        For each divisor $L_i$, and each divisor $t_{il}$ of $N/L_i$, compute
+        image $d_{L_i, t_{il}}(W_{ik})$.
+    \item{} [Return]
+        Return the sequence $(d_{L_i, t_{il}}(W_{ik}), J)$.
+\end{enumerate}
+
+    
+\end{algorithm}
+
+
 \subsubsection{Decomposition as a Product of Simples}
+
+
 
 \Haonew{This is already in Sage.}
 
@@ -244,6 +284,8 @@ $B_i$ and an isogeny $A\to \prod B_i$.
 \subsubsection{Verifying Defining Data of a Modular Abelian Variety}
 
 \Hao{What does this mean?}
+
+
 
 \subsubsection{Subvarieties}
 
@@ -285,6 +327,8 @@ $$
 [[this requires proof]]
 If $A$ and $A'$ are preserved by $\End(J)$, then $\End(J)$ also
 acts on $\Phi$ via its action on $\Lambda_J$.
+
+
 
 \subsubsection{Complements (Poincare Reducibility)}\label{sec:poincare}
 
@@ -328,10 +372,12 @@ in Sage already.}
 
 data: $(L\supset \Lambda, K, A)$.
 
-Let $A=(V, L, J)$ be a modular abelian variety. A finite subgroup $G$ can be
-specified by giving $\mathcal{L}$ such that $\mathcal{L}/L = G$.
+Let $A=(V, L, J)$ be a modular abelian variety. A finite subgroup $G$ of $A$ can be
+specified by giving $\mathcal{L}$ such that $\mathcal{L}/L = G$. Given 2 finite
+subgroups $G_1=(\mathcal{L}_1, K_1, A)$ and $G_2=(\mathcal{L}_2, K_2, A)$, a
+map $G_1\to G_2$ can be defined by giving a map $\mathcal{L}_1\to
+\mathcal{L}_2$.
 
-morphisms between
 
 \subsubsection{The $n$-Torsion Subgroup}
 
@@ -342,7 +388,10 @@ given by $(\frac{1}{n} L, K, A)$.
 
 
 \subsubsection{Intersection of Finite Subgroups}
-$G\cap H$
+
+Let $G=(\mathcal{L}_1, A)$ and $H=(\mathcal{L}_2, A)$ be finite subgroups of
+$A=(L, V, J)$. The intersection $G\cap H$ is the group $(\mathcal{L}_1\cap
+\mathcal{L}_2, A)$.
 
 \Haonew{Don't know if it is in Sage}
 
@@ -351,20 +400,50 @@ $G\cap H$
 
 \Haonew{In Sage.}
 
+The cuspidal subgroup $C$ of $J$ is the subgroup of degree-0 division
+$(\alpha)-(\beta)$ where $\alpha,\beta$ are cusps on $J$. This is a finite
+group that we can compute by
+
+...
+
+
 \subsubsection{The Rational Cuspidal Subgroup}
 i.e. $C(\Q)$,
 which we can compute by getting $G_\Q$ action on $C(\Qbar)$.
+
+Now let $J = J(\Gamma)$, where $\Gamma$ is a congruence group so that
+$\Gamma_1(N)\subseteq \Gamma \subseteq \Gamma_0(N)$. Stevens proves the cusps
+of $X(\Gamma)$ are $\Q(\mu_N)$-rational and the $\Gal(\Q(\mu_N)/\Q)$-action is
+given as follows. Let $[x/y]$ be a cusp of $X(\Gamma)$. For $d\in
+(\ZZ/N\ZZ)^*$, let
+\[
+    \sigma_d\in \Gal(\Q(\mu_N)/\Q):\mu_N\mapsto \mu_N ^d
+\]
+then
+\[
+    \sigma_d([x,y])=[x,d'y],
+\]
+where $dd'\equiv 1 \mod{N}$. With this, we are able to compute the
+\emph{rational cuspidal subgroup} $C(\QQ):=C^{\Gal(\QQ(\mu)/\QQ)}$.
 
 \Haonew{In Sage.}
 
 arithmetic with: $G+H$, $G\cap H$, $G/H$.
 
-\subsubsection{The Torsion Subgroup}
+\subsubsection{The Rational Torsion Subgroup}
+
 point counting over finite fields
 
 divisor, multiple of order
 
 \Haonew{In Sage.}
+
+The goal here is to compute the rational torsion subgroup $J(\QQ)_\tor$. In
+general, this is hard to do and the best we can do is to compute an upper and
+lower bound. The rational cuspidal subgroup provides a lower bound. 
+
+An upper bound can be
+..william's thing..
 
 \subsubsection{The Shimura Subgroup}
 
@@ -378,7 +457,8 @@ By Pic functoriality, this induces a map $s_N ^*: J_0(N)\to J_1(N)$. The
 kernel of this map is the \emph{Shimura subgroup}, denoted $\Sigma(N)$. Ribet
 shows that for any prime $p$ coprime to $N$, $\Sigma(N)=\ker(\delta_1
 ^*-\delta_p ^*)$, where $\delta_1^*, \delta_p ^*:J_0(N)\to J_0(pN)$ are the
-degeneracy maps.
+degeneracy maps. So computing the Shimura subgroup amounts to compute the
+kernel of $(\delta_1 ^* - \delta_p ^*)$.
 
 \subsection{Morphisms Between Modular Abelian Varieties}
 
@@ -386,17 +466,34 @@ degeneracy maps.
 
 \subsubsection{Defining Data for Morphisms}
 
+Let $A=(L, V, J)$ and $B=(L', V', J')$ be modular abelian varieties and
+$\Phi:A\to B$ a map of abelian varieties. Then $\Phi$ induces a map
+$\Phi_V:V\to V'$ so that $\Phi_V(L)\subseteq L'$. The map $\Phi$ is completely
+determined by $\Phi_V$ so the defining data for $\Phi$ is the map $\Phi_V$
+given as a matrix with respect to some basis.
+
 \subsubsection{Natural Maps}
+
+degeneracy maps
 
 \subsubsection{Morphisms Defined by Finite Subgroups}
 
 \subsubsection{Kernels of Morphisms}\label{sec:kernelmodabvar}
 
+Let $\Phi:A\to B$ be a morphism between modular abelian varieties $A=(L, V, J)$
+and $B=(L', V', J')$. Let $V_K=\ker \phi_V$ and $L_K=L\cap V_K$. Then the
+kernel $K$ of $\phi$ is the extension of the abelian variety $K^0 = (L_K, V_K,
+J)$ by a finite component group $G$. The group $G$ is given by...
+
 \subsubsection{Images of Morphisms}
+
+Let $\Phi:A\to B$ be a morphism between modular abelian varieties $A=(L, V, J)$
+and $B=(L', V', J')$. The image of $\Phi$ is the abelian subvariety of $B$
+given by $(L'', V'', J'')$, where $V''=\Im \Phi_V$ and $L''=V\cap V''$.
 
 \subsubsection{The Universal Property of the Cokernel}
 
-\subsubsection{The Projection Morphism}
+\subsubsection{The Projection Morphism} 
 
 \subsubsection{Left and Right Inverses}
 

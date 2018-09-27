@@ -220,6 +220,7 @@ which didn't exist when I wrote this paper.}
 
 
 \begin{algorithm}{Decompositon of jacobians}
+    \label{decomp_jacobian}
     Let $J=J_1(N)$. This algorithm will give a sequence of abelian subvarieties
     $A_i$ with finite intersection and sums to $J$.
 \begin{enumerate}
@@ -274,9 +275,33 @@ contained in the ones found so far, etc.}
 
 
 \begin{algorithm}{Decompose as Product}
-Given a modular abelian variety $A$,
-this algorithm finds simple abelian varieties
-$B_i$ and an isogeny $A\to \prod B_i$.
+    Given a modular abelian variety $A=(L, V, J)$, this algorithm finds simple
+    abelian varieties $B_i$ and an isogeny $A\to \prod B_i$.
+    \begin{enumerate}
+        \item{} [Decompose $J$]
+            Decompose $J$ into simple subvarieties $\{X_i=(V_i, J)\}$, where
+            $i$ runs through $1,\ldots,r$.
+        \item{} [Classify subvarieties]
+            Find abelian subvarieties $E, F$ of $J$ such that $E+F=J$, $E\cap
+            F$ is finite, and the composition $B \to J \to J/E$ is an isogeny.
+            This is done as follows:
+            \begin{enumerate}
+                \item{} [Ascending sequence]
+                    Compute $D_j = \left(\sum_{k=1} ^j V_k \right)$ for $j=0,\ldots,r$.
+                \item{} [Classify]
+                    Let $S_0 = \{j: \dim D_j = \dim D_{j-1}\}$ and $S_1 = \{j:
+                    \dim D_j > \dim D_{j-1}\}$.
+                \item{} [Form subvarieties]
+                    Compute $E = \sum_{j \in S_0} X_j$ and $F = \sum_{j\in S_1}
+                    X_j$.
+            \end{enumerate}
+        \item{} [Isogeny to $F$]
+            Use Algorithm~\ref{?} to compute the projection map $\pi_F:J \to F$
+            and compute the inclusion map $\iota:B \to J$. Let $\Phi:B\to F$. 
+        \item{} [Return pullback]
+            Return $\{(L_j, V_j, J)\}_{j\in S_1}$, where $V_j =
+            \Phi^{-1}(V_F)$ and $L_j = L\cap V_j$.
+    \end{enumerate}
 \end{algorithm}
 
 

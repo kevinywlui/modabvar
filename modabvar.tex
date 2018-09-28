@@ -310,6 +310,7 @@ contained in the ones found so far, etc.}
 
 \Hao{What does this mean?}
 
+As mentioned in the introduction, 
 
 
 \subsubsection{Subvarieties}
@@ -397,11 +398,13 @@ in Sage already.}
 
 data: $(L\supset \Lambda, K, A)$.
 
-Let $A=(V, L, J)$ be a modular abelian variety. A finite subgroup $G$ of $A$ can be
-specified by giving $\mathcal{L}$ such that $\mathcal{L}/L = G$. Given 2 finite
-subgroups $G_1=(\mathcal{L}_1, K_1, A)$ and $G_2=(\mathcal{L}_2, K_2, A)$, a
-map $G_1\to G_2$ can be defined by giving a map $\mathcal{L}_1\to
-\mathcal{L}_2$.
+Let $A=(V, L, J)$ be a modular abelian variety. A finite subgroup $G$ of $A$
+can be specified by giving a defining lattice $\mathcal{L}$ such that
+$\mathcal{L}/L = G$ and a field of definition $K$ of $G$ as a group scheme. 
+
+Given 2 finite subgroups $G_1=(\mathcal{L}_1, K_1, A)$ and $G_2=(\mathcal{L}_2,
+K_2, A)$, a map $\phi: G_1\to G_2$ can be given as a map on the defining
+lattices.
 
 
 \subsubsection{The $n$-Torsion Subgroup}
@@ -492,10 +495,10 @@ kernel of $(\delta_1 ^* - \delta_p ^*)$.
 \subsubsection{Defining Data for Morphisms}
 
 Let $A=(L, V, J)$ and $B=(L', V', J')$ be modular abelian varieties and
-$\Phi:A\to B$ a map of abelian varieties. Then $\Phi$ induces a map
-$\Phi_V:V\to V'$ so that $\Phi_V(L)\subseteq L'$. The map $\Phi$ is completely
-determined by $\Phi_V$ so the defining data for $\Phi$ is the map $\Phi_V$
-given as a matrix with respect to some basis.
+$\Phi:A\to B$ a map of abelian varieties. Then $\Phi$ induces a map on rational
+homology and is also completely determined by the map on rational homology.
+So we will define $\Phi$ by giving the basis corresponding to the map on
+rational homology.
 
 \subsubsection{Natural Maps}
 
@@ -518,7 +521,28 @@ given by $(L'', V'', J'')$, where $V''=\Im \Phi_V$ and $L''=V\cap V''$.
 
 \subsubsection{The Universal Property of the Cokernel}
 
+
 \subsubsection{The Projection Morphism} 
+
+Let $A=(L, V, J)$ be a modular abelian variety with subvarieties $B_1=(L_1,
+V_1, J)$ and $B_2=(L_2, V_2, J)$ such that $B_1+B_2=A$ and $B_1\cap B_2$
+finite. A projection morphism is a surjective map $\pi:A\to B_1$ with $(\ker
+pi)^0 = B_2$. This morphism is not unique.
+
+\begin{algorithm}{Computing Projection Morphism}
+    \begin{enumerate}
+        \item{} [Basis for lattice]
+            Let $\{\lambda_1,\ldots,\lambda_n\}$, $\{u_1,\ldots,u_r\}$, and
+            $\{v_1,\ldots,v_s\}$ be bases for the defining lattices of $A, B_1,
+            B_2$, respectively.
+        \item{} [Project]
+            For each $i$, write $\lambda_i=u_i+v_i$, where $u_i\in B_1$ and
+            $v_i\in B_2$ are torsion. This is possible because $A=B_1+B_2$
+            though not unique unless $B_1\cap B_2$ is trivial.
+        \item{} [Return map]
+            Return the map $\phi$ given by the formula $\phi(\lambda_i)=u_i$.
+    \end{enumerate}
+\end{algorithm}
 
 \subsubsection{Left and Right Inverses}
 

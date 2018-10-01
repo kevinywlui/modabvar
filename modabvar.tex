@@ -354,25 +354,17 @@ determine if $V$ does correspond to a subvariety.
         \item{} [Is isogenous to power?]
             We now verify that each $W_i$ is isogenous to a power of $A_{f_i}$.
             Since we will be doing this individually for each $W_i$, we will
-            use $W$ and $A_f$.
+            use $W$ and $A_f$. Set up plus-spaces and and super-degeneracy map.
             \begin{enumerate}
-                \item{} [Even dimension?] 
-                    If the dimension of $W$ is not even, return False.
-                \item{} 
+                \item{} [Find solution]
+                    Pick some $v\in V\setminus U$. Solve it.
+                \item{} [Enlarge]
+                    Make $U$ bigger.
+                \item{} [Equal?]
+                    If equal, we done. Else, repeat.
             \end{enumerate}
     \end{enumerate}
 \end{algorithm}
-
-\begin{algorithm}
-    Let $W$ be a Hecke eigenspace of $J$. This algorithm will return True if
-    $V$ corresponds to an abelian subvariety of $J$ and False otherwise.
-    \begin{enumerate}
-        \item{} [Determine corresponding newform]
-            Let $S$ be the set of newforms of level dividing $N$. If possible,
-            find $f$ 
-    \end{enumerate}
-\end{algorithm}
-
 
 
 \subsection{Arithmetic with Modular Abelian Varieties}

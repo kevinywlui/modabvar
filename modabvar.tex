@@ -310,15 +310,70 @@ contained in the ones found so far, etc.}
 
 \Hao{What does this mean?}
 
-As mentioned in the introduction, 
+As mentioned in the introduction, not every subspace $V$ of $H_1(J, \QQ)$
+corresponds to a subvariety of $J$. We can use the following proposition to
+determine if $V$ does correspond to a subvariety.
 
+\begin{proposition}
+    Let $A$ be a simple subvariety of $J_1(N)$. Then there exists a divisor $L$
+    of $N$ and a newform $f$ of level $N$ such that $A_f \sim A$. Moreover, $A$
+    is the image of $A_f$ under some integral linear combination of degeneracy
+    maps $\delta_{L, t_i}:J_1(L)\to J_1(N)$.
+\end{proposition}
+
+\begin{algorithm}
+    Let $V$ be a subspace of $H_1(J, \QQ)$. This algorithm will return True if
+    $V$ corresponds to an abelian subvariety of $J$ and False otherwise. Let
+    $N$ be the level of $J$ and $S$ be the set of newforms of level dividing
+    $N$. Let $\T=\{T_1,\ldots\}$ be the Hecke algebra of $J$.
+    \begin{enumerate}
+        \item{} [Decompose into eigenspaces] 
+            We first decompose $V$ into a direct sum $V=W_1\oplus \cdot \oplus
+            W_r$ so that, for each $W_i$, there exists a newform $f_i$ of level
+            dividing $N$, such that either $W_i$ either corresponds to an
+            abelian subvariety isogenous to a power of $A_{f_i}$ or is not an
+            abelian subvariety and we can return False.
+            \begin{enumerate}
+                \item{} [Initialize]
+                    Set $j=1$.
+                \item{} [Decompose into eigenspaces]
+                    Compute the simultaneous eigenspaces $U_{j,1},\ldots,U_{j,
+                    n_j}$ of $\{T_1,\ldots,T_j\}$. If $\sum_{k=1} ^{n_j}
+                    U_{j, k}\neq V$, return False.
+                \item{} [Compare with newforms]
+                    Let $S_{j,k}$ be the set of newforms whose $l$th Fourier
+                    coefficent agrees with the eigenvalue of $T_l$ on $U_{j,
+                    k}$.
+                \item{} [Single newform?]
+                    If $S_{j, k}$ is empty for any $k=1,\ldots,n_j$, return
+                    False. If $S_{j,k}$ is not singleton for any $k=1,\ldots,
+                    n_j$, increment $j$ and return to (b). Otherwise, $S_{j,k}$
+                    is singleton for all $k$ so let $S_{j,k}=\{f_k\}$ and
+                    $W_k=U_{j,k}$.
+            \end{enumerate}
+        \item{} [Initialize]
+            Set $k=1$. 
+    \end{enumerate}
+\end{algorithm}
+
+\begin{algorithm}
+    Let $W$ be a Hecke eigenspace of $J$. This algorithm will return True if
+    $V$ corresponds to an abelian subvariety of $J$ and False otherwise.
+    \begin{enumerate}
+        \item{} [Determine corresponding newform]
+            Let $S$ be the set of newforms of level dividing $N$. If possible,
+            find $f$ 
+    \end{enumerate}
+\end{algorithm}
+
+
+
+\subsection{Arithmetic with Modular Abelian Varieties}
 
 \subsubsection{Subvarieties}
 
 Let $B=(V, L, J)$ be a modular abelian variety with subvariety $A=(W, L', J)$.
 This means $W\subseteq V$ and $L' = L\cap W$.
-
-\subsection{Arithmetic with Modular Abelian Varieties}
 
 \subsubsection{Sums and Products}
 
@@ -410,16 +465,19 @@ lattices.
 \subsubsection{The $n$-Torsion Subgroup}
 
 Let $A=(V, L, J)$ be a modular abelian variety. The $n$-torsion subgroup is
-given by $(\frac{1}{n} L, K, A)$.
+given by $(\frac{1}{n} L, \QQ, A)$.
 
 \Haonew{In Sage.}
 
 
 \subsubsection{Intersection of Finite Subgroups}
 
-Let $G=(\mathcal{L}_1, A)$ and $H=(\mathcal{L}_2, A)$ be finite subgroups of
-$A=(L, V, J)$. The intersection $G\cap H$ is the group $(\mathcal{L}_1\cap
-\mathcal{L}_2, A)$.
+Let $G=(\mathcal{L}_1, K_1, A)$ and $H=(\mathcal{L}_2, K_2, A)$ be finite
+subgroups of an modular abelian variety $A=(L, V, J)$. Let $\mathcal{L}_1 ' =
+\mathcal{L}_1+L$ and $\mathcal{L}_2 ' = \mathcal{L}_2 + L$. Then the
+intersection $G\cap H$ is the group $(\mathcal{L}, K_1K_2, A)$, where
+$\mathcal{L}=\mathcal{L}_1\cap \mathcal{L}_2 \cap V$.
+
 
 \Haonew{Don't know if it is in Sage}
 

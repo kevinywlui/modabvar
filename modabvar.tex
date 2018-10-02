@@ -223,37 +223,35 @@ which didn't exist when I wrote this paper.}
     \label{decomp_jacobian}
     Let $J=J_1(N)$. This algorithm will give a sequence of abelian subvarieties
     $A_i$ with finite intersection and sums to $J$.
-\begin{enumerate}
-    \item{} [Compute divisors of $N$]
-        Let $L_1,\ldots, L_r$ be the divisors $N$.
-    \item{} [Compute new modular symbols]
-        For each divisor $L_i$, compute the new modular symbol space
-        $\mathbb{M}_2(L_i)_\mathrm{new}$.
-    \item{} [Factor the new modular symbols]
-        For each divisor, decompose the new modular symbol space under the
-        Hecke algebra by computing the eigenspace decomposition of a suitably
-        ``generic'' element of the Hecke algebra:
-        \begin{enumerate}
-            \item{} [Randomly pick from Hecke Algebra]
-                Randomly pick $T\in \mathbf{T}$.
-            \item{} [Factor characteristic polynomial]
-                Let $\prod f_j ^{e_j}$ be a factorization of the characteristic
-                polynomial of $T$ so that each term is irreducible and
-                distinct.
-            \item{} [Check?]
-                If any $e_j \geq 3$, return to step (a). Otherwise, proceed.
-            \item{} [Compute eigenspaces]
-                Compute the eigenspace decomposition $\{W_{ik}\}$ of
-                $\mathbb{M}_2(L_i)_\mathrm{new}$
-        \end{enumerate}
-    \item{} [Compute image under degeneracy maps]
-        For each divisor $L_i$, and each divisor $t_{il}$ of $N/L_i$, compute
-        image $d_{L_i, t_{il}}(W_{ik})$.
-    \item{} [Return]
-        Return the sequence $(d_{L_i, t_{il}}(W_{ik}), J)$.
-\end{enumerate}
-
-    
+    \begin{enumerate}
+        \item{} [Compute divisors of $N$]
+            Let $L_1,\ldots, L_r$ be the divisors $N$.
+        \item{} [Compute new modular symbols]
+            For each divisor $L_i$, compute the new modular symbol space
+            $\mathbb{M}_2(L_i)_\mathrm{new}$.
+        \item{} [Factor the new modular symbols]
+            For each divisor, decompose the new modular symbol space under the
+            Hecke algebra by computing the eigenspace decomposition of a suitably
+            ``generic'' element of the Hecke algebra:
+            \begin{enumerate}
+                \item{} [Randomly pick from Hecke Algebra]
+                    Randomly pick $T\in \mathbf{T}$.
+                \item{} [Factor characteristic polynomial]
+                    Let $\prod f_j ^{e_j}$ be a factorization of the characteristic
+                    polynomial of $T$ so that each term is irreducible and
+                    distinct.
+                \item{} [Check?]
+                    If any $e_j \geq 3$, return to step (a). Otherwise, proceed.
+                \item{} [Compute eigenspaces]
+                    Compute the eigenspace decomposition $\{W_{ik}\}$ of
+                    $\mathbb{M}_2(L_i)_\mathrm{new}$
+            \end{enumerate}
+        \item{} [Compute image under degeneracy maps]
+            For each divisor $L_i$, and each divisor $t_{il}$ of $N/L_i$, compute
+            image $d_{L_i, t_{il}}(W_{ik})$.
+        \item{} [Return]
+            Return the sequence $(d_{L_i, t_{il}}(W_{ik}), J)$. 
+    \end{enumerate}
 \end{algorithm}
 
 
@@ -321,7 +319,7 @@ determine if $V$ does correspond to a subvariety.
     maps $\delta_{L, t_i}:J_1(L)\to J_1(N)$.
 \end{proposition}
 
-\begin{algorithm}
+\begin{algorithm}{test}
     Let $V$ be a subspace of $H_1(J, \QQ)$. This algorithm will return True if
     $V$ corresponds to an abelian subvariety of $J$ and False otherwise. Let
     $N$ be the level of $J$ and $S$ be the set of newforms of level dividing

@@ -218,7 +218,43 @@ which didn't exist when I wrote this paper.}
 \subsection{Decomposition}
 \subsubsection{New and Old Subvarieties and Quotients}
 
+\begin{algorithm}{Decompositon of jacobians}
+    \label{decomp_jacobian}
+    Let $J=J_1(N)$. This algorithm will give a sequence of abelian subvarieties
+    $A_i$ with finite intersection that sum to $J$. Let $L_1,\ldots, L_r$ be
+    the divisors of $N$.
+    \begin{enumerate}
+        \item{} [New modular symbols]
+            For each divisor $L_i$, compute the new modular symbol space
+            $\mathbb{M}_2(L_i)_\mathrm{new}$ using William's book.
+        \item{} [Factor the new modular symbols]
+            For each divisor, decompose the new modular symbol space under the
+            Hecke algebra by computing the eigenspace decomposition of a suitably
+            ``generic'' element of the Hecke algebra:
+            \begin{enumerate}
+                \item{} [Randomly pick from Hecke Algebra]
+                    Randomly pick $T\in \mathbf{T}$.
+                \item{} [Factor characteristic polynomial]
+                    Let $\prod f_j ^{e_j}$ be a factorization of the characteristic
+                    polynomial of $T$ so that $f_j$'s are irreducible and
+                    distinct.
+                \item{} [Check?]
+                    If any $e_j \geq 3$, return to step (a). Otherwise, proceed.
+                \item{} [Compute eigenspaces]
+                    Compute the eigenspace decomposition $\{W_{ik}\}$ of
+                    $\mathbb{M}_2(L_i)_\mathrm{new}$
+            \end{enumerate}
+        \item{} [Image under degeneracy maps]
+            For each divisor $L_i$, and each divisor $t_{il}$ of $N/L_i$,
+            compute image $d_{L_i, t_{il}}(W_{ik})$. Return the sequence
+            $(d_{L_i, t_{il}}(W_{ik}), J)$. 
+    \end{enumerate}
+\end{algorithm}
+
+
 \subsubsection{Decomposition as a Product of Simples}
+
+
 
 \Haonew{This is already in Sage.}
 
@@ -234,9 +270,35 @@ contained in the ones found so far, etc.}
 
 
 \begin{algorithm}{Decompose as Product}
-Given a modular abelian variety $A$,
-this algorithm finds simple abelian varieties
-$B_i$ and an isogeny $A\to \prod B_i$.
+    Given a modular abelian variety $A=(L, V, J)$, this algorithm finds simple
+    abelian varieties $B_i$ and an isogeny $A\to \prod B_i$.
+    \begin{enumerate}
+        \item{} [Decompose $J$]
+            Decompose $J$ into simple subvarieties $X_1,\ldots,X_r$ with
+            $X_i=(V_i, J)$.
+        \item{} [Classify subvarieties]
+            Find abelian subvarieties $E, F$ of $J$ such that $E+F=J$, $E\cap
+            F$ is finite, and the composition $B \to J \to J/E$ is an isogeny.
+            This is done as follows:
+            \begin{enumerate}
+                \item{} [Ascending sequence]
+                    Compute $D_j = \left(\sum_{k=1} ^j V_k \right)\cap V$ for
+                    $j=0,\ldots,r$.
+                \item{} [Classify]
+                    Let $S_0 = \{j: \dim D_j = \dim D_{j-1}\}$ and $S_1 = \{j:
+                    \dim D_j > \dim D_{j-1}\}$.
+                \item{} [Form subvarieties]
+                    Compute $E = \sum_{j \in S_0} X_j$ and $F = \sum_{j\in S_1}
+                    X_j$.
+            \end{enumerate}
+        \item{} [Isogeny to $F$]
+            Use Algorithm~\ref{?} to compute the projection map $\pi_F:J \to F$
+            and compose this with the inclusion map $B\to J$ to form $\Phi:B\to
+            F$.
+        \item{} [Pullback]
+            Return $\{(L_j, V_j, J)\}_{j\in S_1}$, where $V_j = \Phi^{-1}(V_F)$
+            and $L_j = L\cap V_j$.
+    \end{enumerate}
 \end{algorithm}
 
 
@@ -245,22 +307,82 @@ $B_i$ and an isogeny $A\to \prod B_i$.
 
 \Hao{What does this mean?}
 
+As mentioned in the introduction, not every subspace $V$ of $H_1(J, \QQ)$
+corresponds to a subvariety of $J$. We can use the following proposition to
+determine if $V$ does correspond to a subvariety.
+
+\begin{proposition}
+    Let $A$ be a simple subvariety of $J_1(N)$. Then there exists a divisor $L$
+    of $N$ and a newform $f$ of level $N$ such that $A_f \sim A$. Moreover, $A$
+    is the image of $A_f$ under some integral linear combination of degeneracy
+    maps $\delta_{L, t_i}:J_1(L)\to J_1(N)$.
+\end{proposition}
+
+TODO: speed up with plus subspace.
+\begin{algorithm}{Verifying subspace correponds to subvariety}
+    Let $J=J_1(N)$ and $V$ be a subspace of $H_1(J, \QQ)$. This algorithm will
+    return True if $V$ corresponds to an abelian subvariety of $J$ and
+    False otherwise. Let $\T=\{T_1,\ldots\}$ be the Hecke algebra of $J$.
+    \begin{enumerate}
+        \item{} [Decompose into eigenspaces] 
+            We first decompose $V$ into a direct sum $V=W_1\oplus \cdots \oplus
+            W_r$ so that, for each $W_i$, there exists a newform $f_i$ of level
+            dividing $N$, such that either $W_i$ either corresponds to an
+            abelian subvariety isogenous to a power of $A_{f_i}$ or is not an
+            abelian subvariety and we can return False.
+            \begin{enumerate}
+                \item{} [Initialize]
+                    Set $j=1$.
+                \item{} [Decompose into eigenspaces]
+                    Compute the simultaneous eigenspaces $U_{j,1},\ldots,U_{j,
+                    n_j}$ of $\{T_1,\ldots,T_j\}$. If $\sum_{k=1} ^{n_j}
+                    U_{j, k}\neq V$, return False.
+                \item{} [Compare with newforms]
+                    Let $S_{j,k}$ be the set of newforms whose $l$th Fourier
+                    coefficent agrees with the eigenvalue of $T_l$ on $U_{j,
+                    k}$ for $l=1,\ldots,j$. If $S_{j, k}$ is empty for any
+                    $k=1,\ldots,n_j$, return False. If $S_{j,k}$ is not
+                    singleton for any $k=1,\ldots, n_j$, increment $j$ and
+                    return to (b).  Otherwise, $S_{j,k}$ is singleton for all
+                    $k$ so let $S_{j,k}=\{f_k\}$ and $W_k=U_{j,k}$.
+            \end{enumerate}
+        \item{} [Is isogenous to power?]
+            We now verify that each $W_i$ is isogenous to a power of $A_{f_i}$.
+            Since we will be doing this individually for each $W_i$, we will
+            consider just a single pair $W$ and $A_f$ with $f$ being a newform
+            of level $L$.
+            \begin{enumerate}
+                \item{} [Initialize]
+                    Let $d_1,\ldots,d_r:J_1(L)\to J_1(N)$ be the full
+                    collection of degeneracy maps from $J_1(L)$ to $J_1(N)$.
+                    Set $U=\{0\}$.
+                \item{} [Find solution]
+                    Choose any $v\in V\setminus U$. Find $q_1,\ldots,q_r$
+                    such that $v\in \Im \left(\sum_{i=1} ^r q_i
+                    \delta_i\right)$. If this is not possible, return
+                    False. Let $R = \Im \left(\sum_{i=1} ^r q_i
+                    \delta_i\right)$. If $R\not\subseteq V$, return False.  
+                \item{} [Enlarge]
+                    Replace $U$ with $U+R$.
+                \item{} [Equal?]
+                    If $V=U$, we are done. Otherwise, return to (b).
+            \end{enumerate}
+    \end{enumerate}
+\end{algorithm}
+
+
 \subsection{Arithmetic with Modular Abelian Varieties}
 
 \subsubsection{Sums and Products}
 
+Suppose $B=(V, L, J)$ is a modular abelian variety with subvarieties $A_1=(W_1,
+L_1, J)$ and $A_2=(W_2, L_2, J)$. Then the sum $A_1+A_2\subseteq B$ is given by
+$(W_1+W_2, L_3, J)$ with $L_3$ given by $L_3 = L\cap (W_1+W_2)$.
 
-\Haonew{This is not in Sage yet.}
-
-[[problem -- the input here should be $A=(V,L,J)$ and $A'=(V',L',J)$
-in a common ambient $B=(V_2,L_2,J)$, where we need not assume $B\subset J$]]
-
-Suppose $A = (V,J)$ and $A' = (V',J)$ are abelian subvarieties of a common ambient $J$.
-Then the $A + A' \subset J$ is given by $(V+V', J)$.
-
-Suppose $A=(V,L,J)$ and $A'=(V',L',J')$ are modular abelian varieties.
-Then $A\times A' = (V\oplus V', L\oplus L', J \cross J')$, where
-$V\oplus V'$ and $L\oplus L'$ embed diagonally into $J\cross J'$.
+Suppose $B_1=(V_1, L_1, J_1)$ and $B_2=(V_2, L_2, J_2)$ are modular abelian
+varieties with subvarieties $A_1=(W_1, L_1, J_1)\subseteq B_1$ and $A_2=(W_2,
+L_2, J_2)\subseteq B_2)$. Then the product $A_1\times A_2\subseteq B_1\times
+B_2$ is given by $(W_1\times W_2, L_1\times L_2, J_1\times J_2)$.
 
 \subsubsection{Intersection}
 
@@ -284,6 +406,8 @@ $$
 [[this requires proof]]
 If $A$ and $A'$ are preserved by $\End(J)$, then $\End(J)$ also
 acts on $\Phi$ via its action on $\Lambda_J$.
+
+
 
 \subsubsection{Complements (Poincare Reducibility)}\label{sec:poincare}
 
@@ -323,17 +447,35 @@ of finite subgroups of a modular abelian variety. That's all implemented
 in Sage already.}
 
 \subsubsection{Defining Data}
- data: $(L\supset \Lambda, K, A)$.
 
-morphisms between
+
+data: $(L\supset \Lambda, K, A)$.
+
+Let $A=(V, L, J)$ be a modular abelian variety. A finite subgroup $G$ of $A$
+can be specified by giving a defining lattice $\mathcal{L}$ such that
+$\mathcal{L}/L = G$ and a field of definition $K$ of $G$ as a group scheme. 
+
+Given 2 finite subgroups $G_1=(\mathcal{L}_1, K_1, A)$ and $G_2=(\mathcal{L}_2,
+K_2, A)$, a map $\phi: G_1\to G_2$ can be given as a map on the defining
+lattices.
+
 
 \subsubsection{The $n$-Torsion Subgroup}
+
+Let $A=(V, L, J)$ be a modular abelian variety. The $n$-torsion subgroup is
+given by $(\frac{1}{n} L, \QQ, A)$.
 
 \Haonew{In Sage.}
 
 
 \subsubsection{Intersection of Finite Subgroups}
-$G\cap H$
+
+Let $G=(\mathcal{L}_1, K_1, A)$ and $H=(\mathcal{L}_2, K_2, A)$ be finite
+subgroups of an modular abelian variety $A=(L, V, J)$. Let $\mathcal{L}_1 ' =
+\mathcal{L}_1+L$ and $\mathcal{L}_2 ' = \mathcal{L}_2 + L$. Then the
+intersection $G\cap H$ is the group $(\mathcal{L}, K_1K_2, A)$, where
+$\mathcal{L}=\mathcal{L}_1\cap \mathcal{L}_2 \cap V$.
+
 
 \Haonew{Don't know if it is in Sage}
 
@@ -342,24 +484,65 @@ $G\cap H$
 
 \Haonew{In Sage.}
 
+The cuspidal subgroup $C$ of $J$ is the subgroup of degree-0 division
+$(\alpha)-(\beta)$ where $\alpha,\beta$ are cusps on $J$. This is a finite
+group that we can compute by
+
+...
+
+
 \subsubsection{The Rational Cuspidal Subgroup}
 i.e. $C(\Q)$,
 which we can compute by getting $G_\Q$ action on $C(\Qbar)$.
+
+Now let $J = J(\Gamma)$, where $\Gamma$ is a congruence group so that
+$\Gamma_1(N)\subseteq \Gamma \subseteq \Gamma_0(N)$. Stevens proves the cusps
+of $X(\Gamma)$ are $\Q(\mu_N)$-rational and the $\Gal(\Q(\mu_N)/\Q)$-action is
+given as follows. Let $[x/y]$ be a cusp of $X(\Gamma)$. For $d\in
+(\ZZ/N\ZZ)^*$, let
+\[
+    \sigma_d\in \Gal(\Q(\mu_N)/\Q):\mu_N\mapsto \mu_N ^d
+\]
+then
+\[
+    \sigma_d([x,y])=[x,d'y],
+\]
+where $dd'\equiv 1 \mod{N}$. With this, we are able to compute the
+\emph{rational cuspidal subgroup} $C(\QQ):=C^{\Gal(\QQ(\mu)/\QQ)}$.
 
 \Haonew{In Sage.}
 
 arithmetic with: $G+H$, $G\cap H$, $G/H$.
 
-\subsubsection{The Torsion Subgroup}
+\subsubsection{The Rational Torsion Subgroup}
+
 point counting over finite fields
 
 divisor, multiple of order
 
 \Haonew{In Sage.}
 
+The goal here is to compute the rational torsion subgroup $J(\QQ)_\tor$. In
+general, this is hard to do and the best we can do is to compute an upper and
+lower bound. The rational cuspidal subgroup provides a lower bound. 
+
+An upper bound can be
+..william's thing..
+
 \subsubsection{The Shimura Subgroup}
 
-\Haonew{In Sage.}
+For any integer $N$, there exists a map between modular curves given
+on the non-cuspidal points by
+\begin{align*}
+    s_N: X_1(N) & \to X_0(N) \\
+    [E, P]      & \mapsto [E, \langle P \rangle].
+\end{align*}
+By Pic functoriality, this induces a map $s_N ^*: J_0(N)\to J_1(N)$. The
+kernel of this map is the \emph{Shimura subgroup}, denoted $\Sigma(N)$. Ribet
+shows that for any prime $p$ coprime to $N$, $\Sigma(N)=\ker(\delta_1
+^*-\delta_p ^*)$, where $\delta_1^*, \delta_p ^*:J_0(N)\to J_0(pN)$ are the
+degeneracy maps. So computing the Shimura subgroup amounts to compute the
+kernel of $(\delta_1 ^* - \delta_p ^*)$.
 
 \subsection{Morphisms Between Modular Abelian Varieties}
 
@@ -367,17 +550,48 @@ divisor, multiple of order
 
 \subsubsection{Defining Data for Morphisms}
 
+Let $A=(L, V, J)$ and $B=(L', V', J')$ be modular abelian varieties and
+$\Phi:A\to B$ a map of abelian varieties. Then $\Phi$ induces a map on rational
+homology and is also completely determined by the map on rational homology.
+So we will define $\Phi$ by giving the basis corresponding to the map on
+rational homology.
+
 \subsubsection{Natural Maps}
+
+degeneracy maps
 
 \subsubsection{Morphisms Defined by Finite Subgroups}
 
 \subsubsection{Kernels of Morphisms}\label{sec:kernelmodabvar}
 
+Let $\Phi:A\to B$ be a morphism between modular abelian varieties $A=(L, V, J)$
+and $B=(L', V', J')$. Let $V_K=\ker \phi_V$ and $L_K=L\cap V_K$. Then the
+kernel $K$ of $\phi$ is the extension of the abelian variety $K^0 = (L_K, V_K,
+J)$ by a finite component group $G$. The group $G$ is given by...
+
 \subsubsection{Images of Morphisms}
+
+Let $\Phi:A\to B$ be a morphism between modular abelian varieties $A=(L, V, J)$
+and $B=(L', V', J')$. The image of $\Phi$ is the abelian subvariety of $B$
+given by $(L'', V'', J'')$, where $V''=\Im \Phi_V$ and $L''=V\cap V''$.
 
 \subsubsection{The Universal Property of the Cokernel}
 
-\subsubsection{The Projection Morphism}
+
+\subsubsection{The Projection Morphism} 
+
+
+Let $A=(L, V, J)$ be a modular abelian variety with subvarieties $B_1=(L_1,
+V_1, J)$ and $B_2=(L_2, V_2, J)$ such that $B_1+B_2=A$ and $B_1\cap B_2$
+finite. A projection morphism is any surjective map $\pi:A\to B_1$ with $(\ker
+\pi)^0 = B_2$. This morphism is not unique.
+
+To construct one, let $\{\lambda_1,\ldots,\lambda_n\}$ be a basis for the
+defining lattice of $A$.  For each $i$, write $\lambda_i=u_i+v_i$, where
+$u_i\in V_1$ and $v_i\in V_2$. This is possible because $A=B_1+B_2$ though not
+unique unless $B_1\cap B_2$ is trivial. An example of a projection map is the
+map $\phi$ given on rational homology by the formula $\phi(\lambda_i)=u_i$.
+
 
 \subsubsection{Left and Right Inverses}
 

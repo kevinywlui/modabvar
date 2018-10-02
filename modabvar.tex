@@ -218,17 +218,16 @@ which didn't exist when I wrote this paper.}
 \subsection{Decomposition}
 \subsubsection{New and Old Subvarieties and Quotients}
 
-
+Let $J=J_1(N)$.
 \begin{algorithm}{Decompositon of jacobians}
     \label{decomp_jacobian}
     Let $J=J_1(N)$. This algorithm will give a sequence of abelian subvarieties
-    $A_i$ with finite intersection and sums to $J$.
+    $A_i$ with finite intersection that sum to $J$. Let $L_1,\ldots, L_r$ be
+    the divisors of $N$.
     \begin{enumerate}
-        \item{} [Compute divisors of $N$]
-            Let $L_1,\ldots, L_r$ be the divisors $N$.
-        \item{} [Compute new modular symbols]
+        \item{} [New modular symbols]
             For each divisor $L_i$, compute the new modular symbol space
-            $\mathbb{M}_2(L_i)_\mathrm{new}$.
+            $\mathbb{M}_2(L_i)_\mathrm{new}$ using William's book.
         \item{} [Factor the new modular symbols]
             For each divisor, decompose the new modular symbol space under the
             Hecke algebra by computing the eigenspace decomposition of a suitably
@@ -246,11 +245,10 @@ which didn't exist when I wrote this paper.}
                     Compute the eigenspace decomposition $\{W_{ik}\}$ of
                     $\mathbb{M}_2(L_i)_\mathrm{new}$
             \end{enumerate}
-        \item{} [Compute image under degeneracy maps]
-            For each divisor $L_i$, and each divisor $t_{il}$ of $N/L_i$, compute
-            image $d_{L_i, t_{il}}(W_{ik})$.
-        \item{} [Return]
-            Return the sequence $(d_{L_i, t_{il}}(W_{ik}), J)$. 
+        \item{} [Image under degeneracy maps]
+            For each divisor $L_i$, and each divisor $t_{il}$ of $N/L_i$,
+            compute image $d_{L_i, t_{il}}(W_{ik})$. Return the sequence
+            $(d_{L_i, t_{il}}(W_{ik}), J)$. 
     \end{enumerate}
 \end{algorithm}
 
@@ -277,15 +275,16 @@ contained in the ones found so far, etc.}
     abelian varieties $B_i$ and an isogeny $A\to \prod B_i$.
     \begin{enumerate}
         \item{} [Decompose $J$]
-            Decompose $J$ into simple subvarieties $\{X_i=(V_i, J)\}$, where
-            $i$ runs through $1,\ldots,r$.
+            Decompose $J$ into simple subvarieties $X_1,\ldots,X_r$ with
+            $X_i=(V_i, J)$.
         \item{} [Classify subvarieties]
             Find abelian subvarieties $E, F$ of $J$ such that $E+F=J$, $E\cap
             F$ is finite, and the composition $B \to J \to J/E$ is an isogeny.
             This is done as follows:
             \begin{enumerate}
                 \item{} [Ascending sequence]
-                    Compute $D_j = \left(\sum_{k=1} ^j V_k \right)$ for $j=0,\ldots,r$.
+                    Compute $D_j = \left(\sum_{k=1} ^j V_k \right)\cap V$ for
+                    $j=0,\ldots,r$.
                 \item{} [Classify]
                     Let $S_0 = \{j: \dim D_j = \dim D_{j-1}\}$ and $S_1 = \{j:
                     \dim D_j > \dim D_{j-1}\}$.
@@ -295,10 +294,11 @@ contained in the ones found so far, etc.}
             \end{enumerate}
         \item{} [Isogeny to $F$]
             Use Algorithm~\ref{?} to compute the projection map $\pi_F:J \to F$
-            and compute the inclusion map $\iota:B \to J$. Let $\Phi:B\to F$. 
-        \item{} [Return pullback]
-            Return $\{(L_j, V_j, J)\}_{j\in S_1}$, where $V_j =
-            \Phi^{-1}(V_F)$ and $L_j = L\cap V_j$.
+            and compose this with the inclusion map $B\to J$ to form $\Phi:B\to
+            F$.
+        \item{} [Pullback]
+            Return $\{(L_j, V_j, J)\}_{j\in S_1}$, where $V_j = \Phi^{-1}(V_F)$
+            and $L_j = L\cap V_j$.
     \end{enumerate}
 \end{algorithm}
 
@@ -319,14 +319,14 @@ determine if $V$ does correspond to a subvariety.
     maps $\delta_{L, t_i}:J_1(L)\to J_1(N)$.
 \end{proposition}
 
-\begin{algorithm}{test}
-    Let $V$ be a subspace of $H_1(J, \QQ)$. This algorithm will return True if
-    $V$ corresponds to an abelian subvariety of $J$ and False otherwise. Let
-    $N$ be the level of $J$ and $S$ be the set of newforms of level dividing
-    $N$. Let $\T=\{T_1,\ldots\}$ be the Hecke algebra of $J$.
+TODO: speed up with plus subspace.
+\begin{algorithm}{Verifying subspace correponds to subvariety}
+    Let $J=J_1(N)$ and $V$ be a subspace of $H_1(J, \QQ)$. This algorithm will
+    return True if $V$ corresponds to an abelian subvariety of $J$ and
+    False otherwise. Let $\T=\{T_1,\ldots\}$ be the Hecke algebra of $J$.
     \begin{enumerate}
         \item{} [Decompose into eigenspaces] 
-            We first decompose $V$ into a direct sum $V=W_1\oplus \cdot \oplus
+            We first decompose $V$ into a direct sum $V=W_1\oplus \cdots \oplus
             W_r$ so that, for each $W_i$, there exists a newform $f_i$ of level
             dividing $N$, such that either $W_i$ either corresponds to an
             abelian subvariety isogenous to a power of $A_{f_i}$ or is not an
@@ -341,25 +341,32 @@ determine if $V$ does correspond to a subvariety.
                 \item{} [Compare with newforms]
                     Let $S_{j,k}$ be the set of newforms whose $l$th Fourier
                     coefficent agrees with the eigenvalue of $T_l$ on $U_{j,
-                    k}$.
-                \item{} [Single newform?]
-                    If $S_{j, k}$ is empty for any $k=1,\ldots,n_j$, return
-                    False. If $S_{j,k}$ is not singleton for any $k=1,\ldots,
-                    n_j$, increment $j$ and return to (b). Otherwise, $S_{j,k}$
-                    is singleton for all $k$ so let $S_{j,k}=\{f_k\}$ and
-                    $W_k=U_{j,k}$.
+                    k}$ for $l=1,\ldots,j$. If $S_{j, k}$ is empty for any
+                    $k=1,\ldots,n_j$, return False. If $S_{j,k}$ is not
+                    singleton for any $k=1,\ldots, n_j$, increment $j$ and
+                    return to (b).  Otherwise, $S_{j,k}$ is singleton for all
+                    $k$ so let $S_{j,k}=\{f_k\}$ and $W_k=U_{j,k}$.
             \end{enumerate}
         \item{} [Is isogenous to power?]
             We now verify that each $W_i$ is isogenous to a power of $A_{f_i}$.
             Since we will be doing this individually for each $W_i$, we will
-            use $W$ and $A_f$. Set up plus-spaces and and super-degeneracy map.
+            consider just a single pair $W$ and $A_f$ with $f$ being a newform
+            of level $L$.
             \begin{enumerate}
+                \item{} [Initialize]
+                    Let $d_1,\ldots,d_r:J_1(L)\to J_1(N)$ be the full
+                    collection of degeneracy maps from $J_1(L)$ to $J_1(N)$.
+                    Set $U=\{0\}$.
                 \item{} [Find solution]
-                    Pick some $v\in V\setminus U$. Solve it.
+                    Choose any $v\in V\setminus U$. Find $q_1,\ldots,q_r$
+                    such that $v\in \Im \left(\sum_{i=1} ^r q_i
+                    \delta_i\right)$. If this is not possible, return
+                    False. Let $R = \Im \left(\sum_{i=1} ^r q_i
+                    \delta_i\right)$. If $R\not\subseteq V$, return False.  
                 \item{} [Enlarge]
-                    Make $U$ bigger.
+                    Replace $U$ with $U+R$.
                 \item{} [Equal?]
-                    If equal, we done. Else, repeat.
+                    If $V=U$, we are done. Otherwise, return to (b).
             \end{enumerate}
     \end{enumerate}
 \end{algorithm}

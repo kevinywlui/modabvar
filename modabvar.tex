@@ -218,33 +218,35 @@ which didn't exist when I wrote this paper.}
 \subsection{Decomposition}
 \subsubsection{New and Old Subvarieties and Quotients}
 
-\begin{algorithm}{Decompositon of jacobians}
+Let $J=J_1(N)$.
+\begin{algorithm}{Decompositon of modular Jacobians}
     \label{decomp_jacobian}
-    Let $J=J_1(N)$. This algorithm will give a sequence of abelian subvarieties
-    $A_i$ with finite intersection that sum to $J$. Let $L_1,\ldots, L_r$ be
-    the divisors of $N$.
+    Let $J=J_1(N)$ with Hecke algebra $\T$. This algorithm will give a sequence
+    of abelian subvarieties $A_i$ with finite intersection and sums to $J$. Let
+    $L_1,\ldots, L_r$ be the divisors of $N$.
     \begin{enumerate}
         \item{} [New modular symbols]
             For each divisor $L_i$, compute the new modular symbol space
-            $\mathbb{M}_2(L_i)_\mathrm{new}$ using William's book.
-        \item{} [Factor the new modular symbols]
-            For each divisor, decompose the new modular symbol space under the
-            Hecke algebra by computing the eigenspace decomposition of a suitably
-            ``generic'' element of the Hecke algebra:
+            $\mathbb{M}_2(L_i)_\mathrm{new}$ using the techniques in \cite[\S
+            8]{stein:modform}
+        \item{} [Factor the new modular symbols space]
+            The new modular symbol space decomposes into 1-dimensional complex
+            simultaneous eigenspaces for $\T$. So for each divisor $L_i$, we can
+            factor the new modular symbols space by computing the eigenspaces
+            with respect to a sufficently generic element of the Hecke algebra.
             \begin{enumerate}
                 \item{} [Randomly pick from Hecke Algebra]
-                    Randomly pick $T\in \mathbf{T}$.
+                    Randomly pick $T\in \T$.
                 \item{} [Factor characteristic polynomial]
                     Let $\prod f_j ^{e_j}$ be a factorization of the characteristic
-                    polynomial of $T$ so that $f_j$'s are irreducible and
+                    polynomial of $T$ so that each $f_j$ is irreducible and
                     distinct.
-                \item{} [Check?]
-                    If any $e_j \geq 3$, return to step (a). Otherwise, proceed.
-                \item{} [Compute eigenspaces]
-                    Compute the eigenspace decomposition $\{W_{ik}\}$ of
+                \item{} [Irreducible?]
+                    If any $e_j \geq 3$, return to step (a). Otherwise, Compute
+                    the eigenspace decomposition $\{W_{ik}\}$ of
                     $\mathbb{M}_2(L_i)_\mathrm{new}$
             \end{enumerate}
-        \item{} [Image under degeneracy maps]
+        \item{} [Return image under degeneracy maps]
             For each divisor $L_i$, and each divisor $t_{il}$ of $N/L_i$,
             compute image $d_{L_i, t_{il}}(W_{ik})$. Return the sequence
             $(d_{L_i, t_{il}}(W_{ik}), J)$. 
@@ -411,6 +413,52 @@ acts on $\Phi$ via its action on $\Lambda_J$.
 
 \subsubsection{Complements (Poincare Reducibility)}\label{sec:poincare}
 
+Let $J=J_1(N)$. This is the Jacobian of a curve principally polarized with the
+$\Theta$-divisor assocaited to a non-degenerate Riemannian form $H$. Let $A=(V,
+J)$ be a subvariety of $J$. Poincare Reducibility states that the orthogonal
+complement $V'$ with respect to $H$ corresponds to an abelian subvariety $A'$
+such that $A+A'=J$ and $A\cap A'$ is finite. Let $E=\Im H$ be the imaginary
+part of $H$. Then since $H(w,z)=E(iw,z)+iE(w,z)$, $H$ is completely determined
+by the restriction of its imaginary part to $H_1(J)$. This is given by
+\[
+    \Im H(\gamma_1, \gamma_2) = \langle \gamma_1, \gamma_2 \rangle,
+\]
+where $\gamma_1, \gamma_2\in H_1(J)$ and $\langle , \rangle$ is the
+intersection pairing on $H_1(J)$.
+
+A method of computing the intersection pairing is given by Merel (Verrill?).
+Every modular symbol of $M_2(\Gamma_1(N))$ can be as (See William's book)
+\[
+    \sum_{g\in \SL_2{\ZZ}} g\{0, \infty\}.
+\] 
+Let $\rho=(1+i\sqrt{3})/2$. Then every modular symbol of $S_2(\Gamma_1(N))$ can
+be written as (See Farey Symbols? Or Lang)
+\[
+    \sum_{g\in \SL_2{\ZZ}} g\{\rho, \rho^2\}.
+\]
+The intersection pairing is then defined on the summands by
+\[
+    \langle g\{0,\infty}, h\{\rho, \rho^2 \rangle 
+    =
+    \begin{cases}
+        1 & \text{if } g\sim h \\
+        -1 & \text{if } g\sim Sh \\
+        0 & \text{if } g\not\sim h.
+    \end{cases}
+\]
+
+\begin{algorithm}{Complement (Poincare Reducibility)}
+    Let $A=(V, J_1(N))$ be an abelian subvariety of $J_1(N)$. This algorithm
+    computes the complement of $A$ given by Poincare Reducibility.
+    \begin{enumerate}
+        \item{} [Matrix associated to Riemannian form]
+            Compute the matrix $M$ associated to the Riemannian form $H$.
+        \item{} [Complement]
+            Compute the orthogonal complement $V'$ of $V$ with respect to $H$
+            and return $A'=(V', J_1(N))$.
+    \end{enumerate}
+\end{algorithm}
+
 
 \Haonew{This is in sage.}
 
@@ -522,7 +570,7 @@ divisor, multiple of order
 
 \Haonew{In Sage.}
 
-The goal here is to compute the rational torsion subgroup $J(\QQ)_\mathrm{tor}$. In
+The goal here is to compute the rational torsion subgroup $J(\QQ)_\tor$. In
 general, this is hard to do and the best we can do is to compute an upper and
 lower bound. The rational cuspidal subgroup provides a lower bound. 
 
@@ -580,18 +628,25 @@ given by $(L'', V'', J'')$, where $V''=\Im \Phi_V$ and $L''=V\cap V''$.
 
 \subsubsection{The Projection Morphism} 
 
-
 Let $A=(L, V, J)$ be a modular abelian variety with subvarieties $B_1=(L_1,
 V_1, J)$ and $B_2=(L_2, V_2, J)$ such that $B_1+B_2=A$ and $B_1\cap B_2$
-finite. A projection morphism is any surjective map $\pi:A\to B_1$ with $(\ker
-\pi)^0 = B_2$. This morphism is not unique.
+finite. A projection morphism is a surjective map $\pi:A\to B_1$ with $(\ker
+pi)^0 = B_2$. This morphism is not unique.
 
-To construct one, let $\{\lambda_1,\ldots,\lambda_n\}$ be a basis for the
-defining lattice of $A$.  For each $i$, write $\lambda_i=u_i+v_i$, where
-$u_i\in V_1$ and $v_i\in V_2$. This is possible because $A=B_1+B_2$ though not
-unique unless $B_1\cap B_2$ is trivial. An example of a projection map is the
-map $\phi$ given on rational homology by the formula $\phi(\lambda_i)=u_i$.
-
+\begin{algorithm}{Computing Projection Morphism}
+    \begin{enumerate}
+        \item{} [Basis for lattice]
+            Let $\{\lambda_1,\ldots,\lambda_n\}$, $\{u_1,\ldots,u_r\}$, and
+            $\{v_1,\ldots,v_s\}$ be bases for the defining lattices of $A, B_1,
+            B_2$, respectively.
+        \item{} [Project]
+            For each $i$, write $\lambda_i=u_i+v_i$, where $u_i\in B_1$ and
+            $v_i\in B_2$ are torsion. This is possible because $A=B_1+B_2$
+            though not unique unless $B_1\cap B_2$ is trivial.
+        \item{} [Return map]
+            Return the map $\phi$ given by the formula $\phi(\lambda_i)=u_i$.
+    \end{enumerate}
+\end{algorithm}
 
 \subsubsection{Left and Right Inverses}
 

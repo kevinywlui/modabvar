@@ -426,6 +426,39 @@ by the restriction of its imaginary part to $H_1(J)$. This is given by
 where $\gamma_1, \gamma_2\in H_1(J)$ and $\langle , \rangle$ is the
 intersection pairing on $H_1(J)$.
 
+A method of computing the intersection pairing is given by Merel (Verrill?).
+Every modular symbol of $M_2(\Gamma_1(N))$ can be as (See William's book)
+\[
+    \sum_{g\in \SL_2{\ZZ}} g\{0, \infty\}.
+\] 
+Let $\rho=(1+i\sqrt{3})/2$. Then every modular symbol of $S_2(\Gamma_1(N))$ can
+be written as (See Farey Symbols? Or Lang)
+\[
+    \sum_{g\in \SL_2{\ZZ}} g\{\rho, \rho^2\}.
+\]
+The intersection pairing is then defined on the summands by
+\[
+    \langle g\{0,\infty}, h\{\rho, \rho^2 \rangle 
+    =
+    \begin{cases}
+        1 & \text{if } g\sim h \\
+        -1 & \text{if } g\sim Sh \\
+        0 & \text{if } g\not\sim h.
+    \end{cases}
+\]
+
+\begin{algorithm}{Complement (Poincare Reducibility)}
+    Let $A=(V, J_1(N))$ be an abelian subvariety of $J_1(N)$. This algorithm
+    computes the complement of $A$ given by Poincare Reducibility.
+    \begin{enumerate}
+        \item{} [Matrix associated to Riemannian form]
+            Compute the matrix $M$ associated to the Riemannian form $H$.
+        \item{} [Complement]
+            Compute the orthogonal complement $V'$ of $V$ with respect to $H$
+            and return $A'=(V', J_1(N))$.
+    \end{enumerate}
+\end{algorithm}
+
 
 \Haonew{This is in sage.}
 

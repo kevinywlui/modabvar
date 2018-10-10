@@ -207,22 +207,21 @@ modular symbols; $\Gamma_H(N)$.
 \subsection{Decomposition}
 \subsubsection{New and Old Subvarieties and Quotients}
 
-Let $J=J_1(N)$.
-\begin{algorithm}{Decompositon of modular Jacobians}
+\begin{algorithm}{Decomposition of modular Jacobians}
     \label{decomp_jacobian}
     Let $J=J_1(N)$ with Hecke algebra $\T$. This algorithm will give a sequence
     of abelian subvarieties $A_i$ with finite intersection and sums to $J$. Let
     $L_1,\ldots, L_r$ be the divisors of $N$.
     \begin{enumerate}
-        \item{} [New modular symbols]
+        \item{} [Compute new modular symbols space]
             For each divisor $L_i$, compute the new modular symbol space
             $\mathbb{M}_2(L_i)_\mathrm{new}$ using the techniques in \cite[\S
-            8]{stein:modform}
-        \item{} [Factor the new modular symbols space]
+            8]{stein:modform}.
+        \item{} [Factor into Hecke eigenspaces]
             The new modular symbol space decomposes into 1-dimensional complex
             simultaneous eigenspaces for $\T$. So for each divisor $L_i$, we can
             factor the new modular symbols space by computing the eigenspaces
-            with respect to a sufficently generic element of the Hecke algebra.
+            with respect to a sufficiently generic element of the Hecke algebra.
             \begin{enumerate}
                 \item{} [Randomly pick from Hecke Algebra]
                     Randomly pick $T\in \T$.
@@ -288,19 +287,28 @@ corresponds to a subvariety of $J$. We can use the following proposition to
 determine if $V$ does correspond to a subvariety.
 
 \begin{proposition}
-    Let $A$ be a simple subvariety of $J_1(N)$. Then there exists a divisor $L$
-    of $N$ and a newform $f$ of level $N$ such that $A_f \sim A$. Moreover, $A$
-    is the image of $A_f$ under some integral linear combination of degeneracy
-    maps $\delta_{L, t_i}:J_1(L)\to J_1(N)$.
+    Let $A$ be a simple subvariety of $J_1(N)$. From the work of Shimura,
+    there exists a divisor $L$ of $N$ and a newform $f$ of level $L$ such that
+    $A_f \sim A$. Let $d_1,\ldots,d_r$ be the full collection of degeneracy
+    maps from $J_0(L)$ to $J_0(N)$. Then there exists integers $n_1,\ldots,n_r$
+    such that
+    \[
+        A = 
+        \left(\sum_{i=1} ^r n_i d_i\right)
+        A_f
+    \]
 \end{proposition}
+\begin{proof}
+    
+\end{proof}
 
-TODO: speed up with plus subspace.
+
 \begin{algorithm}{Verifying subspace correponds to subvariety}
     Let $J=J_1(N)$ and $V$ be a subspace of $H_1(J, \QQ)$. This algorithm will
     return True if $V$ corresponds to an abelian subvariety of $J$ and
     False otherwise. Let $\T=\{T_1,\ldots\}$ be the Hecke algebra of $J$.
     \begin{enumerate}
-        \item{} [Decompose into eigenspaces] 
+        \item{} [Decompose into potential Hecke eigenspaces] 
             We first decompose $V$ into a direct sum $V=W_1\oplus \cdots \oplus
             W_r$ so that, for each $W_i$, there exists a newform $f_i$ of level
             dividing $N$, such that either $W_i$ either corresponds to an
@@ -326,22 +334,19 @@ TODO: speed up with plus subspace.
             We now verify that each $W_i$ is isogenous to a power of $A_{f_i}$.
             Since we will be doing this individually for each $W_i$, we will
             consider just a single pair $W$ and $A_f$ with $f$ being a newform
-            of level $L$.
+            of level $L$. Let $d_1,\ldots,d_r:J_1(L)\to J_1(N)$ be the full
+            collection of degeneracy maps from $J_1(L)$ to $J_1(N)$.  Set
+            $U=\{0\}$.
             \begin{enumerate}
-                \item{} [Initialize]
-                    Let $d_1,\ldots,d_r:J_1(L)\to J_1(N)$ be the full
-                    collection of degeneracy maps from $J_1(L)$ to $J_1(N)$.
-                    Set $U=\{0\}$.
-                \item{} [Find solution]
+                \item{} [Image of $\QQ$-combination of $d_j$'s?]
                     Choose any $v\in V\setminus U$. Find $q_1,\ldots,q_r$
                     such that $v\in \Im \left(\sum_{i=1} ^r q_i
                     \delta_i\right)$. If this is not possible, return
                     False. Let $R = \Im \left(\sum_{i=1} ^r q_i
                     \delta_i\right)$. If $R\not\subseteq V$, return False.  
-                \item{} [Enlarge]
-                    Replace $U$ with $U+R$.
-                \item{} [Equal?]
-                    If $V=U$, we are done. Otherwise, return to (b).
+                \item{} [Full space?]
+                    Replace $U$ with $U+R$. If $V=U$, we are done. Otherwise,
+                    return to (b).
             \end{enumerate}
     \end{enumerate}
 \end{algorithm}
@@ -378,10 +383,8 @@ using Section~\ref{sec:kernelmodabvar}; in particular, we have
 $$
    \Phi \isom \left( \Lambda_J/(\Lambda_A + \Lambda_A')\right)_{\tor}.
 $$
-[[this requires proof]]
 If $A$ and $A'$ are preserved by $\End(J)$, then $\End(J)$ also
 acts on $\Phi$ via its action on $\Lambda_J$.
-
 
 
 \subsubsection{Complements (Poincare Reducibility)}\label{sec:poincare}

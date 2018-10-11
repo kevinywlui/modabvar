@@ -295,11 +295,32 @@ determine if $V$ does correspond to a subvariety.
     \[
         A = 
         \left(\sum_{i=1} ^r n_i d_i\right)
-        A_f
+        A_f.
     \]
 \end{proposition}
 \begin{proof}
-    
+    Let $\Lambda_A = H_1(A)$, $\Lambda_f=H_1(A_f)$, $V_A=H_1(A, \QQ)$, and
+    $V_f=H_1(A_f, \QQ)$. Since $A \subseteq \sum_{i=1} ^r d_i(A_f)$, there
+    exists $\sigma_1,\ldots,\sigma_r\in \End(A_f/\QQ)$ such that 
+    \[
+        A = 
+        \left(\sum_{i=1} ^r d_i \circ \sigma_i\right) A_f.
+    \]
+    But $A_f$ is a simple modular abelian variety so there exists a number
+    field $K_f$ and $a_1,\ldots,a_r$ such that
+    \[
+        A = 
+        \left(\sum_{i=1} ^r a_i d_i\right) A_f.
+    \]
+    This induces a map $\Phi:V_f\to V_A$ given by $\Phi:\sum_{i=1} ^r a_i d_i$
+    such that $\Phi(\Lambda_f)\subseteq \Lambda_A$. Consequently, $a_i\in \QQ$
+    for all $i$. Since abelian varieties are divisible, we can clear
+    denominators from the $a_i$'s to obtain integers $n_i$'s such that
+    \[
+        A = 
+        \left(\sum_{i=1} ^r n_i d_i\right)
+        A_f.
+    \]
 \end{proof}
 
 

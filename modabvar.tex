@@ -410,32 +410,33 @@ acts on $\Phi$ via its action on $\Lambda_J$.
 
 \subsubsection{Complements (Poincare Reducibility)}\label{sec:poincare}
 
-Let $J=J_1(N)$. This is the Jacobian of a curve principally polarized with the
-$\Theta$-divisor assocaited to a non-degenerate Riemannian form $H$. Let $A=(V,
-J)$ be a subvariety of $J$. Poincare Reducibility states that the orthogonal
-complement $V'$ with respect to $H$ corresponds to an abelian subvariety $A'$
-such that $A+A'=J$ and $A\cap A'$ is finite. Let $E=\Im H$ be the imaginary
-part of $H$. Then since $H(w,z)=E(iw,z)+iE(w,z)$, $H$ is completely determined
-by the restriction of its imaginary part to $H_1(J)$. This is given by
+Let $J=J_1(N)$ be principally polarized with the $\Theta$-divisor associated to
+a non-degenerate Riemannian form $H$. Let $A=(V, J)$ be a subvariety of $J$.
+Poincare Reducibility states that the orthogonal complement $V'$ with respect
+to $H$ corresponds to an abelian subvariety $A'$ such that $A+A'=J$ and $A\cap
+A'$ is finite. The Riemmannian form $H$ is completely determined the image part of
+its restriction to $\Lambda_J$ which is, in turn, given by
 \[
     \Im H(\gamma_1, \gamma_2) = \langle \gamma_1, \gamma_2 \rangle,
 \]
-where $\gamma_1, \gamma_2\in H_1(J)$ and $\langle , \rangle$ is the
-intersection pairing on $H_1(J)$.
+where $\gamma_1, \gamma_2\in H_1(J)$ and $\langle \cdot,\cdot \rangle$ is the
+intersection pairing on $\Lambda_J$.
 
-A method of computing the intersection pairing is given by Merel (Verrill?).
-Every modular symbol of $M_2(\Gamma_1(N))$ can be as (See William's book)
+The goal now is to describe an algorithm for computing the intersection pairing
+as described by Verrill~\cite[\S 4]{verrill:intersection}
+Every modular symbol of $M_2(\Gamma_1(N))$ can be as
 \[
-    \sum_{g\in \SL_2{\ZZ}} g\{0, \infty\}.
+    \sum_{g\in \SL_2{\ZZ}} g\{0, \infty\}
 \] 
-Let $\rho=(1+i\sqrt{3})/2$. Then every modular symbol of $S_2(\Gamma_1(N))$ can
-be written as (See Farey Symbols? Or Lang)
+using Manin symbols. Let $\rho=(1+i\sqrt{3})/2$. Then every modular symbol of
+$S_2(\Gamma_1(N))$ can be written as
 \[
     \sum_{g\in \SL_2{\ZZ}} g\{\rho, \rho^2\}.
 \]
-The intersection pairing is then defined on the summands by
+using~\cite[Corollary 4.1]{verrill:intersection}. The intersection pairing is
+then given on these summands by
 \[
-    \langle g\{0,\infty}, h\{\rho, \rho^2 \rangle 
+    \langle g\{0,\infty\}, h\{\rho, \rho^2\} \rangle 
     =
     \begin{cases}
         1 & \text{if } g\sim h \\
@@ -448,8 +449,9 @@ The intersection pairing is then defined on the summands by
     Let $A=(V, J_1(N))$ be an abelian subvariety of $J_1(N)$. This algorithm
     computes the complement of $A$ given by Poincare Reducibility.
     \begin{enumerate}
-        \item{} [Matrix associated to Riemannian form]
-            Compute the matrix $M$ associated to the Riemannian form $H$.
+        \item{} [Riemmannian form]
+            Use the discussion above compute the Riemannian form $H$ associated
+            to $J$.
         \item{} [Complement]
             Compute the orthogonal complement $V'$ of $V$ with respect to $H$
             and return $A'=(V', J_1(N))$.

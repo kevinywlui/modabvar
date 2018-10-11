@@ -69,4 +69,9 @@ William Stein, \emph{Modular {F}orms, {A} {C}omputational {A}pproach}, Graduate
   RI, 2007, With an appendix by Paul E.
   Gunnells,{\mbox{}\\\url{http://wstein.org/books/modform/}}. \MR{2289048}
 
+\bibitem[Ver02]{verrill:intersection}
+Helena~A. Verrill, \emph{Transportable modular symbols and the intersection
+  pairing}, Algorithmic number theory ({S}ydney, 2002), Lecture Notes in
+  Comput. Sci., vol. 2369, Springer, Berlin, 2002, pp.~219--233. \MR{2041086}
+
 \end{thebibliography}

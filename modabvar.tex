@@ -509,29 +509,24 @@ $\mathcal{L}=\mathcal{L}_1\cap \mathcal{L}_2 \cap V$.
 
 \subsubsection{The Cuspidal Subgroup}
 
+The cusps of $X_1(N)$ are the equivalence classes of $\P^1(\QQ)$ under
+$\Gamma_1(N)$. We will denote the elements by $[x/y]_{\Gamma_1}$. The
+\defn{cuspidal subgroup} $C$ of $J$ is the subgroup of degree-0 divisors
+$(\alpha)-(\beta)$ where $\alpha, \beta$ are cusps on $J$. More generally, if
+$A=(L, V, J)$ is a modular abelian variety that is the quotient of $B$ by $L$.
+Then the cuspidal subgroup of $A$ is defined to be $(C\cap B)/L$, where $C$ is
+the cuspidal subgroup of $J$. 
 
-The cuspidal subgroup $C$ of $J$ is the subgroup of degree-0 division
-$(\alpha)-(\beta)$ where $\alpha,\beta$ are cusps on $J$. This is a finite
-group that we can compute by
-
-...
-
-
-\subsubsection{The Rational Cuspidal Subgroup}
-i.e. $C(\Q)$,
-which we can compute by getting $G_\Q$ action on $C(\Qbar)$.
-
-Now let $J = J(\Gamma)$, where $\Gamma$ is a congruence group so that
-$\Gamma_1(N)\subseteq \Gamma \subseteq \Gamma_0(N)$. Stevens proves the cusps
-of $X(\Gamma)$ are $\Q(\mu_N)$-rational and the $\Gal(\Q(\mu_N)/\Q)$-action is
-given as follows. Let $[x/y]$ be a cusp of $X(\Gamma)$. For $d\in
-(\ZZ/N\ZZ)^*$, let
+The Galois structure of the cuspidal subgroup is well-understood~\cite[\S
+1.3]{MR670070}. The points of the cuspidal subgroup are $\QQ(\mu_N)$-rational
+with the following galois action. The Galois $\Gal(\QQ(\mu_N)/\QQ)\cong
+\ZZ/N\ZZ)^*$, let
 \[
     \sigma_d\in \Gal(\Q(\mu_N)/\Q):\mu_N\mapsto \mu_N ^d
 \]
 then
 \[
-    \sigma_d([x,y])=[x,d'y],
+    \sigma_d([x/y]_{\Gamma_1})=[x/d'y]_{\Gamma_1},
 \]
 where $dd'\equiv 1 \mod{N}$. With this, we are able to compute the
 \emph{rational cuspidal subgroup} $C(\QQ):=C^{\Gal(\QQ(\mu)/\QQ)}$.
@@ -546,9 +541,7 @@ point counting over finite fields
 divisor, multiple of order
 
 
-The goal here is to compute the rational torsion subgroup $J(\QQ)_\tor$. In
-general, this is hard to do and the best we can do is to compute an upper and
-lower bound. The rational cuspidal subgroup provides a lower bound. 
+In general 
 
 An upper bound can be
 ..william's thing..

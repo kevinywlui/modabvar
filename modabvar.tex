@@ -591,11 +591,38 @@ J)$ by a finite component group $G$. The group $G$ is given by...
 
 \subsubsection{Images of Morphisms}
 
-Let $\Phi:A\to B$ be a morphism between modular abelian varieties $A=(L, V, J)$
-and $B=(L', V', J')$. The image of $\Phi$ is the abelian subvariety of $B$
-given by $(L'', V'', J'')$, where $V''=\Im \Phi_V$ and $L''=V\cap V''$.
+\begin{algorithm}{Image of Morphisms}
+    \label{alg:image}
+    Let $\Phi:A\to B$ be a morphism between modular abelian varieties $A=(L, V,
+    J)$ and $B=(L', V', J')$. This algorithm will compute the image of $\Phi$
+    which is again a modular abelian variety.
+    \begin{enumerate}
+        \item{} [Image of rational homology]
+            Compute the image $V''$ of $\Phi$ on $V$.
+        \item{} [Intersect lattice]
+            Compute the intersection $L''=L'\cap V''$.
+        \item{} [Return the image]
+            Return the modular abelian variety $C=(L'', V'', J')$.
+    \end{enumerate}
+\end{algorithm}
 
 \subsubsection{The Universal Property of the Cokernel}
+
+The universal property of the cokernel is given by this diagram:
+
+[here is a diagram]
+
+\begin{algorithm}{Cokernel}
+    Let $\Phi:A\to B$ be a morphism between modular abelian varieties $A=(L, V,
+    J)$ and $B=(L', V', J')$. This algorithm will return the cokernel $C$ of
+    $\Phi$ as well as the induced map $A\to C$.
+    \begin{enumerate}
+        \item{} [Compute image]
+            Use Algorithm~\ref{alg:image} to compute the image of $\Phi$.
+        \item{} [Return quotient]
+            Use Algorithm~\ref{alg:quotient} to compute quotient $B/\Im \Phi$.
+    \end{enumerate}
+\end{algorithm}
 
 
 \subsubsection{The Projection Morphism} 

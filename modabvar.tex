@@ -431,7 +431,7 @@ Every modular symbol of $M_2(\Gamma_1(N))$ can be as
 using Manin symbols. Let $\rho=(1+i\sqrt{3})/2$. Then every modular symbol of
 $S_2(\Gamma_1(N))$ can be written as
 \[
-    \sum_{g\in \SL_2{\ZZ}} g\{\rho, \rho^2\}.
+    \sum_{h\in \SL_2{\ZZ}} h\{\rho, \rho^2\}.
 \]
 using~\cite[Corollary 4.1]{verrill:intersection}. The intersection pairing is
 then given on these summands by
@@ -439,11 +439,12 @@ then given on these summands by
     \langle g\{0,\infty\}, h\{\rho, \rho^2\} \rangle 
     =
     \begin{cases}
-        1 & \text{if } g\sim h \\
-        -1 & \text{if } g\sim Sh \\
-        0 & \text{if } g\not\sim h.
+        1 & \text{if } g\sim_\Gamma h \\
+        -1 & \text{if } g\sim_\Gamma Sh \\
+        0 & \text{if } g\not\sim_\Gamma h,
     \end{cases}
 \]
+where $S= \left(\begin{smallmatrix} 0 & 1 \\ 1 & 0 \end{smallmatrix}\right)$.
 
 \begin{algorithm}{Complement (Poincare Reducibility)}
     Let $A=(V, J_1(N))$ be an abelian subvariety of $J_1(N)$. This algorithm
@@ -570,7 +571,9 @@ kernel of $(\delta_1 ^* - \delta_p ^*)$.
 Let $A=(L, V, J)$ and $B=(L', V', J')$ be modular abelian varieties and
 $\Phi:A\to B$ a map of abelian varieties. Then $\Phi$ induces a map on rational
 homology and is also completely determined by the map on rational homology.
-So we will define $\Phi$ by giving the basis corresponding to the map on
+So we will defined $\Phi:A\to B$ by giving the pair $(\Phi_V, K)$, where
+$\Phi_V:V\to V'$ and a field of definition $K$ of $\Phi$. When clear by
+context, we will use $\Phi$ to denote both the map on abelian varieties and on
 rational homology.
 
 \subsubsection{Natural Maps}
@@ -620,7 +623,8 @@ The universal property of the cokernel is given by this diagram:
         \item{} [Compute image]
             Use Algorithm~\ref{alg:image} to compute the image of $\Phi$.
         \item{} [Return quotient]
-            Use Algorithm~\ref{alg:quotient} to compute quotient $B/\Im \Phi$.
+            Use Algorithm~\ref{alg:quotient} to compute quotient $C:=B/\Im
+            \Phi$ and the induced map $A\to C$.
     \end{enumerate}
 \end{algorithm}
 
@@ -648,6 +652,8 @@ pi)^0 = B_2$. This morphism is not unique.
 \end{algorithm}
 
 \subsubsection{Left and Right Inverses}
+
+
 
 \subsection{Endomorphism Rings and Hom Spaces}
 

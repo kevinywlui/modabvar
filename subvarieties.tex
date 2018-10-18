@@ -31,6 +31,7 @@ should be able to enumerate the $\Gal(\QQbar/\QQ)$-submodules of the Shimura
 subgroup maybe hopefully.
 
 \begin{proposition}
+    \label{integral_degen}
     Let $A$ be a simple subvariety of $J_1(N)$. From the work of Shimura,
     there exists a divisor $L$ of $N$ and a newform $f$ of level $L$ such that
     $A_f \sim A$. Let $d_1,\ldots,d_r$ be the full collection of degeneracy
@@ -40,7 +41,7 @@ subgroup maybe hopefully.
 \end{proposition}
 \begin{proof}
     Let $V_f=\sum_{i=1} ^r d_i(A_f)$ and $\Phi:A_f ^r \to V_f$ be defined by
-    $\Phi(x_1,\ldots,x_r) = d_1(x_1)+\cdots+d_r(x_r)$. Let $K_f$ be the Fourier
+    $D(x_1,\ldots,x_r) = d_1(x_1)+\cdots+d_r(x_r)$. Let $K_f$ be the Fourier
     coefficent field of $f$. Since $A$ is an abelian subvariety of $V_f$, there
     exists $M\in \End_0(V)\cong M_{r\times r} (\End_0(A_f)) = M_{r\times r}
     (K_f)$ such that $\Im M = A$. Let $i:A_f\to A_f ^r$ be the inclusion map
@@ -49,31 +50,37 @@ subgroup maybe hopefully.
     \[
         \begin{tikzcd}
             A_f \arrow[r,"i"] &
-            A_f ^l \arrow[r, dotted, "U"] &
-            A_f ^l \arrow[r, "\Phi"] &
+            A_f ^r \arrow[r, dotted, "U"] &
+            A_f ^r \arrow[r, "D"] &
             V_f \arrow[r, "M"] &
             A,
         \end{tikzcd}
     \]
-    the map $T:=M \circ \Phi \circ U\circ i:A_f\to A$ is an isogeny. Since
-    degeneracy maps are $K_f$-linear, there exists coefficents
-    $a_1,\ldots,a_r\in K_f$ such that $T = \sum a_i d_i$. Moreover,
-    $T(\Lambda_{A_f})=\Lambda_A$, so $a_i\in \QQ$. Abelian varieties are
-    divisible so we can clear denominators and assume $a_i\in \ZZ$, as desired.
+    the map $T:=M \circ \Phi \circ U\circ i:A_f\to A\in \Hom_0(A_f, A)$ is
+    nonzero. Since degeneracy maps are $K_f$-linear, there exists coefficents
+    $a_1,\ldots,a_r\in K_f$ such that $T = \sum a_i d_i$. Now there exists
+    $b\in \ZZ_{>0}$ such that $T':=bT\in \Hom(A_f, A)$ is nonzero and hence an
+    isogeny. Since $T'(\Lambda_{A_f})\subseteq \Lambda_A$, $T'=\sum q_i d_i$
+    for $q_i\in \QQ$. Finally, there exists $w\in \ZZ_{>0}$ such that
+    $S:=wT'=\sum n_i d_i$ with $n_i\in \ZZ$.
 \end{proof}
 
-The goal now is to understand the relationship between different degeneracy
+The goal now is to understand the kernel of linear combinations of degeneracy
 maps. Let
 \[
-    \Phi_L = \prod_{i=1} ^r d_i ^* : J_0(L)^r \to J_0(N)
+    \Phi_L = \prod_{i=1} ^r d_i : J_0(L)^r \to J_0(N)
 \]
 and
 \[
     \Sigma(L)_0 ^r =\{(x_1,\ldots,x_r)\in \Sigma(L)^r: \sum x_i = 0\}.
 \]
-We say $(L, N)$ satisifies the $\star$-condition if $\Ker\Phi_L=\Sigma(L)_0$.
-
-\begin{theorem}
+Since degeneracy maps agree on the Shimura subgroup, $\Sigma(L)_0 ^r \subseteq
+\Phi_L$. We say $(L, N)$ satisifies the $\star$-condition if
+$\Ker\Phi_L=\Sigma(L)_0$. This condition occurs often and the check is part of
+the split jacobian package. Sufficient coniditons are also given in the
+literature.  
+\begin{theorem}[Ribet, Ling]
+    \label{ribet_ling}
     Let $L$ and $M$ be relatively prime integers with $M$ squarefree. Let
     \[
         \Phi_L = \prod_{i=1} ^r d_{L,t_i} ^* : J_0(L)^r \to J_0(LM)
@@ -89,10 +96,26 @@ We say $(L, N)$ satisifies the $\star$-condition if $\Ker\Phi_L=\Sigma(L)_0$.
     \end{enumerate}
 \end{theorem}
 
+The purpose of studying $\Ker\Phi_L$ is the following computation. Let
+$A\subseteq J_0(N)$ be isogenous to $A_f$ where $f$ is of level $L$. Then from
+Proposition~\ref{integral_degen}, there exists $S:=\sum n_i d_i:J_0(L)\to
+J_0(N)$ such that $S(A_f)=A$. Since abelian varieties are divisible, we may
+assume that $\gcd(n_1, \ldots,n_r)=1$. Suppose $x\in \Ker S$. Then 
+
+\begin{equation}
+    \label{eq:S_to_Ker}
+    S(x) = 0 \implies \sum d_i(n_i x) =0 \implies (n_1 x,\ldots,n_r x) \in
+    \Ker\Phi_L. 
+\end{equation}
 \begin{corollary}
     Suppose $(L, N)$ satisifies the $\star$-condition, then $\Ker S\subseteq
-    \Sigma(L)$.
+    \Sigma(L)$. 
 \end{corollary}
+\begin{proof}
+    Suppose $x\in \Ker S$. We will continue with equation~\eqref{eq:S_to_Ker}
+    so $(n_1 x, \ldots, n_r x)\in \Ker\Phi_L = \Sigma(L)_0 ^r$. Hence, $n_i x\in
+    \Sigma$ for all $i$. Since $\gcd(n_1,\ldots,n_r)=1$, $x\in \Sigma(L)$.
+\end{proof}
 
 \begin{question}
     Let $A$ be a simple subvariety of $J_0(N)$ for some $N$. Let $\mathcal{I}$

@@ -62,10 +62,49 @@ subgroup maybe hopefully.
     divisible so we can clear denominators and assume $a_i\in \ZZ$, as desired.
 \end{proof}
 
+The goal now is to understand the relationship between different degeneracy
+maps. Let
+\[
+    \Phi_L = \prod_{i=1} ^r d_i ^* : J_0(L)^r \to J_0(N)
+\]
+and
+\[
+    \Sigma(L)_0 ^r =\{(x_1,\ldots,x_r)\in \Sigma(L)^r: \sum x_i = 0\}.
+\]
+We say $(L, N)$ satisifies the $\star$-condition if $\Ker\Phi_L=\Sigma(L)_0$.
 
+\begin{theorem}
+    Let $L$ and $M$ be relatively prime integers with $M$ squarefree. Let
+    \[
+        \Phi_L = \prod_{i=1} ^r d_{L,t_i} ^* : J_0(L)^r \to J_0(LM)
+    \]
+    be as defined above. Then
+    \begin{enumerate}
+        \item 
+            If $L$ is odd or $M$ is prime, then $\Sigma(L)_0 ^r=\ker\Phi_L$.
+        \item
+            If $L$ is even and $M$ is not a prime, then $\Sigma(L)_0 ^r
+            \subseteq \ker\Phi_L$ and $[\ker\Phi_L: \Sigma(L)_0 ^r]$ is
+            a power of 2.
+    \end{enumerate}
+\end{theorem}
 
-\begin{proposition}
-    
-\end{proposition}
-    
+\begin{corollary}
+    Suppose $(L, N)$ satisifies the $\star$-condition, then $\Ker S\subseteq
+    \Sigma(L)$.
+\end{corollary}
+
+\begin{question}
+    Let $A$ be a simple subvariety of $J_0(N)$ for some $N$. Let $\mathcal{I}$
+    be the isogeny class of $A$. For all $B\in \mathcal{I}$, is $B$ a
+    subvariety of $J_0(M)$ for some $M$?
+\end{question}
+The answer is no. Here's an example.
+
+\begin{question}
+    Let $M$ be a $\Gal(\QQbar/\QQ)$-submodule of $J_0(L)$. Does there exists
+    $N$ and an integral linear combination of degeneracy maps $S:=\sum n_i d_i$
+    such that $\Ker S=M$? This is the converse to the earlier corollary.
+\end{question}
+
 \end{document}

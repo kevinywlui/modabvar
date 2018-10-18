@@ -1,0 +1,71 @@
+\documentclass{article}
+
+\usepackage{fullpage}
+\include{macros}
+\usepackage{tikz-cd}
+
+\begin{document}
+
+\section{Enumerating Abelian Subvarieties of $J_0(N)$}
+
+The goal of this section is to enumerate the simple isomorphism classes of
+subvarieties of $J_0(N)$. There is a decomposition of $J_0(N)$ as 
+\[
+    J_0(N) \approx 
+    \sum_{f} V_f,
+\]
+where $V_f=A_f ^{m_f}$, where the sum runs through newforms $f$ of level $L$
+and $m_f$ is the number of divisors of $N/L$. Every abelian subvariety is the
+image of an endomorphism of $J_0(N)$ and $\Hom(V_f, V_g)$ is trivial for
+distinct $f$ and $g$. So the goal of this section can be restated as
+enumerating the isomorphism classes of subvarieties of $V_f$ for all $f$.
+Because of multiplicity one, we have that $V_f$ is already simple when $f$ is
+of level $N$. Hence, the problem reduces to enumerating the subvarieties of
+$V_f$ when $f$ is an oldform.
+
+The main idea is that every simple abelian varieties is the image of an
+integral linear combination of degeneracy maps. The kernel of such a map is
+then related to the Shimura subgroup by the work of Ribet and Ling. The Galois
+structure of the Shimura subgroup has been studied by Ling-Oesterle so we
+should be able to enumerate the $\Gal(\QQbar/\QQ)$-submodules of the Shimura
+subgroup maybe hopefully.
+
+\begin{proposition}
+    Let $A$ be a simple subvariety of $J_1(N)$. From the work of Shimura,
+    there exists a divisor $L$ of $N$ and a newform $f$ of level $L$ such that
+    $A_f \sim A$. Let $d_1,\ldots,d_r$ be the full collection of degeneracy
+    maps from $J_0(L)$ to $J_0(N)$. Then there exists integers $n_1,\ldots,n_r$
+    such that $S:=\sum n_i d_i: A_f\to A$ is an isogeny from $A_f$ to $A$. Note
+    that $S$ is defined over $\QQ$.
+\end{proposition}
+\begin{proof}
+    Let $V_f=\sum_{i=1} ^r d_i(A_f)$ and $\Phi:A_f ^r \to V_f$ be defined by
+    $\Phi(x_1,\ldots,x_r) = d_1(x_1)+\cdots+d_r(x_r)$. Let $K_f$ be the Fourier
+    coefficent field of $f$. Since $A$ is an abelian subvariety of $V_f$, there
+    exists $M\in \End_0(V)\cong M_{r\times r} (\End_0(A_f)) = M_{r\times r}
+    (K_f)$ such that $\Im M = A$. Let $i:A_f\to A_f ^r$ be the inclusion map
+    into the first coordinate. Then there exists $U\in \Aut(A_f
+    ^r)=\GL_r (K_f)$ such that,
+    \[
+        \begin{tikzcd}
+            A_f \arrow[r,"i"] &
+            A_f ^l \arrow[r, dotted, "U"] &
+            A_f ^l \arrow[r, "\Phi"] &
+            V_f \arrow[r, "M"] &
+            A,
+        \end{tikzcd}
+    \]
+    the map $T:=M \circ \Phi \circ U\circ i:A_f\to A$ is an isogeny. Since
+    degeneracy maps are $K_f$-linear, there exists coefficents
+    $a_1,\ldots,a_r\in K_f$ such that $T = \sum a_i d_i$. Moreover,
+    $T(\Lambda_{A_f})=\Lambda_A$, so $a_i\in \QQ$. Abelian varieties are
+    divisible so we can clear denominators and assume $a_i\in \ZZ$, as desired.
+\end{proof}
+
+
+
+\begin{proposition}
+    
+\end{proposition}
+    
+\end{document}

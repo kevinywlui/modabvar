@@ -462,6 +462,7 @@ where $S= \left(\begin{smallmatrix} 0 & 1 \\ 1 & 0 \end{smallmatrix}\right)$.
 
 \subsubsection{Quotients by Subgroups and Subvarieties}
 
+\label{sec:quotients}
 
 Suppose $A = (V, L, J)$ is a modular abelian variety and $A' = (V',
 L', J)$ is an abelian subvariety of $A$, so $V\subset V'$ and $L' =
@@ -477,9 +478,6 @@ using Section~\ref{sec:kernelmodabvar}.
 
 
 \subsubsection{Defining Data}
-
-
-data: $(L\supset \Lambda, K, A)$.
 
 Let $A=(V, L, J)$ be a modular abelian variety. A finite subgroup $G$ of $A$
 can be specified by giving a defining lattice $\mathcal{L}$ such that
@@ -505,7 +503,19 @@ subgroups of an modular abelian variety $A=(L, V, J)$. Let $\mathcal{L}_1 ' =
 intersection $G\cap H$ is the group $(\mathcal{L}, K_1K_2, A)$, where
 $\mathcal{L}=\mathcal{L}_1\cap \mathcal{L}_2 \cap V$.
 
+\subsubsection{Sums of Finite Subgroups}
 
+Let $G=(\mathcal{L}_1, K_1, A)$ and $H=(\mathcal{L}_2, K_2, A)$ be finite
+subgroups of $A=(L, V, J)$. The sum is given by $G+H=(\mathcal{L}_1 +
+\mathcal{L}_2+L, K_1K_2, A)$.
+
+\subsubsection{Quotients of Finite Subgroups}
+
+Let $G=(\mathcal{L}_1, K_1, A)$ and $H=(\mathcal{L}_2, K_2, A)$ be finite
+subgroups of $A=(L, V, J)$ with $H\subseteq G$ so $\mathcal{L}_2\subseteq
+\mathcal{L}_1$. The quotient is given by $G/H=(\mathcal{L}_1/\mathcal{L}_2,
+K_1K_2, A/H)$, where the computation of $A/H$ is given in
+Section~\ref{sec:quotients}.
 
 
 \subsubsection{The Cuspidal Subgroup}
@@ -531,9 +541,6 @@ then
 \]
 where $dd'\equiv 1 \mod{N}$. With this, we are able to compute the
 \emph{rational cuspidal subgroup} $C(\QQ):=C^{\Gal(\QQ(\mu)/\QQ)}$.
-
-
-arithmetic with: $G+H$, $G\cap H$, $G/H$.
 
 \subsubsection{The Rational Torsion Subgroup}
 
@@ -623,7 +630,7 @@ The universal property of the cokernel is given by this diagram:
         \item{} [Compute image]
             Use Algorithm~\ref{alg:image} to compute the image of $\Phi$.
         \item{} [Return quotient]
-            Use Algorithm~\ref{alg:quotient} to compute quotient $C:=B/\Im
+            Use \ref{quotients} to compute quotient $C:=B/\Im
             \Phi$ and the induced map $A\to C$.
     \end{enumerate}
 \end{algorithm}

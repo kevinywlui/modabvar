@@ -107,9 +107,11 @@ assume that $\gcd(n_1, \ldots,n_r)=1$. Suppose $x\in \Ker S$. Then
     S(x) = 0 \implies \sum d_i(n_i x) =0 \implies (n_1 x,\ldots,n_r x) \in
     \Ker\Phi_L. 
 \end{equation}
+
 \begin{corollary}
+    \label{cor:star}
     Suppose $(L, N)$ satisifies the $\star$-condition, then $\Ker S\subseteq
-    \Sigma(L)$. 
+    \Sigma(L)$. In particular, this isogeny is Eisenstein.
 \end{corollary}
 \begin{proof}
     Suppose $x\in \Ker S$. We will continue with equation~\eqref{eq:S_to_Ker}
@@ -118,17 +120,30 @@ assume that $\gcd(n_1, \ldots,n_r)=1$. Suppose $x\in \Ker S$. Then
 \end{proof}
 
 \begin{question}
+    \label{question:iso}
     Let $A$ be a simple subvariety of $J_0(N)$ for some $N$. Let $\mathcal{I}$
     be the isogeny class of $A$. For all $B\in \mathcal{I}$, is $B$ a
     subvariety of $J_0(M)$ for some $M$?
 \end{question}
-Stein, Watkins proves that this is true for Neumann-Setzer Elliptic Curves.
+
+\begin{example}
+    Suppose $I$ is a Neumann-Setzer isogeny class of elliptic curves of
+    conductor $p$. Then there are exactly 2 elliptic curves $E_0$ and $E_1$,
+    where $E_0$ is $J_0(p)$-optimal and $E_1$ is $J_1(p)$-optimal
+    (Stein-Watkins). Viewing $E_0$ as a subvariety of $J_0(p)$ and taking $q$
+    to be a prime distinct from $p$, we have
+    \[
+        E_1 \isom \Im (d_1-d_q)(E_0)\subseteq J_0(pq),
+    \]
+    where $d_1, d_q:J_0(p)\to J_0(pq)$ are the natural degeneracy maps. This
+    gives an affirmative answer to Question~\ref{question:iso}.
+\end{example}
 
 
 \begin{question}
     Let $M$ be a $\Gal(\QQbar/\QQ)$-submodule of $J_0(L)$. Does there exists
     $N$ and an integral linear combination of degeneracy maps $S:=\sum n_i d_i$
-    such that $\Ker S=M$? This is the converse to the earlier corollary.
+    such that $\Ker S=M$? This is the converse to Corollary~\ref{cor:star}.
 \end{question}
 
 \end{document}

@@ -41,10 +41,10 @@ The main ideas to enumerate simple subvarieties of $V_f$ presented here are:
 
 \begin{proposition}
     \label{integral_degen}
-    Let $A$ be a simple subvariety of $J_1(N)$. From the work of Shimura,
+    Let $A$ be a simple subvariety of $J(N)$. From the work of Shimura,
     there exists a divisor $L$ of $N$ and a newform $f$ of level $L$ such that
     $A_f \sim A$. Let $d_1,\ldots,d_r$ be the full collection of degeneracy
-    maps from $J_0(L)$ to $J_0(N)$. Then there exists integers $n_1,\ldots,n_r$
+    maps from $J(L)$ to $J(N)$. Then there exists integers $n_1,\ldots,n_r$
     such that $S:=\sum n_i d_i: A_f\to A$ is an isogeny from $A_f$ to $A$. Note
     that $S$ is defined over $\QQ$.
 \end{proposition}
@@ -85,7 +85,7 @@ and
 \]
 Since degeneracy maps agree on the Shimura subgroup, $\Sigma(L)_0 ^r \subseteq
 \Phi_L$. We say $(L, N)$ satisifies the $\star$-condition if
-$\Ker\Phi_L=\Sigma(L)_0$. This condition occurs often and the check is part of
+$\ker\Phi_L=\Sigma(L)_0$. This condition occurs often and the check is part of
 the split jacobian package. Sufficient coniditons are also given in the
 literature.  
 \begin{theorem}[Ribet, Ling]
@@ -105,26 +105,26 @@ literature.
     \end{enumerate}
 \end{theorem}
 
-The purpose of studying $\Ker\Phi_L$ is the following computation. Let
+The purpose of studying $\ker\Phi_L$ is the following computation. Let
 $A\subseteq J_0(N)$ be isogenous to $A_f$ where $f$ is of level $L$. Then from
 Proposition~\ref{integral_degen}, there exists $S:=\sum n_i d_i:J_0(L)\to
 J_0(N)$ such that $S(A_f)=A$. Since abelian varieties are divisible, we may
-assume that $\gcd(n_1, \ldots,n_r)=1$. Suppose $x\in \Ker S$. Then 
+assume that $\gcd(n_1, \ldots,n_r)=1$. Suppose $x\in \ker S$. Then 
 
 \begin{equation}
-    \label{eq:S_to_Ker}
+    \label{eq:S_to_ker}
     S(x) = 0 \implies \sum d_i(n_i x) =0 \implies (n_1 x,\ldots,n_r x) \in
-    \Ker\Phi_L. 
+    \ker\Phi_L. 
 \end{equation}
 
 \begin{corollary}
     \label{cor:star}
-    Suppose $(L, N)$ satisifies the $\star$-condition, then $\Ker S\subseteq
+    Suppose $(L, N)$ satisifies the $\star$-condition, then $\ker S\subseteq
     \Sigma(L)$. In particular, this isogeny is Eisenstein.
 \end{corollary}
 \begin{proof}
-    Suppose $x\in \Ker S$. We will continue with equation~\eqref{eq:S_to_Ker}
-    so $(n_1 x, \ldots, n_r x)\in \Ker\Phi_L = \Sigma(L)_0 ^r$. Hence, $n_i x\in
+    Suppose $x\in \ker S$. We will continue with equation~\eqref{eq:S_to_ker}
+    so $(n_1 x, \ldots, n_r x)\in \ker\Phi_L = \Sigma(L)_0 ^r$. Hence, $n_i x\in
     \Sigma$ for all $i$. Since $\gcd(n_1,\ldots,n_r)=1$, $x\in \Sigma(L)$.
 \end{proof}
 
@@ -152,7 +152,11 @@ assume that $\gcd(n_1, \ldots,n_r)=1$. Suppose $x\in \Ker S$. Then
 \begin{question}
     Let $M$ be a $\Gal(\QQbar/\QQ)$-submodule of $J_0(L)$. Does there exists
     $N$ and an integral linear combination of degeneracy maps $S:=\sum n_i d_i$
-    such that $\Ker S=M$? This is the converse to Corollary~\ref{cor:star}.
+    such that $\ker S=M$? This is the converse to Corollary~\ref{cor:star}.
+\end{question}
+
+\begin{question}
+    Is $\ker S$ always Eisenstein? This is true under the $\star$-condition.
 \end{question}
 
 \end{document}

@@ -280,7 +280,7 @@ algorithm will also give a decomposition of $V$ into simple subvarieties.
     nonzero. Since degeneracy maps are $K_f$-linear, there exists coefficients
     $a_1,\ldots,a_r\in K_f$ such that $T = \sum a_i d_i$. Now there exists
     $b\in \ZZ_{>0}$ such that $T':=bT\in \Hom(A_f, A)$ is nonzero and hence an
-    isogeny. Since $T'(\Lambda_{A_f})\subseteq \Lambda_A$, $T'=\sum q_i d_i$
+    isogeny. Since $T'(\Lambda_{A_f})\subset \Lambda_A$, $T'=\sum q_i d_i$
     for $q_i\in \QQ$. Finally, there exists $w\in \ZZ_{>0}$ such that
     $S:=wT'=\sum n_i d_i$ with $n_i\in \ZZ$.
 \end{proof}
@@ -328,7 +328,7 @@ algorithm will also give a decomposition of $V$ into simple subvarieties.
                     such that $v\in \Im \left(\sum_{i=1} ^r q_i
                     \delta_i\right)$. If this is not the case, return
                     'NO'. Let $R = \Im \left(\sum_{i=1} ^r q_i
-                    \delta_i\right)$. If $R\not\subseteq V$, return 'NO'.  
+                    \delta_i\right)$. If $R\not\subset V$, return 'NO'.  
                 \item{} [Full space?]
                     Replace $U$ with $U+R$. If $V=U$, we are done. Otherwise,
                     return to (b). 
@@ -342,12 +342,12 @@ algorithm will also give a decomposition of $V$ into simple subvarieties.
 \subsubsection{Sums and Products}
 
 Suppose $B=(V, L, J)$ is a modular abelian variety with subvarieties $A_1=(W_1,
-L_1, J)$ and $A_2=(W_2, L_2, J)$. Then the sum $A_1+A_2\subseteq B$ is given by
+L_1, J)$ and $A_2=(W_2, L_2, J)$. Then the sum $A_1+A_2\subset B$ is given by
 $(W_1+W_2, L_3, J)$ with $L_3$ given by $L_3 = L\cap (W_1+W_2)$.
 
 Suppose $B_1=(V_1, L_1, J_1)$ and $B_2=(V_2, L_2, J_2)$ are modular abelian
-varieties with subvarieties $A_1=(W_1, L_1, J_1)\subseteq B_1$ and $A_2=(W_2,
-L_2, J_2)\subseteq B_2)$. Then the product $A_1\times A_2\subseteq B_1\times
+varieties with subvarieties $A_1=(W_1, L_1, J_1)\subset B_1$ and $A_2=(W_2,
+L_2, J_2)\subset B_2)$. Then the product $A_1\times A_2\subset B_1\times
 B_2$ is given by $(W_1\times W_2, L_1\times L_2, J_1\times J_2)$.
 
 \subsubsection{Intersection}
@@ -374,54 +374,58 @@ acts on $\Phi$ via its action on $\Lambda_J$.
 
 \subsubsection{Complements (Poincare Reducibility)}\label{sec:poincare}
 
-Let $J=J_1(N)$ be principally polarized with the $\Theta$-divisor associated to
-a non-degenerate Riemannian form $H$. Let $A=(V, J)$ be a subvariety of $J$.
-Poincare Reducibility states that the orthogonal complement $V'$ with respect
-to $H$ corresponds to an abelian subvariety $A'$ such that $A+A'=J$ and $A\cap
-A'$ is finite. The Riemmannian form $H$ is completely determined the image part of
-its restriction to $\Lambda_J$ which is, in turn, given by
+Let $J=J_H(N)$ and $\Gamma=\Gamma_H(N)$. Then $J$ is prinically polarized with
+respect to a theta-divisor associated to a Riemannian form $H$.  Let $A=(V, J)$
+be a subvariety of $J$. Poincare Reducibility states that the orthogonal
+complement $V'$ of $V$ with respect to $H$ corresponds to an abelian subvariety
+$A'$ such that $A+A'=J$ and $A\cap A'$ is finite. The goal of this section is
+to describe how to compute this $V'$.
+
+The Riemmannian form $H$ is completely determined the image part of its
+restriction to $\Lambda_J$ which is, in turn, given by
 \[
     \Im H(\gamma_1, \gamma_2) = \langle \gamma_1, \gamma_2 \rangle,
 \]
 where $\gamma_1, \gamma_2\in H_1(J)$ and $\langle \cdot,\cdot \rangle$ is the
-intersection pairing on $\Lambda_J$.
-
-The goal now is to describe an algorithm for computing the intersection pairing
-as described by Verrill~\cite[\S 4]{verrill:intersection}
-Every modular symbol of $M_2(\Gamma_1(N))$ can be as
+intersection pairing on $\Lambda_J$. The goal now is to describe an algorithm
+for computing the intersection pairing as described by Verrill~\cite[\S
+4]{verrill:intersection}. The theory of Manin symbols gives a way to writing
+every modular symbol of $M_2(\Gamma_1(N))$ can be as
 \[
     \sum_{g\in \SL_2{\ZZ}} g\{0, \infty\}
 \] 
-using Manin symbols. Let $\rho=(1+i\sqrt{3})/2$. Then every modular symbol of
-$S_2(\Gamma_1(N))$ can be written as
+Let $\rho=(1+i\sqrt{3})/2$ and 
+$S = \left(
+    \begin{smallmatrix}
+        0 & -1 \\
+        1 & 0
+    \end{smallmatrix}
+\right)$,
+$T = \left(
+    \begin{smallmatrix}
+        1 & 1 \\
+        0 & 1
+    \end{smallmatrix}
+\right)$ be the usual generators for $\SL_2(\ZZ)$.
+Every every modular symbol of $S_2(\Gamma_1(N))$ can be written as
 \[
     \sum_{h\in \SL_2{\ZZ}} h\{\rho, \rho^2\}.
 \]
-using~\cite[Corollary 4.1]{verrill:intersection}. The intersection pairing is
-then given on these summands by
+using~\cite[Corollary 4.1]{verrill:intersection}. This step requires writing
+elements of $\SL_2(\ZZ)$ in terms of $ \langle S, T^{-1} \rangle$ which can be
+done by dissecting Serre's proof~\cite[Chapter 7, Theorem 2]{MR0344216}.
+
+The intersection pairing is then given formally on the summands by
 \[
     \langle g\{0,\infty\}, h\{\rho, \rho^2\} \rangle 
     =
     \begin{cases}
         1 & \text{if } g\sim_\Gamma h \\
         -1 & \text{if } g\sim_\Gamma Sh \\
-        0 & \text{if } g\not\sim_\Gamma h,
+        0 & \text{if } g\not\sim_\Gamma h.
     \end{cases}
 \]
-where $S= \left(\begin{smallmatrix} 0 & 1 \\ 1 & 0 \end{smallmatrix}\right)$.
-
-\begin{algorithm}{Complement (Poincare Reducibility)}
-    Let $A=(V, J_1(N))$ be an abelian subvariety of $J_1(N)$. This algorithm
-    computes the complement of $A$ given by Poincare Reducibility.
-    \begin{enumerate}
-        \item{} [Riemmannian form]
-            Use the discussion above compute the Riemannian form $H$ associated
-            to $J$.
-        \item{} [Complement]
-            Compute the orthogonal complement $V'$ of $V$ with respect to $H$
-            and return $A'=(V', J_1(N))$.
-    \end{enumerate}
-\end{algorithm}
+The intersection pairing on $H_1(J)$ is then obtained by extending linearly.
 
 
 \subsubsection{Quotients by Subgroups and Subvarieties}
@@ -476,7 +480,7 @@ subgroups of $A=(L, V, J)$. The sum is given by $G+H=(\mathcal{L}_1 +
 \subsubsection{Quotients of Finite Subgroups}
 
 Let $G=(\mathcal{L}_1, K_1, A)$ and $H=(\mathcal{L}_2, K_2, A)$ be finite
-subgroups of $A=(L, V, J)$ with $H\subseteq G$ so $\mathcal{L}_2\subseteq
+subgroups of $A=(L, V, J)$ with $H\subset G$ so $\mathcal{L}_2\subset
 \mathcal{L}_1$. The quotient is given by $G/H=(\mathcal{L}_1/\mathcal{L}_2,
 K_1K_2, A/H)$, where the computation of $A/H$ is given in
 Section~\ref{sec:quotients}.

@@ -40,22 +40,21 @@ The main ideas to enumerate simple subvarieties of $V_f$ presented here are:
 \end{itemize}
 
 \begin{proposition}
-    \label{integral_degen}
-    Let $A$ be a simple subvariety of $J(N)$. From the work of Shimura,
+    \label{prop:integral_degen}
+    Let $A$ be a simple subvariety of $J_H(N)$. From the work of Shimura,
     there exists a divisor $L$ of $N$ and a newform $f$ of level $L$ such that
     $A_f \sim A$. Let $d_1,\ldots,d_r$ be the full collection of degeneracy
-    maps from $J(L)$ to $J(N)$. Then there exists integers $n_1,\ldots,n_r$
+    maps from $J_H(L)$ to $J_H(N)$. Then there exists integers $n_1,\ldots,n_r$
     such that $S:=\sum n_i d_i: A_f\to A$ is an isogeny from $A_f$ to $A$. Note
     that $S$ is defined over $\QQ$.
 \end{proposition}
 \begin{proof}
     Let $V_f=\sum_{i=1} ^r d_i(A_f)$ and $\Phi:A_f ^r \to V_f$ be defined by
     $D(x_1,\ldots,x_r) = d_1(x_1)+\cdots+d_r(x_r)$. Let $K_f$ be the Fourier
-    coefficent field of $f$. Since $A$ is an abelian subvariety of $V_f$, there
-    exists $M\in \End_0(V)\cong M_{r\times r} (\End_0(A_f)) = M_{r\times r}
-    (K_f)$ such that $\Im M = A$. Let $i:A_f\to A_f ^r$ be the inclusion map
-    into the first coordinate. Then there exists $U\in \Aut(A_f
-    ^r)=\GL_r (K_f)$ such that,
+    coefficient field of $f$. Since $A$ is an abelian subvariety of $V_f$, there
+    exists $M\in \End_0(V)\cong M_r(\End_0(A_f)) = M_r (K_f)$ such that $\Im M
+    = A$. Let $i:A_f\to A_f ^r$ be the inclusion map into the first coordinate.
+    Then there exists $U\in \Aut(A_f ^r)=\GL_r (K_f)$ such that,
     \[
         \begin{tikzcd}
             A_f \arrow[r,"i"] &
@@ -66,10 +65,10 @@ The main ideas to enumerate simple subvarieties of $V_f$ presented here are:
         \end{tikzcd}
     \]
     the map $T:=M \circ \Phi \circ U\circ i:A_f\to A\in \Hom_0(A_f, A)$ is
-    nonzero. Since degeneracy maps are $K_f$-linear, there exists coefficents
+    nonzero. Since degeneracy maps are $K_f$-linear, there exists coefficients
     $a_1,\ldots,a_r\in K_f$ such that $T = \sum a_i d_i$. Now there exists
     $b\in \ZZ_{>0}$ such that $T':=bT\in \Hom(A_f, A)$ is nonzero and hence an
-    isogeny. Since $T'(\Lambda_{A_f})\subseteq \Lambda_A$, $T'=\sum q_i d_i$
+    isogeny. Since $T'(\Lambda_{A_f})\subset \Lambda_A$, $T'=\sum q_i d_i$
     for $q_i\in \QQ$. Finally, there exists $w\in \ZZ_{>0}$ such that
     $S:=wT'=\sum n_i d_i$ with $n_i\in \ZZ$.
 \end{proof}
@@ -107,7 +106,7 @@ literature.
 
 The purpose of studying $\ker\Phi_L$ is the following computation. Let
 $A\subseteq J_0(N)$ be isogenous to $A_f$ where $f$ is of level $L$. Then from
-Proposition~\ref{integral_degen}, there exists $S:=\sum n_i d_i:J_0(L)\to
+Proposition~\ref{prop:integral_degen}, there exists $S:=\sum n_i d_i:J_0(L)\to
 J_0(N)$ such that $S(A_f)=A$. Since abelian varieties are divisible, we may
 assume that $\gcd(n_1, \ldots,n_r)=1$. Suppose $x\in \ker S$. Then 
 

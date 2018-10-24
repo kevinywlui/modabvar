@@ -36,6 +36,11 @@ E.\thinspace{}V. Flynn, F.~\protect{Lepr\'{e}vost}, E.\thinspace{}F. Schaefer,
   for modular {J}acobians of genus 2 curves}, Math. Comp. \textbf{70} (2001),
   no.~236, 1675--1697 (electronic). \MR{1 836 926}
 
+\bibitem[LO91]{MR1141458}
+San Ling and Joseph Oesterl\'{e}, \emph{The {S}himura subgroup of {$J_0(N)$}},
+  Ast\'{e}risque (1991), no.~196-197, 6, 171--203 (1992), Courbes modulaires et
+  courbes de Shimura (Orsay, 1987/1988). \MR{1141458}
+
 \bibitem[Mil86]{milne:abvars}
 J.\thinspace{}S. Milne, \emph{Abelian varieties}, Arithmetic geometry (Storrs,
   Conn., 1984), Springer, New York, 1986, pp.~103--150.
@@ -45,10 +50,14 @@ K.\thinspace{}A. Ribet, \emph{Twists of modular forms and endomorphisms of
   abelian varieties}, Math. Ann. \textbf{253} (1980), no.~1, 43--62.
   \MR{82e:10043}
 
+\bibitem[Rib83]{ribet:congrel}
+Kenneth~A. Ribet, \emph{Congruence relations between modular forms}, Proc.
+  International Congress of Mathematicians (1983), 503--514.
+
 \bibitem[Rib92]{ribet:abvars}
-\bysame, \emph{Abelian varieties over {${\bf Q}$} and modular forms}, Algebra
-  and topology 1992 (Taej\u on), Korea Adv. Inst. Sci. Tech., Taej\u on, 1992,
-  pp.~53--79. \MR{94g:11042}
+K.\thinspace{}A. Ribet, \emph{Abelian varieties over {${\bf Q}$} and modular
+  forms}, Algebra and topology 1992 (Taej\u on), Korea Adv. Inst. Sci. Tech.,
+  Taej\u on, 1992, pp.~53--79. \MR{94g:11042}
 
 \bibitem[S{\etalchar{+}}11]{sage}
 W.\thinspace{}A. Stein et~al., \emph{{S}age {M}athematics {S}oftware ({V}ersion

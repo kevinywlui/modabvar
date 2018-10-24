@@ -494,9 +494,8 @@ Section~\ref{sec:quotients}.
 
 \subsubsection{The Cuspidal Subgroup}
 
-Let $\Gamma = \Gamma_H(N)$ and 
-The cusps of $X_1(N)$ are the equivalence classes of $\P^1(\QQ)$ under
-$\Gamma_1(N)$. We will denote the elements by $[x/y]_{\Gamma_1}$. The
+The cusps of $X_H(N)$ are the equivalence classes of $\P^1(\QQ)$ under
+$\Gamma_H(N)$. We will denote the elements by $[x/y]_{\Gamma_H(N)}$. The
 \defn{cuspidal subgroup} $C$ of $J$ is the subgroup of degree-0 divisors
 $(\alpha)-(\beta)$ where $\alpha, \beta$ are cusps on $J$. More generally, if
 $A=(L, V, J)$ is a modular abelian variety that is the quotient of $B$ by $L$.
@@ -505,7 +504,7 @@ the cuspidal subgroup of $J$.
 
 The Galois structure of the cuspidal subgroup is well-understood~\cite[\S
 1.3]{MR670070}. The points of the cuspidal subgroup are $\QQ(\mu_N)$-rational
-with the following galois action. The Galois $\Gal(\QQ(\mu_N)/\QQ)\cong
+with the following Galois action. The Galois $\Gal(\QQ(\mu_N)/\QQ)\cong
 \ZZ/N\ZZ)^*$, let
 \[
     \sigma_d\in \Gal(\Q(\mu_N)/\Q):\mu_N\mapsto \mu_N ^d
@@ -534,15 +533,20 @@ An upper bound can be
 For any integer $N$, there exists a map between modular curves given
 on the non-cuspidal points by
 \begin{align*}
-    s_N: X_1(N) & \to X_0(N) \\
+    s_N ^*: Y_1(N) & \to Y_0(N) \\
     [E, P]      & \mapsto [E, \langle P \rangle].
 \end{align*}
-By Pic functoriality, this induces a map $s_N ^*: J_0(N)\to J_1(N)$. The
-kernel of this map is the \emph{Shimura subgroup}, denoted $\Sigma(N)$. Ribet
-shows that for any prime $p$ coprime to $N$, $\Sigma(N)=\ker(\delta_1
-^*-\delta_p ^*)$, where $\delta_1^*, \delta_p ^*:J_0(N)\to J_0(pN)$ are the
-degeneracy maps. So computing the Shimura subgroup amounts to compute the
-kernel of $(\delta_1 ^* - \delta_p ^*)$.
+By Pic functoriality, this induces a map $s_N: J_0(N)\to J_1(N)$. The kernel of
+this map is the \emph{Shimura subgroup}, denoted $\Sigma(N)$.
+Ribet~\cite[Theorem 4.3]{ribet:congrel} shows that for any prime $p$ coprime to
+$N$, $\Sigma(N)=\ker(d_1 - d_p)$, where $d_1,d_p :J_0(N)\to J_0(pN)$ are the
+degeneracy maps. 
+
+Ling and Oesterle~\cite[Theorem 1,2]{MR1141458} gives a formula for the group
+invariants of the Shimura subgroup as an abstract abelian group. Moreover, if
+$e$ is the exponent of the Shimura subgroup then the points are defined over
+$\QQ(\mu_e)$ and the Galois action is given by the cyclotomic character of
+$\Gal(\QQ(\mu_e)/\QQ)$.
 
 \subsection{Morphisms Between Modular Abelian Varieties}
 
@@ -567,7 +571,8 @@ Jacobian.
 
 \subsubsection{Morphisms Defined by Finite Subgroups}
 
-\subsubsection{Kernels of Morphisms}\label{sec:kernelmodabvar}
+\subsubsection{Kernels of Morphisms}
+\label{sec:kernelmodabvar}
 
 Let $\Phi:A\to B$ be a morphism between modular abelian varieties $A=(L, V, J)$
 and $B=(L', V', J')$. Let $V_K=\ker \phi_V$ and $L_K=L\cap V_K$. Then the
@@ -575,21 +580,12 @@ kernel $K$ of $\phi$ is the extension of the abelian variety $K^0 = (L_K, V_K,
 J)$ by a finite component group $G$. The group $G$ is given by...
 
 \subsubsection{Images of Morphisms}
+\label{sec:image}
 
-\begin{algorithm}{Image of Morphisms}
-    \label{alg:image}
-    Let $\Phi:A\to B$ be a morphism between modular abelian varieties $A=(L, V,
-    J)$ and $B=(L', V', J')$. This algorithm will compute the image of $\Phi$
-    which is again a modular abelian variety.
-    \begin{enumerate}
-        \item{} [Image of rational homology]
-            Compute the image $V''$ of $\Phi$ on $V$.
-        \item{} [Intersect lattice]
-            Compute the intersection $L''=L'\cap V''$.
-        \item{} [Return the image]
-            Return the modular abelian variety $C=(L'', V'', J')$.
-    \end{enumerate}
-\end{algorithm}
+Let $\Phi:A\to B$ be a morphism between modular abelian varieties $A=(L, V, J)$
+and $B=(L', V', J')$. The image of $\Phi$ in $B$ is the abelian subvariety
+$\Phi(A)=(L'', \Phi(V), J')$, where $L''=\Phi(V)\cap L'$.
+
 
 \subsubsection{The Universal Property of the Cokernel}
 
@@ -597,19 +593,10 @@ The universal property of the cokernel is given by this diagram:
 
 [here is a diagram]
 
-\begin{algorithm}{Cokernel}
-    Let $\Phi:A\to B$ be a morphism between modular abelian varieties $A=(L, V,
-    J)$ and $B=(L', V', J')$. This algorithm will return the cokernel $C$ of
-    $\Phi$ as well as the induced map $A\to C$.
-    \begin{enumerate}
-        \item{} [Compute image]
-            Use Algorithm~\ref{alg:image} to compute the image of $\Phi$.
-        \item{} [Return quotient]
-            Use \ref{quotients} to compute quotient $C:=B/\Im
-            \Phi$ and the induced map $A\to C$.
-    \end{enumerate}
-\end{algorithm}
-
+Let $\Phi:A\to B$ be a morphism between modular abelian varieties $A=(L, V, J)$
+and $B=(L', V', J')$. The cokernel is the abelian variety $B/\Phi(A)$. The
+image $\Phi(A)$ is describe in Section~\ref{sec:image} and the quotient is
+described in Section~\ref{sec:quotients}.
 
 \subsubsection{The Projection Morphism} 
 

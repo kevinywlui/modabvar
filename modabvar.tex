@@ -128,8 +128,8 @@ rest of this paper.
 We represent modular abelian varieties over $\QQ$ {\em explicitly} as
 follows. Let $J$ be an arbitrary finite product of modular Jacobians
 $J_H(N)=\Jac(X_H(N))$ for subgroups $H\subset (\Z/N\Z)^*$, where
-$N$ is a positive integer (see, e.g, \cite{} for the definition
-of $J_H(N)$).   We will refer to $J$ as an \emph{ambient modular abelian
+$N$ is a positive integer (see \ref{sec:amb_modabvar} for the definition
+of $J_H(N)$).  We will refer to $J$ as an \emph{ambient modular abelian
 variety}.
 Fix a modular abelian variety $A$ and a
 finite degree homomorphism $\vphi: A\to J$.  Then there is an isogeny
@@ -154,7 +154,7 @@ symbols \cite{stein:modform}, and specify $B$ by giving a basis in
 reduced echelon form for a subspace $V \subset \H_1(J, \Q)$.  Of
 course, not every subspace corresponds to a modular abelian variety,
 but we can determine whether or not a given $V$ corresponds to a valid
-abelian subvariety (see \ref{}).
+abelian subvariety (see Section \ref{sec:decomp_verify}).
 
 {\em We specify $G$ as follows.}
 Suppose $V$ defines an abelian subvariety $B$ of $J$ as above.
@@ -192,8 +192,28 @@ We use the notation $(V,J)$ as a shorthand for $L=\Lambda$.
 \section{Computing with Modular Abelian Varieties}
 
 \subsection{Ambient Modular Abelian Varieties}
-modular symbols; $\Gamma_H(N)$.
+\label{sec:amb_modabvar}
 
+Let $\Gamma_0(N)$ and $\Gamma_1(N)$ be the usual congruence subgroups of level
+$N$ (see~\cite{stein:modform}). In this article, we will consider subgroups of
+the form $\Gamma_H(N)$ with $\Gamma_1(N)\subseteq \Gamma_H(N)\subseteq
+\Gamma_0(N)$ defined by
+\[
+    \Gamma_H(N) = 
+    \left\{
+    \begin{pmatrix}
+        a & b \\
+        c & d
+    \end{pmatrix}
+    \in \SL_2(\ZZ) :
+    N\mid c \text{ and } a,b\in H
+    \right\}, 
+\]
+where $H$ is a normal subgroup of $(\ZZ/N\ZZ)^*$ given by a list of generators.
+
+We specify $J_H(N)$ by specifying an integral basis for $H_1(X_H(N), \ZZ)$.
+By~\cite[Theorem 1.9]{manin:parabolic}, this is equivalent to computing the
+space of cuspidal modular symbols (see~\cite[\S 3]{stein:modform}).
 
 \subsection{Enumerating New Simple Modular Abelian Varieties}
 
@@ -209,7 +229,7 @@ modular symbols; $\Gamma_H(N)$.
 
 \begin{algorithm}{Decomposition of modular Jacobians}
     \label{alg:decomp_jacobian}
-    Let $J=J(N)$ with Hecke algebra $\T$. This algorithm will give a sequence
+    Let $J=J_H(N)$ with Hecke algebra $\T$. This algorithm will give a sequence
     of abelian subvarieties $A_i$ with finite intersection and sums to $J$. Let
     $L_1,\ldots, L_r$ be the divisors of $N$.
     \begin{enumerate}
@@ -244,6 +264,7 @@ modular symbols; $\Gamma_H(N)$.
 \end{algorithm}
 
 \subsubsection{Decomposition and Verification of an Abelian Subvariety} 
+\label{sec:decomp_verify}
 
 As mentioned in the introduction, not every subspace $V$ of $H_1(J, \QQ)$
 corresponds to an abelian subvariety of $J$. In this section, we will give an
@@ -375,8 +396,8 @@ acts on $\Phi$ via its action on $\Lambda_J$.
 \subsubsection{Complements (Poincare Reducibility)}\label{sec:poincare}
 
 Let $J=J_H(N)$ and $\Gamma=\Gamma_H(N)$. Then $J$ is prinically polarized with
-respect to a theta-divisor associated to a Riemannian form $H$.  Let $A=(V, J)$
-be a subvariety of $J$. Poincare Reducibility states that the orthogonal
+respect to a theta-divisor corresponding to a Riemannian form $H$. Let $A=(V,
+J)$ be a subvariety of $J$. Poincare Reducibility states that the orthogonal
 complement $V'$ of $V$ with respect to $H$ corresponds to an abelian subvariety
 $A'$ such that $A+A'=J$ and $A\cap A'$ is finite. The goal of this section is
 to describe how to compute this $V'$.
@@ -467,8 +488,6 @@ lattices.
 Let $A=(V, L, J)$ be a modular abelian variety. The $n$-torsion subgroup is
 given by $(\frac{1}{n} L, \QQ, A)$.
 
-
-
 \subsubsection{Intersection of Finite Subgroups}
 
 Let $G=(\mathcal{L}_1, K_1, A)$ and $H=(\mathcal{L}_2, K_2, A)$ be finite
@@ -534,7 +553,7 @@ For any integer $N$, there exists a map between modular curves given
 on the non-cuspidal points by
 \begin{align*}
     s_N ^*: Y_1(N) & \to Y_0(N) \\
-    [E, P]      & \mapsto [E, \langle P \rangle].
+    (E, P)      & \mapsto (E, \langle P \rangle).
 \end{align*}
 By Pic functoriality, this induces a map $s_N: J_0(N)\to J_1(N)$. The kernel of
 this map is the \emph{Shimura subgroup}, denoted $\Sigma(N)$.

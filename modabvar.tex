@@ -9,6 +9,7 @@
 
 \newcommand{\Hao}[1]{\textcolor{blue}{\textsf{Hao: #1}}}
 \newcommand{\wstein}[1]{\textcolor{blue}{\textsf{William: #1}}}
+\newcommand{\ws}[1]{\textcolor{blue}{\textsf{ws: #1}}}
 
 \newcommand{\Haonew}[1]{\textcolor{red}{\textsf{Hao: #1}}}
 
@@ -18,8 +19,8 @@
 
 %\title{Deciding Whether Two Simple Modular Abelian
 %Varieties are Isomorphic}
-\title{Computing with Isogenies Between Abelian Varieties of $\GL_2$-type}
-\author{Hao Chen \and William Stein}
+\title{Computing with Isogenies Between Abelian Varieties of $\GL_2$-type\ws{Title seems wrong now...}}
+\author{Hao Chen \and Kevin Lui \and  William Stein}
 \begin{document}
 \maketitle
 \tableofcontents
@@ -31,10 +32,12 @@
   We describe algorithms for enumerating and decomposing $\GL_2$-type
   abelian varieties, isomorphism testing, computation of endomorphism
   and homomorphism rings, arithmetic with finite subgroups, computing
-  the modular degree, computing special values of $L$-functions, and
-  computing Tamagawa numbers.  None of our algorithms use defining
+  the modular degree, computing special values of $L$-functions,
+  enumeration of the isogeny class, and
+  computing Tamagawa numbers. Though we do not completely solve
+  all problems listed above, none of our algorithms use defining
   equations for varieties, and as such they work in a great degree of
-  generality allowing us to treat all dimensions uniformly.
+  generality, allowing us to treat all dimensions uniformly.
 \end{abstract}
 
 
@@ -68,7 +71,7 @@ like we do just for $J_0(125)$.]]
 In this paper we mostly ignore issues of computational complexity,
 since our goal is to describe how it is {\em practical at all} to
 compute explicitly with modular abelian varieties.  Except for [[...??
-norm equations]], the algorithm discussed in this paper mostly amount
+norm equations]], the algorithms discussed in this paper mostly amount
 to linear algebra and have complexity that is polynomial time in the
 level $N$ of the abelian variety.
 
@@ -99,7 +102,7 @@ variety is of $\GL_2$-type.  His paper also shows
 \cite[Thm.~4.4]{ribet:abvars} that Serre's conjectures
 \cite{serre:conjectures} on modularity of odd irreducible
 two-dimensional mod~$p$ Galois representations imply the converse.
-Since Khare and Wintenberger have now completely proved Serre's
+Since Khare and Wintenberger \ws{add citation} have now completely proved Serre's
 conjecture, we have the following theorem.
 
 \begin{theorem}[Khare, Wintenberger]\label{conj:ribmod}
@@ -119,12 +122,16 @@ rest of this paper.
   exists a finite degree morphism $A\to J_1(N)$ over $K$ for some
   $N$. The main complication is that the endomorphism ring over
   $\Qbar$ of a simple modular abelian variety $A$ over $\Q$ need not
-  be commutative.  Fortunately much is known about its structure (see
+  be commutative.  Fortunately, much is known about its structure (see
   \cite{ribet:twistsendoalg}).
 
   Also many of the algorithms in this paper naturally generalize to
   the context of Grothendieck motives attached to modular forms.  This
-  is also a topic for future investigation.
+  is also a topic for future investigation, and we expect that
+  many of the algorithms we give
+  here generalize to that context.
+  \ws{Cite Dummigan-Stein-Watkins.}
+
 \end{remark}
 
 
@@ -149,6 +156,7 @@ $$
 In other words we can represent any modular abelian variety by giving
 $G\subset B\subset J$, all defined over $\QQ$.  It remains to explain
 how we explicitly specify $B$ and $G$.
+\ws{It would be clearer to first say that we explain how we represent $J$, which is of course what we do below.}
 
 {\em We specify $B$ as follows.}  The inclusion $B \hookrightarrow J$
 induces an inclusion of rational homology $\H_1(B, \Q) \hookrightarrow
@@ -175,6 +183,8 @@ $$
 $$
 and we specify $G\subset B(\C)_{\tor}$ by giving the lattice $L$ with
 $\Lambda \subset L\subset V$ such that $L/\Lambda \isom G$.
+\ws{Since we said we give $V$ by reduced row echelon form, we could similar say that we give $L$ by
+its Hermite normal form basis.}
 
 %giving a finite list $g_i$ of
 %elements of $V$ that generate the elementary factors.  More precisely,
@@ -193,6 +203,7 @@ congruence subgroups $\Gamma_0(N)$, $\Gamma_1(N)$, and $\Gamma_H(N)$.
 We use the notation $(V,J)$ as a shorthand for $L=\Lambda$.
 
 
+\ws{Obviously, we need a section with some simple examples here, which are likely to be familiar to readers.  Good simple explicit examples would be: 11a2 (showing nontrivial $L$), 37a1, 43a1 and 43b1 (dim 2).}
 
 \section{Computing with Modular Abelian Varieties}
 
@@ -261,14 +272,14 @@ $B_i$ and an isogeny $A\to \prod B_i$.
 in a common ambient $B=(V_2,L_2,J)$, where we need not assume $B\subset J$]]
 
 Suppose $A = (V,J)$ and $A' = (V',J)$ are abelian subvarieties of a common ambient $J$.
-Then the $A + A' \subset J$ is given by $(V+V', J)$.
+Then the sum $A + A' \subset J$ is given by $(V+V', J)$.
 
 Suppose $A=(V,L,J)$ and $A'=(V',L',J')$ are modular abelian varieties.
 Then $A\times A' = (V\oplus V', L\oplus L', J \cross J')$, where
 $V\oplus V'$ and $L\oplus L'$ embed diagonally into $J\cross J'$.
 
 \subsubsection{Intersection}
-
+\ws{Title should be "Intersections" to be consistent with adjacent titles.}
 \Haonew{This is in Sage.}
 
 Suppose $A = (V,J)$ and $A' = (V', J)$ are abelian subvarieties of a
@@ -280,7 +291,7 @@ $$
    0\ar[r]& (A\cap A')^0 \ar[r]&  A\cap A'\ar@{^(->}[u] \ar[r]& \Phi\ar[r] & 0,
 }
 $$
-The component group is isomorphic to the torsion subgroup of kernel of
+The component group is isomorphic to the torsion subgroup of the kernel of
 the map $A \times A' \to J$ sending $(x,y)\to x-y$, which we compute
 using Section~\ref{sec:kernelmodabvar}; in particular, we have
 $$
@@ -359,7 +370,7 @@ Let $G = L_G/\Lambda$ and $H = L_H/\Lambda$ be finite subgroups. Then $G\cap H
 
 \Haonew{In Sage.}
 
-Given a modular abelian variety, this algorithm computes the 
+Given a modular abelian variety, this algorithm computes the
 
 \subsubsection{The Rational Cuspidal Subgroup}
 i.e. $C(\Q)$,
@@ -374,16 +385,17 @@ arithmetic with: $G+H$, $G\cap H$, $G/H$.
 \subsubsection{Point Counting over Finite Fields}
 
 Let $p$ be an odd prime not dividing $N$. Using the theory of formal groups, we
-can show reduction map $A_f(\Q)\to A_f(\FF_p)$ is injective on torsion points.
-Hence, for any set, $P$, of odd primes not dividing $N$,
-$\GCD(\{\#A_f(\FF_p):p\in P\})$ is a multiple of the $\Q$-rational torsion order. To
-compute $\#A_f(\FF_p)$, we use the result in Agashe-Stein.
+can show reduction map $A_f(\Q)\to A_f(\FF_p)$ is injective on torsion points \ws{reference; probably in
+my thesis or some paper with Amod Agashe}.
+Hence, for any set $P$ of odd primes not dividing $N$,
+the gcd $\GCD(\{\#A_f(\FF_p):p\in P\})$ is a multiple of the $\Q$-rational torsion order. To
+compute $\#A_f(\FF_p)$, we use the result in Agashe-Stein \ws{citation}.
 
 
 \subsubsection{The Rational Torsion Order}
 
 When $A$ is not an elliptic curve, there is no known algorithm for explicitly
-computing the rational torison order. There are 39 newforms of level up to 30.
+computing the rational torsion order. There are 39 newforms of level up to 30.
 We are able to compute the rational torsion order of the corresponding abelian
 variety for 13 of them using these methods.
 
@@ -459,7 +471,7 @@ Let $M$ be a matrix whose rows are a $\Z$-basis for $L$.
 \begin{enumerate}
 \item{} [Hermite Normal Form] Find the Hermite Normal Form $H'$ of $M^t$. Let
     $H$ be the submatrix of the nonzero rows of $H'$.
-\item{} [Inverse] Compute $S = (H^t)^{-1} M$ using the ``last big row'' trick.
+\item{} [Inverse] Compute $S = (H^t)^{-1} M$ using the ``last big row'' trick \cite{cite Clement-Stein paper, which is now published}.
 Then output $S$ whose rows are a basis for the saturation of $L$.
 \end{enumerate}
 \end{algorithm}
@@ -478,10 +490,10 @@ Then output $S$ whose rows are a basis for the saturation of $L$.
 Note that one could instead replace $H$ by an LLL reduced basis for
 the rowspace of $M^t$, but this is usually much slower because the
 $p$-adic/modular algorithm \cite{blah} for computing Hermite normal
-form is fast.
+form is so fast in this case.
 
 
-If $A$ is an abelian variety of dimension $2$ then after chosing a basis for
+Let $A$ be an abelian variety of dimension $2$. After choosing a basis for
 $\Lambda = \H_1(A,\Z)$, we have
 $$
   \End(\Lambda)\isom \Mat_{2d\times 2d}(\Z) \ncisom \Z^{(2d)^2}.
@@ -503,7 +515,7 @@ We will use the following lemma in the proof of Proposition~\ref{prop:end}.
   every element of $\Aut(\C/K)$, then $x\in K$.
 \end{lemma}
 \begin{proof}
-  If $x\in\Kbar$, this is standard Galois theory.  If $x\not\in
+  If $x\in\Kbar$, this is standard Galois theory. \ws{How is this not super well known -- seems like we should just cite some book.} If $x\not\in
   \Kbar$, then $x$ is transcendental.  Since $x+1$ is also transcendental,
 the fields $\Kbar(x)$ and $\Kbar(x+1)$ are isomorphic via a map $\sigma$
 sending $x$ to $x+1$.  Every automorphism of a subfield of $\C$

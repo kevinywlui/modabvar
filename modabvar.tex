@@ -19,17 +19,17 @@
 \maketitle
 \tableofcontents
 \begin{abstract}
-  We lay the foundations for a computational theory of abelian
-  varieties over $\Q$ of $\GL_2$-type, or equivalently, with factors
-  of modular Jacobians $J_1(N)$.  This will make it possible to
-  generalize Cremona's tables of elliptic curves to higher dimension.
-  We describe algorithms for enumerating and decomposing $\GL_2$-type
-  abelian varieties, isomorphism testing, computation of endomorphism
-  and homomorphism rings, arithmetic with finite subgroups, computing
-  the modular degree, computing special values of $L$-functions, and
-  computing Tamagawa numbers.  None of our algorithms use defining
-  equations for varieties, and as such they work in a great degree of
-  generality allowing us to treat all dimensions uniformly.
+	We lay the foundations for a computational theory of abelian
+	varieties over $\Q$ of $\GL_2$-type, or equivalently, with factors
+	of modular Jacobians $J_1(N)$.  This will make it possible to
+	generalize Cremona's tables of elliptic curves to higher dimension.
+	We describe algorithms for enumerating and decomposing $\GL_2$-type
+	abelian varieties, isomorphism testing, computation of endomorphism
+	and homomorphism rings, arithmetic with finite subgroups, computing
+	the modular degree, computing special values of $L$-functions, and
+	computing Tamagawa numbers.  None of our algorithms use defining
+	equations for varieties, and as such they work in a great degree of
+	generality allowing us to treat all dimensions uniformly.
 \end{abstract}
 
 
@@ -46,7 +46,7 @@ Tamagawa numbers.  None of our algorithms use defining equations for
 varieties, and as such they work in a great degree of generality
 allowing us to treat all dimensions uniformly.  There are also several
 open problems that are suggested by this paper [[give
-cross-references]].
+				cross-references]].
 
 As mentioned above, a distinctive feature of our approach is that we
 do not use explicit defining equations. This is in stark contrast to the
@@ -57,13 +57,13 @@ in this paper may be applicable to \cite{MR2282913} and
 forthcoming paper \cite{calegari-stein:eisenstein}.  The author has
 implemented all of the algorithms described here, and they are
 included in Sage (which is free open source software \cite{sage}).
-[[Cite that whole French paper that does via ad hoc methods something
-like we do just for $J_0(125)$.]]
+	[[Cite that whole French paper that does via ad hoc methods something
+				like we do just for $J_0(125)$.]]
 
 In this paper we mostly ignore issues of computational complexity,
 since our goal is to describe how it is {\em practical at all} to
 compute explicitly with modular abelian varieties.  Except for [[...??
-norm equations]], the algorithm discussed in this paper mostly amount
+				norm equations]], the algorithm discussed in this paper mostly amount
 to linear algebra and have complexity that is polynomial time in the
 level $N$ of the abelian variety.
 
@@ -87,7 +87,7 @@ isomorphism classes of pairs $(E,P)$, where $E$ is an elliptic curve
 and $P$ is a point of order $N$, and let $J_1(N)$ be the Jacobian of
 $X_1(N)$, which is an abelian variety over $\Q$.  An abelian variety
 $A$ over $\QQ$ is \defn{modular} if there is a homomorphism $A \to
-J_1(N)$ with finite kernel.
+	J_1(N)$ with finite kernel.
 
 Ribet observed in \cite[\S3]{ribet:abvars} that every modular abelian
 variety is of $\GL_2$-type.  His paper also shows
@@ -98,7 +98,7 @@ Since Khare and Wintenberger have now completely proved Serre's
 conjecture, we have the following theorem.
 
 \begin{theorem}[Khare, Wintenberger]\label{conj:ribmod}
-Every $\GL_2$-type abelian variety over $\Q$ is modular.
+	Every $\GL_2$-type abelian variety over $\Q$ is modular.
 \end{theorem}
 Thus to explicitly compute with abelian varieties of $\GL_2$-type it
 suffices to consider modular abelian varieties, which we do for the
@@ -107,19 +107,19 @@ rest of this paper.
 
 
 \begin{remark}
-  In this paper we only consider modular abelian varieties defined
-  over~$\Q$.  It would be interesting to use similar methods to treat
-  the general case of modular abelian varieties over a number field
-  $K$, by which we mean abelian varieties $A$ over $K$ for which there
-  exists a finite degree morphism $A\to J_1(N)$ over $K$ for some
-  $N$. The main complication is that the endomorphism ring over
-  $\Qbar$ of a simple modular abelian variety $A$ over $\Q$ need not
-  be commutative.  Fortunately much is known about its structure (see
-  \cite{ribet:twistsendoalg}).
+	In this paper we only consider modular abelian varieties defined
+	over~$\Q$.  It would be interesting to use similar methods to treat
+	the general case of modular abelian varieties over a number field
+	$K$, by which we mean abelian varieties $A$ over $K$ for which there
+	exists a finite degree morphism $A\to J_1(N)$ over $K$ for some
+	$N$. The main complication is that the endomorphism ring over
+	$\Qbar$ of a simple modular abelian variety $A$ over $\Q$ need not
+	be commutative.  Fortunately much is known about its structure (see
+	\cite{ribet:twistsendoalg}).
 
-  Also many of the algorithms in this paper naturally generalize to
-  the context of Grothendieck motives attached to modular forms.  This
-  is also a topic for future investigation.
+	Also many of the algorithms in this paper naturally generalize to
+	the context of Grothendieck motives attached to modular forms.  This
+	is also a topic for future investigation.
 \end{remark}
 
 
@@ -130,24 +130,24 @@ follows. Let $J$ be an arbitrary finite product of modular Jacobians
 $J_H(N)=\Jac(X_H(N))$ for subgroups $H\subset (\Z/N\Z)^*$, where
 $N$ is a positive integer (see \ref{sec:amb_modabvar} for the definition
 of $J_H(N)$).  We will refer to $J$ as an \emph{ambient modular abelian
-variety}.
+	variety}.
 Fix a modular abelian variety $A$ and a
 finite degree homomorphism $\vphi: A\to J$.  Then there is an isogeny
 from the image $B$ of $A$ in $J$ back to $A$ whose kernel we denote by
 $G$, so $A$ is isomorphic to $B/G$ and $B\subset J$:
 $$
-\xymatrix{
-   & & J & & \\
-   0\ar[r]& G \ar[r]& B\ar@{^(->}[u] \ar[r]& A\ar[r] \ar@/^/[l]\ar[ul]_{f} & 0
-}
+	\xymatrix{
+	& & J & & \\
+	0\ar[r]& G \ar[r]& B\ar@{^(->}[u] \ar[r]& A\ar[r] \ar@/^/[l]\ar[ul]_{f} & 0
+	}
 $$
 In other words we can represent any modular abelian variety by giving
 $G\subset B\subset J$, all defined over $\QQ$.  It remains to explain
 how we explicitly specify $B$ and $G$.
 
-{\em We specify $B$ as follows.}  The inclusion $B \hookrightarrow J$
+	{\em We specify $B$ as follows.}  The inclusion $B \hookrightarrow J$
 induces an inclusion of rational homology $\H_1(B, \Q) \hookrightarrow
-\H_1(J, \Q)$ and $B$ is determined by the image $V$ of $\H_1(B,\Q)$ in
+	\H_1(J, \Q)$ and $B$ is determined by the image $V$ of $\H_1(B,\Q)$ in
 the $\Q$-vector space $\H_1(J,\Q)$.  We explicitly compute a basis for
 $\H_1(J,\Z)$ and $\H_1(J,\Q)=\H_1(J,\Z)\tensor \QQ$ using modular
 symbols \cite{stein:modform}, and specify $B$ by giving a basis in
@@ -156,17 +156,17 @@ course, not every subspace corresponds to a modular abelian variety,
 but we can determine whether or not a given $V$ corresponds to a valid
 abelian subvariety (see Section \ref{sec:decomp_verify}).
 
-{\em We specify $G$ as follows.}
+	{\em We specify $G$ as follows.}
 Suppose $V$ defines an abelian subvariety $B$ of $J$ as above.
 By the Abel-Jacobi theorem, we have
 $$
- J(\C) \cong \H_1(J, \R) / \H_1(J,\Z),
+	J(\C) \cong \H_1(J, \R) / \H_1(J,\Z),
 $$
 and letting $\Lambda = \H_1(J,\Z) \cap V$ we have
 $B(\C) \cong (V\tensor\R) / \Lambda$.
 In particular,
 $$
-  B(\C)_{\tor} \cong V/\Lambda,
+	B(\C)_{\tor} \cong V/\Lambda,
 $$
 and we specify $G\subset B(\C)_{\tor}$ by giving the lattice $L$ with
 $\Lambda \subset L\subset V$ such that $L/\Lambda \isom G$.
@@ -182,8 +182,8 @@ $\Lambda \subset L\subset V$ such that $L/\Lambda \isom G$.
 For brevity, henceforth we use the term {\em modular abelian variety}
 to mean a modular (or equivalently $\GL_2$-type) abelian variety $A$
 that has been given explicitly by a triple $(V,L,J)$ where $V\subset
-\H_1(J,\QQ)$, the lattice $L\subset V$ contains $\Lambda = V\cap
-\H_1(J,\ZZ)$, and $J$ is specified by a finite ordered list of
+	\H_1(J,\QQ)$, the lattice $L\subset V$ contains $\Lambda = V\cap
+	\H_1(J,\ZZ)$, and $J$ is specified by a finite ordered list of
 congruence subgroups $\Gamma_0(N)$, $\Gamma_1(N)$, and $\Gamma_H(N)$.
 We use the notation $(V,J)$ as a shorthand for $L=\Lambda$.
 
@@ -197,17 +197,17 @@ We use the notation $(V,J)$ as a shorthand for $L=\Lambda$.
 Let $\Gamma_0(N)$ and $\Gamma_1(N)$ be the usual congruence subgroups of level
 $N$ (see~\cite{stein:modform}). In this article, we will consider subgroups of
 the form $\Gamma_H(N)$ with $\Gamma_1(N)\subseteq \Gamma_H(N)\subseteq
-\Gamma_0(N)$ defined by
+	\Gamma_0(N)$ defined by
 \[
-    \Gamma_H(N) = 
-    \left\{
-    \begin{pmatrix}
-        a & b \\
-        c & d
-    \end{pmatrix}
-    \in \SL_2(\ZZ) :
-    N\mid c \text{ and } a,b\in H
-    \right\}, 
+	\Gamma_H(N) =
+	\left\{
+	\begin{pmatrix}
+		a & b \\
+		c & d
+	\end{pmatrix}
+	\in \SL_2(\ZZ) :
+	N\mid c \text{ and } a,b\in H
+	\right\},
 \]
 where $H$ is a normal subgroup of $(\ZZ/N\ZZ)^*$ given by a list of generators.
 
@@ -218,9 +218,9 @@ space of cuspidal modular symbols (see~\cite[\S 3]{stein:modform}).
 \subsection{Enumerating New Simple Modular Abelian Varieties}
 
 \begin{algorithm}{Enumerate Modular Abelian Varieties}
-  Given a modular Jacobian $J$ this algorithm outputs a list of
-  abelian subvarieties of $J$ in each isogeny class of simple modular
-  abelian varieties of level $N$.
+	Given a modular Jacobian $J$ this algorithm outputs a list of
+	abelian subvarieties of $J$ in each isogeny class of simple modular
+	abelian varieties of level $N$.
 \end{algorithm}
 
 
@@ -228,42 +228,42 @@ space of cuspidal modular symbols (see~\cite[\S 3]{stein:modform}).
 \subsubsection{New and Old Subvarieties and Quotients}
 
 \begin{algorithm}{Decomposition of modular Jacobians}
-    \label{alg:decomp_jacobian}
-    Let $J=J_H(N)$ with Hecke algebra $\T$. This algorithm will give a sequence
-    of abelian subvarieties $A_i$ with finite intersection and sums to $J$. Let
-    $L_1,\ldots, L_r$ be the divisors of $N$.
-    \begin{enumerate}
-        \item{} [Compute new modular symbols space]
-            For each divisor $L_i$, compute the new modular symbol space
-            $\mathbb{M}_2(L_i)_\mathrm{new}$ using the techniques in \cite[\S
-            8]{stein:modform}.
-        \item{} [Factor into Hecke eigenspaces]
-            The new modular symbol space decomposes into 1-dimensional complex
-            simultaneous eigenspaces for $\T$. So for each divisor $L_i$, we can
-            factor the new modular symbols space by computing the eigenspaces
-            with respect to a sufficiently generic element of the Hecke algebra.
-            \begin{enumerate}
-                \item{} [Randomly pick from Hecke Algebra]
-                    Randomly pick $T\in \T$.
-                \item{} [Factor characteristic polynomial]
-                    Let $\prod f_j ^{e_j}$ be a factorization of the characteristic
-                    polynomial of $T$ so that each $f_j$ is irreducible and
-                    distinct. Since elements of $\T$ are $\CC$-linear, each
-                    $e_j$ to be even.
-                \item{} [Irreducible?]
-                    If any $e_j/2 > 1$, some eigenspace of $T$ has complex
-                    dimension greater than 1 so return to step (a). Otherwise,
-                    Compute the eigenspace decomposition $\{W_{ik}\}$ of
-                    $\mathbb{M}_2(L_i)_\mathrm{new}$
-            \end{enumerate}
-        \item{} [Return image under degeneracy maps]
-            For each divisor $L_i$, and each divisor $t_{il}$ of $N/L_i$,
-            compute image $d_{L_i, t_{il}}(W_{ik})$. Return the sequence
-            $(d_{L_i, t_{il}}(W_{ik}), J)$. 
-    \end{enumerate}
+	\label{alg:decomp_jacobian}
+	Let $J=J_H(N)$ with Hecke algebra $\T$. This algorithm will give a sequence
+	of abelian subvarieties $A_i$ with finite intersection and sums to $J$. Let
+	$L_1,\ldots, L_r$ be the divisors of $N$.
+	\begin{enumerate}
+		\item{} [Compute new modular symbols space]
+		      For each divisor $L_i$, compute the new modular symbol space
+		      $\mathbb{M}_2(L_i)_\mathrm{new}$ using the techniques in \cite[\S
+			      8]{stein:modform}.
+		\item{} [Factor into Hecke eigenspaces]
+		      The new modular symbol space decomposes into 1-dimensional complex
+		      simultaneous eigenspaces for $\T$. So for each divisor $L_i$, we can
+		      factor the new modular symbols space by computing the eigenspaces
+		      with respect to a sufficiently generic element of the Hecke algebra.
+		      \begin{enumerate}
+			      \item{} [Randomly pick from Hecke Algebra]
+			            Randomly pick $T\in \T$.
+			      \item{} [Factor characteristic polynomial]
+			            Let $\prod f_j ^{e_j}$ be a factorization of the characteristic
+			            polynomial of $T$ so that each $f_j$ is irreducible and
+			            distinct. Since elements of $\T$ are $\CC$-linear, each
+			            $e_j$ to be even.
+			      \item{} [Irreducible?]
+			            If any $e_j/2 > 1$, some eigenspace of $T$ has complex
+			            dimension greater than 1 so return to step (a). Otherwise,
+			            Compute the eigenspace decomposition $\{W_{ik}\}$ of
+			            $\mathbb{M}_2(L_i)_\mathrm{new}$
+		      \end{enumerate}
+		\item{} [Return image under degeneracy maps]
+		      For each divisor $L_i$, and each divisor $t_{il}$ of $N/L_i$,
+		      compute image $d_{L_i, t_{il}}(W_{ik})$. Return the sequence
+		      $(d_{L_i, t_{il}}(W_{ik}), J)$.
+	\end{enumerate}
 \end{algorithm}
 
-\subsubsection{Decomposition and Verification of an Abelian Subvariety} 
+\subsubsection{Decomposition and Verification of an Abelian Subvariety}
 \label{sec:decomp_verify}
 
 As mentioned in the introduction, not every subspace $V$ of $H_1(J, \QQ)$
@@ -273,88 +273,88 @@ algorithm will also give a decomposition of $V$ into simple subvarieties.
 
 
 \begin{proposition}
-    \label{prop:integral_degen}
-    Let $A$ be a simple subvariety of $J_H(N)$. From the work of Shimura,
-    there exists a divisor $L$ of $N$ and a newform $f$ of level $L$ such that
-    $A_f \sim A$. Let $d_1,\ldots,d_r$ be the full collection of degeneracy
-    maps from $J_H(L)$ to $J_H(N)$. Then there exists integers $n_1,\ldots,n_r$
-    such that $S:=\sum n_i d_i: A_f\to A$ is an isogeny from $A_f$ to $A$. Note
-    that $S$ is defined over $\QQ$.
+	\label{prop:integral_degen}
+	Let $A$ be a simple subvariety of $J_H(N)$. From the work of Shimura,
+	there exists a divisor $L$ of $N$ and a newform $f$ of level $L$ such that
+	$A_f \sim A$. Let $d_1,\ldots,d_r$ be the full collection of degeneracy
+	maps from $J_H(L)$ to $J_H(N)$. Then there exists integers $n_1,\ldots,n_r$
+	such that $S:=\sum n_i d_i: A_f\to A$ is an isogeny from $A_f$ to $A$. Note
+	that $S$ is defined over $\QQ$.
 \end{proposition}
 \begin{proof}
-    Let $V_f=\sum_{i=1} ^r d_i(A_f)$ and $\Phi:A_f ^r \to V_f$ be defined by
-    $D(x_1,\ldots,x_r) = d_1(x_1)+\cdots+d_r(x_r)$. Let $K_f$ be the Fourier
-    coefficient field of $f$. Since $A$ is an abelian subvariety of $V_f$, there
-    exists $M\in \End_0(V)\cong M_r(\End_0(A_f)) = M_r (K_f)$ such that $\Im M
-    = A$. Let $i:A_f\to A_f ^r$ be the inclusion map into the first coordinate.
-    Then there exists $U\in \Aut(A_f ^r)=\GL_r (K_f)$ such that,
-    \[
-        \begin{tikzcd}
-            A_f \arrow[r,"i"] &
-            A_f ^r \arrow[r, dotted, "U"] &
-            A_f ^r \arrow[r, "D"] &
-            V_f \arrow[r, "M"] &
-            A,
-        \end{tikzcd}
-    \]
-    the map $T:=M \circ \Phi \circ U\circ i:A_f\to A\in \Hom_0(A_f, A)$ is
-    nonzero. Since degeneracy maps are $K_f$-linear, there exists coefficients
-    $a_1,\ldots,a_r\in K_f$ such that $T = \sum a_i d_i$. Now there exists
-    $b\in \ZZ_{>0}$ such that $T':=bT\in \Hom(A_f, A)$ is nonzero and hence an
-    isogeny. Since $T'(\Lambda_{A_f})\subset \Lambda_A$, $T'=\sum q_i d_i$
-    for $q_i\in \QQ$. Finally, there exists $w\in \ZZ_{>0}$ such that
-    $S:=wT'=\sum n_i d_i$ with $n_i\in \ZZ$.
+	Let $V_f=\sum_{i=1} ^r d_i(A_f)$ and $\Phi:A_f ^r \to V_f$ be defined by
+	$D(x_1,\ldots,x_r) = d_1(x_1)+\cdots+d_r(x_r)$. Let $K_f$ be the Fourier
+	coefficient field of $f$. Since $A$ is an abelian subvariety of $V_f$, there
+	exists $M\in \End_0(V)\cong M_r(\End_0(A_f)) = M_r (K_f)$ such that $\Im M
+		= A$. Let $i:A_f\to A_f ^r$ be the inclusion map into the first coordinate.
+	Then there exists $U\in \Aut(A_f ^r)=\GL_r (K_f)$ such that,
+	\[
+		\begin{tikzcd}
+			A_f \arrow[r,"i"] &
+			A_f ^r \arrow[r, dotted, "U"] &
+			A_f ^r \arrow[r, "D"] &
+			V_f \arrow[r, "M"] &
+			A,
+		\end{tikzcd}
+	\]
+	the map $T:=M \circ \Phi \circ U\circ i:A_f\to A\in \Hom_0(A_f, A)$ is
+	nonzero. Since degeneracy maps are $K_f$-linear, there exists coefficients
+	$a_1,\ldots,a_r\in K_f$ such that $T = \sum a_i d_i$. Now there exists
+	$b\in \ZZ_{>0}$ such that $T':=bT\in \Hom(A_f, A)$ is nonzero and hence an
+	isogeny. Since $T'(\Lambda_{A_f})\subset \Lambda_A$, $T'=\sum q_i d_i$
+	for $q_i\in \QQ$. Finally, there exists $w\in \ZZ_{>0}$ such that
+	$S:=wT'=\sum n_i d_i$ with $n_i\in \ZZ$.
 \end{proof}
 
 \begin{algorithm}{Decomposing and Verifying Abelian Subvarieties}
-    Let $J=J_H(N)$ and $V$ be a subspace of $H_1(J, \QQ)$. If $V$ corresponds
-    to a subvariety $A$ of $J$, then this algorithm will return a decomposition
-    into simples $X_i=(V_i, J)$ of $A$, otherwise, this algorithm will return
-    'NO'. Let $\T=\{T_1,\ldots\}$ be the Hecke algebra of $J$.
-    \begin{enumerate}
-        \item{} [Decompose into potential Hecke eigenspaces] 
-            We first decompose $V$ into a direct sum $V=W_1\oplus \cdots \oplus
-            W_r$ so that, for each $W_i$, there exists a newform $f_i$ of level
-            dividing $N$, such that either $W_i$ either corresponds to an
-            abelian subvariety isogenous to a power of $A_{f_i}$ or is not an
-            abelian subvariety and we can return 'NO'.
-            \begin{enumerate}
-                \item{} [Initialize]
-                    Set $j=1$.
-                \item{} [Decompose into eigenspaces]
-                    Compute the simultaneous eigenspaces $U_{j,1},\ldots,U_{j,
-                    n_j}$ of $\{T_1,\ldots,T_j\}$. If $\sum_{k=1} ^{n_j}
-                    U_{j, k}\neq V$, return 'NO'.
-                \item{} [Compare with newforms]
-                    Let $S_{j,k}$ be the set of newforms whose $l$th Fourier
-                    coefficient agrees with the eigenvalue of $T_l$ on $U_{j,
-                    k}$ for $l=1,\ldots,j$. If $S_{j, k}$ is empty for any
-                    $k=1,\ldots,n_j$, return 'NO". If $S_{j,k}$ is not
-                    singleton for any $k=1,\ldots, n_j$, increment $j$ and
-                    return to (b). Otherwise, $S_{j,k}$ is singleton for all
-                    $k$ so let $S_{j,k}=\{f_k\}$ and $W_k=U_{j,k}$.
-            \end{enumerate}
-        \item{} [Is isogenous to power?]
-            We now verify that each $W_i$ is isogenous to a power of $A_{f_i}$
-            and give its decomposition. The $W_i$'s are pairwise non-isogenous
-            so we will do this individually for each $W_i$ and consider just a
-            single pair $W$ and $A_f$ with $f$ being a newform of level $L$.
-            Let $d_1,\ldots,d_r:J_H(L)\to J_H(N)$ be the full collection of
-            degeneracy maps from $J_H(L)$ to $J_H(N)$.  Set $U=\{0\}$.
-            \begin{enumerate}
-                \item{} [Image of $\QQ$-combination of $d_j$'s?]
-                    Choose any $v\in V\setminus U$. By
-                    Proposition~\ref{prop:integral_degen}, if $W$ is an abelian
-                    subvariety then there exists $q_1,\ldots,q_r$
-                    such that $v\in \Im \left(\sum_{i=1} ^r q_i
-                    \delta_i\right)$. If this is not the case, return
-                    'NO'. Let $R = \Im \left(\sum_{i=1} ^r q_i
-                    \delta_i\right)$. If $R\not\subset V$, return 'NO'.  
-                \item{} [Full space?]
-                    Replace $U$ with $U+R$. If $V=U$, we are done. Otherwise,
-                    return to (b). 
-            \end{enumerate}
-    \end{enumerate}
+	Let $J=J_H(N)$ and $V$ be a subspace of $H_1(J, \QQ)$. If $V$ corresponds
+	to a subvariety $A$ of $J$, then this algorithm will return a decomposition
+	into simples $X_i=(V_i, J)$ of $A$, otherwise, this algorithm will return
+	'NO'. Let $\T=\{T_1,\ldots\}$ be the Hecke algebra of $J$.
+	\begin{enumerate}
+		\item{} [Decompose into potential Hecke eigenspaces]
+		      We first decompose $V$ into a direct sum $V=W_1\oplus \cdots \oplus
+			      W_r$ so that, for each $W_i$, there exists a newform $f_i$ of level
+		      dividing $N$, such that either $W_i$ either corresponds to an
+		      abelian subvariety isogenous to a power of $A_{f_i}$ or is not an
+		      abelian subvariety and we can return 'NO'.
+		      \begin{enumerate}
+			      \item{} [Initialize]
+			            Set $j=1$.
+			      \item{} [Decompose into eigenspaces]
+			            Compute the simultaneous eigenspaces $U_{j,1},\ldots,U_{j,
+				            n_j}$ of $\{T_1,\ldots,T_j\}$. If $\sum_{k=1} ^{n_j}
+				            U_{j, k}\neq V$, return 'NO'.
+			      \item{} [Compare with newforms]
+			            Let $S_{j,k}$ be the set of newforms whose $l$th Fourier
+			            coefficient agrees with the eigenvalue of $T_l$ on $U_{j,
+						            k}$ for $l=1,\ldots,j$. If $S_{j, k}$ is empty for any
+			            $k=1,\ldots,n_j$, return 'NO". If $S_{j,k}$ is not
+			            singleton for any $k=1,\ldots, n_j$, increment $j$ and
+			            return to (b). Otherwise, $S_{j,k}$ is singleton for all
+			            $k$ so let $S_{j,k}=\{f_k\}$ and $W_k=U_{j,k}$.
+		      \end{enumerate}
+		\item{} [Is isogenous to power?]
+		      We now verify that each $W_i$ is isogenous to a power of $A_{f_i}$
+		      and give its decomposition. The $W_i$'s are pairwise non-isogenous
+		      so we will do this individually for each $W_i$ and consider just a
+		      single pair $W$ and $A_f$ with $f$ being a newform of level $L$.
+		      Let $d_1,\ldots,d_r:J_H(L)\to J_H(N)$ be the full collection of
+		      degeneracy maps from $J_H(L)$ to $J_H(N)$.  Set $U=\{0\}$.
+		      \begin{enumerate}
+			      \item{} [Image of $\QQ$-combination of $d_j$'s?]
+			            Choose any $v\in V\setminus U$. By
+			            Proposition~\ref{prop:integral_degen}, if $W$ is an abelian
+			            subvariety then there exists $q_1,\ldots,q_r$
+			            such that $v\in \Im \left(\sum_{i=1} ^r q_i
+				            \delta_i\right)$. If this is not the case, return
+			            'NO'. Let $R = \Im \left(\sum_{i=1} ^r q_i
+				            \delta_i\right)$. If $R\not\subset V$, return 'NO'.
+			      \item{} [Full space?]
+			            Replace $U$ with $U+R$. If $V=U$, we are done. Otherwise,
+			            return to (b).
+		      \end{enumerate}
+	\end{enumerate}
 \end{algorithm}
 
 
@@ -363,13 +363,13 @@ algorithm will also give a decomposition of $V$ into simple subvarieties.
 \subsubsection{Sums and Products}
 
 Suppose $B=(V, L, J)$ is a modular abelian variety with subvarieties $A_1=(W_1,
-L_1, J)$ and $A_2=(W_2, L_2, J)$. Then the sum $A_1+A_2\subset B$ is given by
+	L_1, J)$ and $A_2=(W_2, L_2, J)$. Then the sum $A_1+A_2\subset B$ is given by
 $(W_1+W_2, L_3, J)$ with $L_3$ given by $L_3 = L\cap (W_1+W_2)$.
 
 Suppose $B_1=(V_1, L_1, J_1)$ and $B_2=(V_2, L_2, J_2)$ are modular abelian
 varieties with subvarieties $A_1=(W_1, L_1, J_1)\subset B_1$ and $A_2=(W_2,
-L_2, J_2)\subset B_2)$. Then the product $A_1\times A_2\subset B_1\times
-B_2$ is given by $(W_1\times W_2, L_1\times L_2, J_1\times J_2)$.
+	L_2, J_2)\subset B_2)$. Then the product $A_1\times A_2\subset B_1\times
+	B_2$ is given by $(W_1\times W_2, L_1\times L_2, J_1\times J_2)$.
 
 \subsubsection{Intersection}
 
@@ -378,16 +378,16 @@ Suppose $A = (V,J)$ and $A' = (V', J)$ are abelian subvarieties of a
 common ambient $J$.  Then $A\cap A'$ is an extension of the abelian
 variety $(A\cap A')^0 = (V\cap V', J)$ by a finite component group:
 $$
-\xymatrix{
-   & & J & & \\
-   0\ar[r]& (A\cap A')^0 \ar[r]&  A\cap A'\ar@{^(->}[u] \ar[r]& \Phi\ar[r] & 0,
-}
+	\xymatrix{
+		& & J & & \\
+		0\ar[r]& (A\cap A')^0 \ar[r]&  A\cap A'\ar@{^(->}[u] \ar[r]& \Phi\ar[r] & 0,
+	}
 $$
 The component group is isomorphic to the torsion subgroup of kernel of
 the map $A \times A' \to J$ sending $(x,y)\to x-y$, which we compute
 using Section~\ref{sec:kernelmodabvar}; in particular, we have
 $$
-   \Phi \isom \left( \Lambda_J/(\Lambda_A + \Lambda_A')\right)_{\tor}.
+	\Phi \isom \left( \Lambda_J/(\Lambda_A + \Lambda_A')\right)_{\tor}.
 $$
 If $A$ and $A'$ are preserved by $\End(J)$, then $\End(J)$ also
 acts on $\Phi$ via its action on $\Lambda_J$.
@@ -397,7 +397,7 @@ acts on $\Phi$ via its action on $\Lambda_J$.
 
 Let $J=J_H(N)$ and $\Gamma=\Gamma_H(N)$. Then $J$ is prinically polarized with
 respect to a theta-divisor corresponding to a Riemannian form $H$. Let $A=(V,
-J)$ be a subvariety of $J$. Poincare Reducibility states that the orthogonal
+	J)$ be a subvariety of $J$. Poincare Reducibility states that the orthogonal
 complement $V'$ of $V$ with respect to $H$ corresponds to an abelian subvariety
 $A'$ such that $A+A'=J$ and $A\cap A'$ is finite. The goal of this section is
 to describe how to compute this $V'$.
@@ -405,32 +405,32 @@ to describe how to compute this $V'$.
 The Riemmannian form $H$ is completely determined the image part of its
 restriction to $\Lambda_J$ which is, in turn, given by
 \[
-    \Im H(\gamma_1, \gamma_2) = \langle \gamma_1, \gamma_2 \rangle,
+	\Im H(\gamma_1, \gamma_2) = \langle \gamma_1, \gamma_2 \rangle,
 \]
 where $\gamma_1, \gamma_2\in H_1(J)$ and $\langle \cdot,\cdot \rangle$ is the
 intersection pairing on $\Lambda_J$. The goal now is to describe an algorithm
 for computing the intersection pairing as described by Verrill~\cite[\S
-4]{verrill:intersection}. The theory of Manin symbols gives a way to writing
+	4]{verrill:intersection}. The theory of Manin symbols gives a way to writing
 every modular symbol of $M_2(\Gamma_1(N))$ can be as
 \[
-    \sum_{g\in \SL_2{\ZZ}} g\{0, \infty\}
-\] 
-Let $\rho=(1+i\sqrt{3})/2$ and 
+	\sum_{g\in \SL_2{\ZZ}} g\{0, \infty\}
+\]
+Let $\rho=(1+i\sqrt{3})/2$ and
 $S = \left(
-    \begin{smallmatrix}
-        0 & -1 \\
-        1 & 0
-    \end{smallmatrix}
-\right)$,
+	\begin{smallmatrix}
+			0 & -1 \\
+			1 & 0
+		\end{smallmatrix}
+	\right)$,
 $T = \left(
-    \begin{smallmatrix}
-        1 & 1 \\
-        0 & 1
-    \end{smallmatrix}
-\right)$ be the usual generators for $\SL_2(\ZZ)$.
+	\begin{smallmatrix}
+			1 & 1 \\
+			0 & 1
+		\end{smallmatrix}
+	\right)$ be the usual generators for $\SL_2(\ZZ)$.
 Every every modular symbol of $S_2(\Gamma_1(N))$ can be written as
 \[
-    \sum_{h\in \SL_2{\ZZ}} h\{\rho, \rho^2\}.
+	\sum_{h\in \SL_2{\ZZ}} h\{\rho, \rho^2\}.
 \]
 using~\cite[Corollary 4.1]{verrill:intersection}. This step requires writing
 elements of $\SL_2(\ZZ)$ in terms of $ \langle S, T^{-1} \rangle$ which can be
@@ -438,13 +438,13 @@ done by dissecting Serre's proof~\cite[Chapter 7, Theorem 2]{MR0344216}.
 
 The intersection pairing is then given formally on the summands by
 \[
-    \langle g\{0,\infty\}, h\{\rho, \rho^2\} \rangle 
-    =
-    \begin{cases}
-        1 & \text{if } g\sim_\Gamma h \\
-        -1 & \text{if } g\sim_\Gamma Sh \\
-        0 & \text{if } g\not\sim_\Gamma h.
-    \end{cases}
+	\langle g\{0,\infty\}, h\{\rho, \rho^2\} \rangle
+	=
+	\begin{cases}
+		1  & \text{if } g\sim_\Gamma h      \\
+		-1 & \text{if } g\sim_\Gamma Sh     \\
+		0  & \text{if } g\not\sim_\Gamma h.
+	\end{cases}
 \]
 The intersection pairing on $H_1(J)$ is then obtained by extending linearly.
 
@@ -454,8 +454,8 @@ The intersection pairing on $H_1(J)$ is then obtained by extending linearly.
 \label{sec:quotients}
 
 Suppose $A = (V, L, J)$ is a modular abelian variety and $A' = (V',
-L', J)$ is an abelian subvariety of $A$, so $V\subset V'$ and $L' =
-L\cap V'$. Using Section~\ref{sec:poincare}, we compute $A/A'$ by
+	L', J)$ is an abelian subvariety of $A$, so $V\subset V'$ and $L' =
+	L\cap V'$. Using Section~\ref{sec:poincare}, we compute $A/A'$ by
 finding a complement $B=(V_B,L_B,J)$ of $A'$ in $A$ along with
 surjective projection maps $\pi_{A'}: A \to A'$ and $\pi_B: A\to B$.
 The kernel $\ker \pi_B$ is the extension of an abelian subvariety $C$ by a
@@ -471,16 +471,16 @@ in~\ref{sec:factor_component}.
 Let $G$ be a finite subgroup of a modular abelian variety $A=(V, L, J)$. Then
 the quotient is given by $A/G = (V, L+G, J)$.
 
-\subsection{Finite Subgroups} 
+\subsection{Finite Subgroups}
 
 \subsubsection{Defining Data}
 
 Let $A=(V, L, J)$ be a modular abelian variety. A finite subgroup $G$ of $A$
 can be specified by giving a defining lattice $\mathcal{L}$ such that
-$\mathcal{L}/L = G$ and a field of definition $K$ of $G$ as a group scheme. 
+$\mathcal{L}/L = G$ and a field of definition $K$ of $G$ as a group scheme.
 
 Given 2 finite subgroups $G_1=(\mathcal{L}_1, K_1, A)$ and $G_2=(\mathcal{L}_2,
-K_2, A)$, a map $\phi: G_1\to G_2$ can be given as a map on the defining
+	K_2, A)$, a map $\phi: G_1\to G_2$ can be given as a map on the defining
 lattices.
 
 \subsubsection{The $n$-Torsion Subgroup}
@@ -492,7 +492,7 @@ given by $(\frac{1}{n} L, \QQ, A)$.
 
 Let $G=(\mathcal{L}_1, K_1, A)$ and $H=(\mathcal{L}_2, K_2, A)$ be finite
 subgroups of an modular abelian variety $A=(L, V, J)$. Let $\mathcal{L}_1 ' =
-\mathcal{L}_1+L$ and $\mathcal{L}_2 ' = \mathcal{L}_2 + L$. Then the
+	\mathcal{L}_1+L$ and $\mathcal{L}_2 ' = \mathcal{L}_2 + L$. Then the
 intersection $G\cap H$ is the group $(\mathcal{L}, K_1K_2, A)$, where
 $\mathcal{L}=\mathcal{L}_1\cap \mathcal{L}_2 \cap V$.
 
@@ -500,14 +500,14 @@ $\mathcal{L}=\mathcal{L}_1\cap \mathcal{L}_2 \cap V$.
 
 Let $G=(\mathcal{L}_1, K_1, A)$ and $H=(\mathcal{L}_2, K_2, A)$ be finite
 subgroups of $A=(L, V, J)$. The sum is given by $G+H=(\mathcal{L}_1 +
-\mathcal{L}_2+L, K_1K_2, A)$.
+	\mathcal{L}_2+L, K_1K_2, A)$.
 
 \subsubsection{Quotients of Finite Subgroups}
 
 Let $G=(\mathcal{L}_1, K_1, A)$ and $H=(\mathcal{L}_2, K_2, A)$ be finite
 subgroups of $A=(L, V, J)$ with $H\subset G$ so $\mathcal{L}_2\subset
-\mathcal{L}_1$. The quotient is given by $G/H=(\mathcal{L}_1/\mathcal{L}_2,
-K_1K_2, A/H)$, where the computation of $A/H$ is given in
+	\mathcal{L}_1$. The quotient is given by $G/H=(\mathcal{L}_1/\mathcal{L}_2,
+	K_1K_2, A/H)$, where the computation of $A/H$ is given in
 Section~\ref{sec:quotients}.
 
 
@@ -519,18 +519,18 @@ $\Gamma_H(N)$. We will denote the elements by $[x/y]_{\Gamma_H(N)}$. The
 $(\alpha)-(\beta)$ where $\alpha, \beta$ are cusps on $J$. More generally, if
 $A=(L, V, J)$ is a modular abelian variety that is the quotient of $B$ by $L$.
 Then the cuspidal subgroup of $A$ is defined to be $(C\cap B)/L$, where $C$ is
-the cuspidal subgroup of $J$. 
+the cuspidal subgroup of $J$.
 
 The Galois structure of the cuspidal subgroup is well-understood~\cite[\S
-1.3]{MR670070}. The points of the cuspidal subgroup are $\QQ(\mu_N)$-rational
+	1.3]{MR670070}. The points of the cuspidal subgroup are $\QQ(\mu_N)$-rational
 with the following Galois action. The Galois $\Gal(\QQ(\mu_N)/\QQ)\cong
-\ZZ/N\ZZ)^*$, let
+	\ZZ/N\ZZ)^*$, let
 \[
-    \sigma_d\in \Gal(\Q(\mu_N)/\Q):\mu_N\mapsto \mu_N ^d
+	\sigma_d\in \Gal(\Q(\mu_N)/\Q):\mu_N\mapsto \mu_N ^d
 \]
 then
 \[
-    \sigma_d([x/y]_{\Gamma_1})=[x/d'y]_{\Gamma_1},
+	\sigma_d([x/y]_{\Gamma_1})=[x/d'y]_{\Gamma_1},
 \]
 where $dd'\equiv 1 \mod{N}$. With this, we are able to compute the
 \emph{rational cuspidal subgroup} $C(\QQ):=C^{\Gal(\QQ(\mu)/\QQ)}$.
@@ -542,7 +542,7 @@ point counting over finite fields
 divisor, multiple of order
 
 
-In general 
+In general
 
 An upper bound can be
 ..william's thing..
@@ -552,14 +552,14 @@ An upper bound can be
 For any integer $N$, there exists a map between modular curves given
 on the non-cuspidal points by
 \begin{align*}
-    s_N ^*: Y_1(N) & \to Y_0(N) \\
-    (E, P)      & \mapsto (E, \langle P \rangle).
+	s_N ^*: Y_1(N) & \to Y_0(N)                      \\
+	(E, P)         & \mapsto (E, \langle P \rangle).
 \end{align*}
 By Pic functoriality, this induces a map $s_N: J_0(N)\to J_1(N)$. The kernel of
 this map is the \emph{Shimura subgroup}, denoted $\Sigma(N)$.
 Ribet~\cite[Theorem 4.3]{ribet:congrel} shows that for any prime $p$ coprime to
 $N$, $\Sigma(N)=\ker(d_1 - d_p)$, where $d_1,d_p :J_0(N)\to J_0(pN)$ are the
-degeneracy maps. 
+degeneracy maps.
 
 Ling and Oesterle~\cite[Theorem 1,2]{MR1141458} gives a formula for the group
 invariants of the Shimura subgroup as an abstract abelian group. Moreover, if
@@ -584,7 +584,7 @@ rational homology.
 \subsubsection{Natural Maps}
 
 The Hecke operators~\cite[\S 8.3]{stein:modform}, degeneracy maps~\cite[\S
-8.6]{stein:modform}, and star involution~\cite[\S 8.5]{stein:modform} are
+	8.6]{stein:modform}, and star involution~\cite[\S 8.5]{stein:modform} are
 useful maps defined on modular symbols which, in turn, induce maps on the
 Jacobian.
 
@@ -596,7 +596,7 @@ Jacobian.
 Let $\Phi:A\to B$ be a morphism between modular abelian varieties $A=(L, V, J)$
 and $B=(L', V', J')$. Let $V_K=\ker \phi_V$ and $L_K=L\cap V_K$. Then the
 kernel $K$ of $\phi$ is the extension of the abelian variety $K^0 = (L_K, V_K,
-J)$ by a finite component group $G$. The group $G$ is given by...
+	J)$ by a finite component group $G$. The group $G$ is given by...
 
 \subsubsection{Images of Morphisms}
 \label{sec:image}
@@ -617,26 +617,26 @@ and $B=(L', V', J')$. The cokernel is the abelian variety $B/\Phi(A)$. The
 image $\Phi(A)$ is describe in Section~\ref{sec:image} and the quotient is
 described in Section~\ref{sec:quotients}.
 
-\subsubsection{The Projection Morphism} 
+\subsubsection{The Projection Morphism}
 
 Let $A=(L, V, J)$ be a modular abelian variety with subvarieties $B_1=(L_1,
-V_1, J)$ and $B_2=(L_2, V_2, J)$ such that $B_1+B_2=A$ and $B_1\cap B_2$
+	V_1, J)$ and $B_2=(L_2, V_2, J)$ such that $B_1+B_2=A$ and $B_1\cap B_2$
 finite. A projection morphism is a surjective map $\pi:A\to B_1$ with $(\ker
-pi)^0 = B_2$. This morphism is not unique.
+	pi)^0 = B_2$. This morphism is not unique.
 
 \begin{algorithm}{Computing Projection Morphism}
-    \begin{enumerate}
-        \item{} [Basis for lattice]
-            Let $\{\lambda_1,\ldots,\lambda_n\}$, $\{u_1,\ldots,u_r\}$, and
-            $\{v_1,\ldots,v_s\}$ be bases for the defining lattices of $A, B_1,
-            B_2$, respectively.
-        \item{} [Project]
-            For each $i$, write $\lambda_i=u_i+v_i$, where $u_i\in B_1$ and
-            $v_i\in B_2$ are torsion. This is possible because $A=B_1+B_2$
-            though not unique unless $B_1\cap B_2$ is trivial.
-        \item{} [Return map]
-            Return the map $\phi$ given by the formula $\phi(\lambda_i)=u_i$.
-    \end{enumerate}
+	\begin{enumerate}
+		\item{} [Basis for lattice]
+		      Let $\{\lambda_1,\ldots,\lambda_n\}$, $\{u_1,\ldots,u_r\}$, and
+		      $\{v_1,\ldots,v_s\}$ be bases for the defining lattices of $A, B_1,
+			      B_2$, respectively.
+		\item{} [Project]
+		      For each $i$, write $\lambda_i=u_i+v_i$, where $u_i\in B_1$ and
+		      $v_i\in B_2$ are torsion. This is possible because $A=B_1+B_2$
+		      though not unique unless $B_1\cap B_2$ is trivial.
+		\item{} [Return map]
+		      Return the map $\phi$ given by the formula $\phi(\lambda_i)=u_i$.
+	\end{enumerate}
 \end{algorithm}
 
 \subsubsection{Left and Right Inverses}
@@ -650,26 +650,26 @@ pi)^0 = B_2$. This morphism is not unique.
 The following saturation algorithm will be important
 when computing $\End(A)$ and $\Hom(A,B)$.
 
-[[insert very quick summary of Hermite and smith forms]]
+	[[insert very quick summary of Hermite and smith forms]]
 
-[[this should go in paper on hnf, etc. writing with
-Clement Pernet]]
+	[[this should go in paper on hnf, etc. writing with
+				Clement Pernet]]
 
 \begin{algorithm}{Saturate}
-Given a subgroup $L$ of $\Z^n$, this algorithm computes
-the saturation $(\Q L) \cap \Z^n$ of $L$ in $\Z^n$.
-Let $M$ be a matrix whose rows are a $\Z$-basis for $L$.
+	Given a subgroup $L$ of $\Z^n$, this algorithm computes
+	the saturation $(\Q L) \cap \Z^n$ of $L$ in $\Z^n$.
+	Let $M$ be a matrix whose rows are a $\Z$-basis for $L$.
 
-\begin{enumerate}
-\item{} [Hermite Normal Form] Find the Hermite Normal Form $H$ of $M^t$.
-\item{} [Inverse] Compute $S = (H^t)^{-1} M$ using the ``last big row'' trick.
-Then output $S$ whose rows are a basis for the saturation of $L$.
-\end{enumerate}
+	\begin{enumerate}
+		\item{} [Hermite Normal Form] Find the Hermite Normal Form $H$ of $M^t$.
+		\item{} [Inverse] Compute $S = (H^t)^{-1} M$ using the ``last big row'' trick.
+		      Then output $S$ whose rows are a basis for the saturation of $L$.
+	\end{enumerate}
 \end{algorithm}
 \begin{proof}
-It suffices to prove that $(H^t)^{-1}M$ has rows that span the
-saturation of the row span of $M$.
-[...]
+	It suffices to prove that $(H^t)^{-1}M$ has rows that span the
+	saturation of the row span of $M$.
+		[...]
 \end{proof}
 
 Note that one could instead replace $H$ by an LLL reduced basis for
@@ -681,97 +681,97 @@ form is fast.
 If $A$ is an abelian variety of dimension $2$ then after chosing a basis for
 $\Lambda = \H_1(A,\Z)$, we have
 $$
-  \End(\Lambda)\isom \Mat_{2d\times 2d}(\Z) \ncisom \Z^{(2d)^2}.
+	\End(\Lambda)\isom \Mat_{2d\times 2d}(\Z) \ncisom \Z^{(2d)^2}.
 $$
 
 \begin{proposition}\label{prop:end}
-Let $A$ be a simple abelian variety over a number field $K$,
-let $\Lambda = \H_1(A,\Z)$ and
-embed $\End(A/K)$ in $\End(\Lambda)$
-by the action of endomorphisms on homology.   Then
-$$
-  \End(A/K) = (\End(A/K)\tensor \Q)\cap \End(\Lambda),
-$$
-where  the intersection takes place in $\End(\Lambda)\tensor\Q$.
+	Let $A$ be a simple abelian variety over a number field $K$,
+	let $\Lambda = \H_1(A,\Z)$ and
+	embed $\End(A/K)$ in $\End(\Lambda)$
+	by the action of endomorphisms on homology.   Then
+	$$
+		\End(A/K) = (\End(A/K)\tensor \Q)\cap \End(\Lambda),
+	$$
+	where  the intersection takes place in $\End(\Lambda)\tensor\Q$.
 \end{proposition}
 We will use the following lemma in the proof of Proposition~\ref{prop:end}.
 \begin{lemma}\label{lem:gal}
-  Let $K$ be a number field.  If an element $x\in \C$ is fixed by
-  every element of $\Aut(\C/K)$, then $x\in K$.
+	Let $K$ be a number field.  If an element $x\in \C$ is fixed by
+	every element of $\Aut(\C/K)$, then $x\in K$.
 \end{lemma}
 \begin{proof}
-  If $x\in\Kbar$, this is standard Galois theory.  If $x\not\in
-  \Kbar$, then $x$ is transcendental.  Since $x+1$ is also transcendental,
-the fields $\Kbar(x)$ and $\Kbar(x+1)$ are isomorphic via a map $\sigma$
-sending $x$ to $x+1$.  Every automorphism of a subfield of $\C$
-extends to $\C$, so $\sigma$ extends to an automorphism of $\C$
-that does not fix~$x$.
+	If $x\in\Kbar$, this is standard Galois theory.  If $x\not\in
+		\Kbar$, then $x$ is transcendental.  Since $x+1$ is also transcendental,
+	the fields $\Kbar(x)$ and $\Kbar(x+1)$ are isomorphic via a map $\sigma$
+	sending $x$ to $x+1$.  Every automorphism of a subfield of $\C$
+	extends to $\C$, so $\sigma$ extends to an automorphism of $\C$
+	that does not fix~$x$.
 \end{proof}
 
 \begin{proof}[Proof of Proposition~\ref{prop:end}]
-An element of $\End(A/\C)$ is just
-a complex linear map on $\Tan(A_\C)$  that preserves $\Lambda$.
-The inclusion of $\End(A/K)$ in the right hand side is obvious,
-so suppose $\vphi \in (\End(A/K)\tensor \Q)\cap \End(\Lambda)$.
-Then there is a positive integer $n$ such that $n\vphi\in \End(A/K)$.
-Thus $n\vphi\in \End(A/K)\tensor\Q$ induces a complex-linear endomorphism of $\Tan(A_\C)$,
-so $\vphi = (1/n)n\vphi $ also induces a complex-linear endomorphism of $\Tan(A_\C)$;
-also, by hypothesis $\vphi$ preserves $\Lambda$.
-Thus $\vphi\in\End(A/\C)$.
+	An element of $\End(A/\C)$ is just
+	a complex linear map on $\Tan(A_\C)$  that preserves $\Lambda$.
+	The inclusion of $\End(A/K)$ in the right hand side is obvious,
+	so suppose $\vphi \in (\End(A/K)\tensor \Q)\cap \End(\Lambda)$.
+	Then there is a positive integer $n$ such that $n\vphi\in \End(A/K)$.
+	Thus $n\vphi\in \End(A/K)\tensor\Q$ induces a complex-linear endomorphism of $\Tan(A_\C)$,
+	so $\vphi = (1/n)n\vphi $ also induces a complex-linear endomorphism of $\Tan(A_\C)$;
+	also, by hypothesis $\vphi$ preserves $\Lambda$.
+	Thus $\vphi\in\End(A/\C)$.
 
-There is a nonzero integer $n$ such that $n\vphi$ is defined over $K$,
-so for any $\sigma\in\Gal(\C/K)$, we have $\sigma([n]\vphi) - [n]\vphi
-= 0$.  But
-$$\sigma([n]\vphi) = \sigma([n])\sigma(\vphi) = [n]\sigma(\vphi),$$
-so
-$$[n](\sigma(\vphi) - \vphi) = 0,$$
-which implies $\sigma(\vphi)=\vphi$, since the kernel of $[n]$ is
-finite and the image of $\sigma(\vphi)-\vphi$ is either infinite or
-$0$.  By Lemma~\ref{lem:gal}, $\vphi\in \End(A/K)$.
+	There is a nonzero integer $n$ such that $n\vphi$ is defined over $K$,
+	so for any $\sigma\in\Gal(\C/K)$, we have $\sigma([n]\vphi) - [n]\vphi
+		= 0$.  But
+	$$\sigma([n]\vphi) = \sigma([n])\sigma(\vphi) = [n]\sigma(\vphi),$$
+	so
+	$$[n](\sigma(\vphi) - \vphi) = 0,$$
+	which implies $\sigma(\vphi)=\vphi$, since the kernel of $[n]$ is
+	finite and the image of $\sigma(\vphi)-\vphi$ is either infinite or
+	$0$.  By Lemma~\ref{lem:gal}, $\vphi\in \End(A/K)$.
 \end{proof}
 
 \begin{algorithm}{Endomorphism Algebra as Field}
-    Given a simple modular abelian variety $A$ over $\Q$,
-    this algorithm computes a number field $F$ and an
-    isomorphism $\End(A)\tensor\Q \to F$.
-\begin{enumerate}
-%\item{} [Field?] Check if $\End(A)$ is a field and quit if it is not.
+	Given a simple modular abelian variety $A$ over $\Q$,
+	this algorithm computes a number field $F$ and an
+	isomorphism $\End(A)\tensor\Q \to F$.
+	\begin{enumerate}
+		%\item{} [Field?] Check if $\End(A)$ is a field and quit if it is not.
 
-\item{} [Find $A_f$] Using Algorithm~\ref{} find an isogeny $\vphi:A\to A_f$,
-where $A_f$ is a newform abelian variety.
+		\item{} [Find $A_f$] Using Algorithm~\ref{} find an isogeny $\vphi:A\to A_f$,
+		      where $A_f$ is a newform abelian variety.
 
-\item{} [Choose random endomorphism] Randomly pick [[how??]] an endomorphism
-  $\varphi$ of $A_f$ and compute its minimal polynomial $g$.
-\item{} [Does endomorphism generate?]
-If $\deg g$ = $\dim(A_f)$, then let $F$ be the
-number field generated by a root~$\alpha$ of $g$.
-Otherwise, go to step 1.
-\item{} [Define an isomorphism] Let $\Psi$ be the unique field
-  homomorphism $\End(A_f)\tensor\Q \to F$ that sends~$\varphi$
-  to~$\alpha$.  Compose this with the isomorphism
-$\End(A)\tensor\Q \to \End(A_f)\tensor\Q$ induced by $\vphi$
-to obtain the desired isomorphism.
+		\item{} [Choose random endomorphism] Randomly pick [[how??]] an endomorphism
+		      $\varphi$ of $A_f$ and compute its minimal polynomial $g$.
+		\item{} [Does endomorphism generate?]
+		      If $\deg g$ = $\dim(A_f)$, then let $F$ be the
+		      number field generated by a root~$\alpha$ of $g$.
+		      Otherwise, go to step 1.
+		\item{} [Define an isomorphism] Let $\Psi$ be the unique field
+		      homomorphism $\End(A_f)\tensor\Q \to F$ that sends~$\varphi$
+		      to~$\alpha$.  Compose this with the isomorphism
+		      $\End(A)\tensor\Q \to \End(A_f)\tensor\Q$ induced by $\vphi$
+		      to obtain the desired isomorphism.
 
-\end{enumerate}
+	\end{enumerate}
 \end{algorithm}
 \begin{proof}
-%"Most" choices of $\varphi$ will have characteristic polynomial of degree
-%$\dim(A)$, so in practice finding such $\varphi$ is easy. Then we build
-%$K$ using the primitive element theorem.
+	%"Most" choices of $\varphi$ will have characteristic polynomial of degree
+	%$\dim(A)$, so in practice finding such $\varphi$ is easy. Then we build
+	%$K$ using the primitive element theorem.
 
-By \cite[???]{ribet:abvars} because $A$ is simple, modular, and defined over $\Q$,
-we know that $\End(A)\tensor\Q$ is a number
-field of degree equal to $\dim(A)$.  (If we instead consider $\End(A/\Qbar)$,
-then $\End(A/\Qbar)\tensor\Q$ could be a non-commutative division algebra.
-Again we emphasize that by definition $\End(A)$ contains only the endomorphisms
-of $A$ that are defined over $\QQ$.)
+	By \cite[???]{ribet:abvars} because $A$ is simple, modular, and defined over $\Q$,
+	we know that $\End(A)\tensor\Q$ is a number
+	field of degree equal to $\dim(A)$.  (If we instead consider $\End(A/\Qbar)$,
+	then $\End(A/\Qbar)\tensor\Q$ could be a non-commutative division algebra.
+	Again we emphasize that by definition $\End(A)$ contains only the endomorphisms
+	of $A$ that are defined over $\QQ$.)
 
-By the primitive element theorem, there exists a $\varphi$ such that
-if $f$ is the minimal polynomial of~$\varphi$, then
-$\deg(f) = \dim(A)$.
-Then since $\deg(f) = \dim(A)$ it follows that the
-map $\Psi$ is an isomorphism (a nonzero homomorphism between number
-fields of the same dimension is an isomorphism).
+	By the primitive element theorem, there exists a $\varphi$ such that
+	if $f$ is the minimal polynomial of~$\varphi$, then
+	$\deg(f) = \dim(A)$.
+	Then since $\deg(f) = \dim(A)$ it follows that the
+	map $\Psi$ is an isomorphism (a nonzero homomorphism between number
+	fields of the same dimension is an isomorphism).
 \end{proof}
 % This is where probability of choosing a primitive
 %element at random comes in...  This is CERTAINLY already already
@@ -780,83 +780,83 @@ fields of the same dimension is an isomorphism).
 %({\tt http://www.math.clemson.edu/faculty/Gao/papers/prim-ele.pdf})
 
 \begin{algorithm}{Compute $\End(A)$}
-Given a simple modular abelian variety $A$, this algorithm
-computes $\End(A)$.
-\begin{enumerate}
-\item{} [Find Modular Form] Since $A$ is simple we can use
-  Algorithm~\ref{} to find a newform $f$ such that $A$ is isogenous to
-  the abelian variety $A_f$.  It suffices to compute $\End(A)\tensor\Q
-  = \End(A_f)\tensor\Q$, since by Proposition~\ref{prop:end} this
-  yields $\End(A)$.  Thus it suffices to compute $\End(A_f)$.
-\item{} [Initialize] Let $d=\dim(A_f)$, let $n=1$, and let $V$ be the
-  zero subspace of $\End(A_f)\tensor\Q$.
-\item{} [Compute Hecke operator]\label{step:heckeop} Using
-  Algorithm~\ref{}, compute the restriction of the Hecke operator
-  $T_n$ to $A_f$, as an element of $\End(A_f)\tensor\Q$.
-\item{} [Increase $V$] Replace $V$ by $V+\Q\cdot T_n$.
-\item{} [Finished?]  If $\dim(V) < d$, increase $n$ and go to
-  Step~\ref{step:heckeop}.
-\item{} [Saturate] Compute $\End(A_f/\Q) = V \cap \End(\Lambda_{A_f})$
-  using Algorithm~\ref{}.
-\end{enumerate}
+	Given a simple modular abelian variety $A$, this algorithm
+	computes $\End(A)$.
+	\begin{enumerate}
+		\item{} [Find Modular Form] Since $A$ is simple we can use
+		      Algorithm~\ref{} to find a newform $f$ such that $A$ is isogenous to
+		      the abelian variety $A_f$.  It suffices to compute $\End(A)\tensor\Q
+			      = \End(A_f)\tensor\Q$, since by Proposition~\ref{prop:end} this
+		      yields $\End(A)$.  Thus it suffices to compute $\End(A_f)$.
+		\item{} [Initialize] Let $d=\dim(A_f)$, let $n=1$, and let $V$ be the
+		      zero subspace of $\End(A_f)\tensor\Q$.
+		\item{} [Compute Hecke operator]\label{step:heckeop} Using
+		      Algorithm~\ref{}, compute the restriction of the Hecke operator
+		      $T_n$ to $A_f$, as an element of $\End(A_f)\tensor\Q$.
+		\item{} [Increase $V$] Replace $V$ by $V+\Q\cdot T_n$.
+		\item{} [Finished?]  If $\dim(V) < d$, increase $n$ and go to
+		      Step~\ref{step:heckeop}.
+		\item{} [Saturate] Compute $\End(A_f/\Q) = V \cap \End(\Lambda_{A_f})$
+		      using Algorithm~\ref{}.
+	\end{enumerate}
 \end{algorithm}
 \begin{proof}
-  We need to show that the algorithm terminates, i.e., that the Hecke
-  algebra generates $\End(A_f/\Q) \tensor \Q$. But by
-  \cite[Thm.~1]{shimura:factors} the image of $T \tensor \Q$ in
-  $\End(A_f/\Q) \tensor \Q$ is a subfield of degree $\dim A_f$. But
-  $A_f$ is simple by \cite[Cor.~4.2]{ribet:twistsendoalg}, so
-  \cite[Thm.~2.1]{ribet:abvars} implies that $\End(A_f/\Q) \tensor \Q$
-  also has dimension $\dim(A_f)$. Thus the Hecke algebra generates
-  $\End(A_f/\Q) \tensor \Q$. By Proposition~\ref{prop:end} once we
-  have $\End(A_f/\Q) \tensor \Q$ we apply Algorithm~\ref{} to get
-  $\End(A_f/\Q)$.
+	We need to show that the algorithm terminates, i.e., that the Hecke
+	algebra generates $\End(A_f/\Q) \tensor \Q$. But by
+	\cite[Thm.~1]{shimura:factors} the image of $T \tensor \Q$ in
+	$\End(A_f/\Q) \tensor \Q$ is a subfield of degree $\dim A_f$. But
+	$A_f$ is simple by \cite[Cor.~4.2]{ribet:twistsendoalg}, so
+	\cite[Thm.~2.1]{ribet:abvars} implies that $\End(A_f/\Q) \tensor \Q$
+	also has dimension $\dim(A_f)$. Thus the Hecke algebra generates
+	$\End(A_f/\Q) \tensor \Q$. By Proposition~\ref{prop:end} once we
+	have $\End(A_f/\Q) \tensor \Q$ we apply Algorithm~\ref{} to get
+	$\End(A_f/\Q)$.
 \end{proof}
 
 
 \begin{algorithm}{Compute $\Hom(A,B)$}
-Given  modular abelian varieties $A$ and $B$, we
-compute $\Hom(A,B)$ as follows.
-\begin{enumerate}
-\item{} [Factorizations]
-By Proposition~\ref{prop:end} it suffices to explain how
-to compute $\Hom(A,B)\tensor \Q$.
-For this, we compute using Algorithm~\ref{}
-  factorizations $\prod_{i \in I} C_i^{e_i}$ and $\prod_{i \in I}
-  C_i^{f_i}$ of $A$ and $B$ up to isogeny (with isogenies)
-respectively, where $I$ is some index set,
-  the $C_i's$ are non-isogenous simple abelian varieties, and $e_i,
-  f_i \geq 0$.  For the rest of this algorithm
-we replace $A$, $B$, by these products.
-\item{} [Simple case]\label{step:simplecase} When $A \sim C^e$ and $B \sim D^f$, where $C, D$ are simple
-abelian varieties we compute $\Hom(A,B)$ in the following way. If $C$ and
-$D$ are not isogenous $\Hom(A,B) = 0$. If $C$ and $D$ are isogenous,
-$$
-  \Hom(A,B)\tensor\Q = \Hom(C^e, D^f) \tensor \Q = \Mat_{e \times f} (\End(C) \tensor \Q).
-$$
-%Then we compute
-%$$
-%   \Hom(A,B) \subset \Hom(A,B) \tensor \Q
-%$$ using Algorithm~\ref{}.
-\item{} [General case] We compute each $\Hom(C_i^{e_i}, C_j^{f_j})\tensor\Q$ as in Step~\ref{step:simplecase}
-and obtain $\Hom(\prod C_i^{e_i}, \prod C_j^{f_j})\tensor\Q$ as a
-matrix with blocks $\Hom(C_i^{e_i},C_j^{f_j})\tensor\Q$ for each pair $(i,j)$.
-%Then we find $\Hom(A,B)$ inside $\Hom(\prod C_i^{e_i}, \prod C_j^{f_j})\tensor\Q$.
-\end{enumerate}
+	Given  modular abelian varieties $A$ and $B$, we
+	compute $\Hom(A,B)$ as follows.
+	\begin{enumerate}
+		\item{} [Factorizations]
+		      By Proposition~\ref{prop:end} it suffices to explain how
+		      to compute $\Hom(A,B)\tensor \Q$.
+		      For this, we compute using Algorithm~\ref{}
+		      factorizations $\prod_{i \in I} C_i^{e_i}$ and $\prod_{i \in I}
+			      C_i^{f_i}$ of $A$ and $B$ up to isogeny (with isogenies)
+		      respectively, where $I$ is some index set,
+		      the $C_i's$ are non-isogenous simple abelian varieties, and $e_i,
+			      f_i \geq 0$.  For the rest of this algorithm
+		      we replace $A$, $B$, by these products.
+		\item{} [Simple case]\label{step:simplecase} When $A \sim C^e$ and $B \sim D^f$, where $C, D$ are simple
+		      abelian varieties we compute $\Hom(A,B)$ in the following way. If $C$ and
+		      $D$ are not isogenous $\Hom(A,B) = 0$. If $C$ and $D$ are isogenous,
+		      $$
+			      \Hom(A,B)\tensor\Q = \Hom(C^e, D^f) \tensor \Q = \Mat_{e \times f} (\End(C) \tensor \Q).
+		      $$
+		      %Then we compute
+		      %$$
+		      %   \Hom(A,B) \subset \Hom(A,B) \tensor \Q
+		      %$$ using Algorithm~\ref{}.
+		\item{} [General case] We compute each $\Hom(C_i^{e_i}, C_j^{f_j})\tensor\Q$ as in Step~\ref{step:simplecase}
+		      and obtain $\Hom(\prod C_i^{e_i}, \prod C_j^{f_j})\tensor\Q$ as a
+		      matrix with blocks $\Hom(C_i^{e_i},C_j^{f_j})\tensor\Q$ for each pair $(i,j)$.
+		      %Then we find $\Hom(A,B)$ inside $\Hom(\prod C_i^{e_i}, \prod C_j^{f_j})\tensor\Q$.
+	\end{enumerate}
 \end{algorithm}
 \begin{proof}
-Suppose first that $A \sim C^e$, $B \sim D^f$ with $C,D$ simple abelian varieties.
-When $C$ and $D$ are not isogenous there is no morphism $A \to B$, so
-$\Hom(A,B) =  0$. When $C$ and $D$ are isogenous, a morphism $C^e \to D^f$
-over $\Q$ is given by an $e \times f$ matrix with entries from $\End(A) \tensor
-\Q$, where the $(i,j)$th entry represents the morphism between the $i$th
-component of $A$ and $j$th component of $B$. We get $\End(A) \tensor \Q$
-using Algorithm~\ref{}. Once we have $\Hom(A,B)
-\tensor \Q$, to get $\Hom(A,B)$ we only need to apply Proposition~\ref{prop:end}.
+	Suppose first that $A \sim C^e$, $B \sim D^f$ with $C,D$ simple abelian varieties.
+	When $C$ and $D$ are not isogenous there is no morphism $A \to B$, so
+	$\Hom(A,B) =  0$. When $C$ and $D$ are isogenous, a morphism $C^e \to D^f$
+	over $\Q$ is given by an $e \times f$ matrix with entries from $\End(A) \tensor
+		\Q$, where the $(i,j)$th entry represents the morphism between the $i$th
+	component of $A$ and $j$th component of $B$. We get $\End(A) \tensor \Q$
+	using Algorithm~\ref{}. Once we have $\Hom(A,B)
+		\tensor \Q$, to get $\Hom(A,B)$ we only need to apply Proposition~\ref{prop:end}.
 
-In general, when $A = \prod_{i \in I} C_i^{e_i}$ and $B = \prod_{i \in I}
-C_i^{f_i}$ we get $\Hom(C_i^{e_i}, C_j^{f_j})$ as before and combining these
-blocks we obtain $\Hom(A,B)$.
+	In general, when $A = \prod_{i \in I} C_i^{e_i}$ and $B = \prod_{i \in I}
+		C_i^{f_i}$ we get $\Hom(C_i^{e_i}, C_j^{f_j})$ as before and combining these
+	blocks we obtain $\Hom(A,B)$.
 \end{proof}
 
 
@@ -877,53 +877,53 @@ for $I\subset \T$ or $I\subset\End(A)$.
 \subsubsection{Isogenies From $A$ to $B$}
 
 \begin{algorithm}{Test if Isogenous}
-    Given two modular abelian varieties $A$ and $B$, this
-    algorithm decides whether or not $A$ and $B$ are isogenous, and if
-    so returns an isogeny between them.
+	Given two modular abelian varieties $A$ and $B$, this
+	algorithm decides whether or not $A$ and $B$ are isogenous, and if
+	so returns an isogeny between them.
 
-\begin{enumerate}
-\item{} [$A$, $B$ both simple] When $A$ and $B$ are both simple they
-  are isogenenous to abelian varieties $A_f$ and $A_g$ attached to
-  newforms; we can find explicit isogenies using Algorithm~\ref{}.
-  Then $A$ is isogenous to $B$ if and only if $A_f = A_g$, i.e., $f$
-  and $g$ are Galois conjugate.
+	\begin{enumerate}
+		\item{} [$A$, $B$ both simple] When $A$ and $B$ are both simple they
+		      are isogenenous to abelian varieties $A_f$ and $A_g$ attached to
+		      newforms; we can find explicit isogenies using Algorithm~\ref{}.
+		      Then $A$ is isogenous to $B$ if and only if $A_f = A_g$, i.e., $f$
+		      and $g$ are Galois conjugate.
 
 
-\item{} [Pair off factors] When $A$ and $B$ are not simple we pair off
-  factors, i.e. for any $C$ in a factorization of $A$ we check if
-  there is an isogenous $D$ in a factorization of $B$. If such $D$
-  exists and the multiplicities of $C$ in $ A$ and $D$ in $B$ are the
-  same we remove $D$ and continue with another $C$. Otherwise, $A$ and
-  $B$ cannot be isogenous.
-\end{enumerate}
+		\item{} [Pair off factors] When $A$ and $B$ are not simple we pair off
+		      factors, i.e. for any $C$ in a factorization of $A$ we check if
+		      there is an isogenous $D$ in a factorization of $B$. If such $D$
+		      exists and the multiplicities of $C$ in $ A$ and $D$ in $B$ are the
+		      same we remove $D$ and continue with another $C$. Otherwise, $A$ and
+		      $B$ cannot be isogenous.
+	\end{enumerate}
 \end{algorithm}
 \begin{proof}
-  When $A$ and $B$ are simple, by \cite[\S5]{faltings:finiteness}
-  $A\isog A_f$ and $B\isog A_g$ are isogenous if and only if the
-  corresponding newforms $f$ and $g$ are Galois conjugate,
-since $f$ and $g$ determine $L(A_f,s)$ ad $L(A_g,s)$.
+	When $A$ and $B$ are simple, by \cite[\S5]{faltings:finiteness}
+	$A\isog A_f$ and $B\isog A_g$ are isogenous if and only if the
+	corresponding newforms $f$ and $g$ are Galois conjugate,
+	since $f$ and $g$ determine $L(A_f,s)$ ad $L(A_g,s)$.
 
-If $A \sim \prod_{i \in I} A_i^{e_i}$ and $B \sim \prod_{i \in I}
-B_i^{e_i}$, indexed so that $A_i \sim B_i$ for all $i \in I$, then we
-get that the products $\prod_{i \in I} A_i^{e_i}$ and $\prod_{i \in I}
-B_i^{e_i}$ are isogenous, so $A$ and $B$ are also isogenous.
+	If $A \sim \prod_{i \in I} A_i^{e_i}$ and $B \sim \prod_{i \in I}
+		B_i^{e_i}$, indexed so that $A_i \sim B_i$ for all $i \in I$, then we
+	get that the products $\prod_{i \in I} A_i^{e_i}$ and $\prod_{i \in I}
+		B_i^{e_i}$ are isogenous, so $A$ and $B$ are also isogenous.
 
-  Conversely, suppose that $A \sim B$ and $\varphi: A \to B$ is some
-  isogeny.  Let $A \sim \prod_{i \in I} A_i^{e_i}$ and $B \sim
-  \prod_{j \in J} B_j^{f_j}$ be factorizations of $A$ and $B$ into
-  products of powers of non-isogenous simple abelian varieties. Fix an
-  index $i \in I$.  Combining the maps from $A_i$ to $A$, from $A$ to
-  $B$, and the projection to $B_j$ for each $j$ we obtain morphisms
-  $\phi_{ij}: A_i \to B_j$ for all $j \in J$. Since the image of an
-  abelian variety is an abelian variety and all $B_j$'s are simple it
-  follows that $\varphi_{ij}(A_i)$ is either zero or all of $B_j$,
-  which means that $A_i$ and $B_j$ are isogenous. It is not possible
-  that all $\varphi_{ij}(A_i)$ are zero since that would imply that
-  $\varphi$ is the zero map, so we find a $B_j$ isogenous to
-  $A_i$. Removing $A_i$ and $B_j$ from the factorizations and
-  repeating this argument yields that $A$ and $B$ are isogenous if and
-  only if there is a bijection $\sigma:I\to J$ such that $A_i$ is
-  isogenous to $B_{\sigma(i)}$ for all $i$, and $e_i = f_{\sigma(i)}$.
+	Conversely, suppose that $A \sim B$ and $\varphi: A \to B$ is some
+	isogeny.  Let $A \sim \prod_{i \in I} A_i^{e_i}$ and $B \sim
+		\prod_{j \in J} B_j^{f_j}$ be factorizations of $A$ and $B$ into
+	products of powers of non-isogenous simple abelian varieties. Fix an
+	index $i \in I$.  Combining the maps from $A_i$ to $A$, from $A$ to
+	$B$, and the projection to $B_j$ for each $j$ we obtain morphisms
+	$\phi_{ij}: A_i \to B_j$ for all $j \in J$. Since the image of an
+	abelian variety is an abelian variety and all $B_j$'s are simple it
+	follows that $\varphi_{ij}(A_i)$ is either zero or all of $B_j$,
+	which means that $A_i$ and $B_j$ are isogenous. It is not possible
+	that all $\varphi_{ij}(A_i)$ are zero since that would imply that
+	$\varphi$ is the zero map, so we find a $B_j$ isogenous to
+	$A_i$. Removing $A_i$ and $B_j$ from the factorizations and
+	repeating this argument yields that $A$ and $B$ are isogenous if and
+	only if there is a bijection $\sigma:I\to J$ such that $A_i$ is
+	isogenous to $B_{\sigma(i)}$ for all $i$, and $e_i = f_{\sigma(i)}$.
 \end{proof}
 
 \subsubsection{Isomorphisms from $A$ to $B$}
@@ -936,79 +936,79 @@ to enumerate elements in lattice of small norm -- might be straightforward
 if don't care about speed!).
 
 \begin{algorithm}{Norm Equation}
-Given an order $\O$ in a number field $K$ and an element $a\in \Q$,
-this algorithm finds all solutions in $\O$ to the norm equation
-$\Norm(x)=a$, up to units of $\O$.
+	Given an order $\O$ in a number field $K$ and an element $a\in \Q$,
+	this algorithm finds all solutions in $\O$ to the norm equation
+	$\Norm(x)=a$, up to units of $\O$.
 
-Replace the following by a reference to Henri Cohen's book, etc.
-[[Claus Fieker suggests the following algorithm (we should expand on that)
-\begin{enumerate}
-\item{} [Class Group] Find the class group of $K$.
-\item{} [Ideals of bounded norm] Use linear programming [[huh??]] to find all ideals of
-norm up to some bound.
-\item{} [Solve] Deduce all solutions to the norm equation up to units.
-\end{enumerate}
+	Replace the following by a reference to Henri Cohen's book, etc.
+	[[Claus Fieker suggests the following algorithm (we should expand on that)
+	\begin{enumerate}
+		\item{} [Class Group] Find the class group of $K$.
+		\item{} [Ideals of bounded norm] Use linear programming [[huh??]] to find all ideals of
+		      norm up to some bound.
+		\item{} [Solve] Deduce all solutions to the norm equation up to units.
+	\end{enumerate}
 \end{algorithm}
 ]]
 
 
 \begin{algorithm}{Test if Isomorphic}\label{alg:isom}
-Given simple modular abelian varieties $A$ and $B$,
-this algorithm either proves that $A$ and $B$ are not isomorphic,
-or returns an isomorphism between them (or all isomorphisms,
-up to units).
+	Given simple modular abelian varieties $A$ and $B$,
+	this algorithm either proves that $A$ and $B$ are not isomorphic,
+	or returns an isomorphism between them (or all isomorphisms,
+	up to units).
 
-\begin{enumerate}
-\item{}[Equal?] If $A=B$, return ``yes'' and the identity map.
-\item{}[Isogenous?]  Determine whether $A$ and $B$ are isogenous using Algorithm~\ref{}.
-If $A$ and $B$ are not isogenous then return ``no'', and if
-$A$ and $B$ are isogenous, let $f: B \to A$ be an isogeny.
-\item{}[Degree of isogeny]  Compute $d = \deg(f)$. If $d$ is not a square, return ``no''.
-\item{}[Endomorphism algebra]
-Compute the number field $K=\End(A)\tensor\Q$, and
-an embedding of $\End(A)$ into $K$ using Algorithm~\ref{}.
-\item{}[Hom space] Compute $\Hom(A,B)$ using Algorithm~\ref{}.
-\item{}[Image of Hom space]  Compute the image $H_f$ of $\Hom(A,B)$ in $\End(A)$
-got by composing with $f$.
-\item{}[Endomorphism ring] Compute the order $\O$ in $K$ equal to $\End(A)$
-using Algorithm~\ref{}.
-\item{}[Solve norm equation] Find solutions (up to units of $\O$) of the norm equations
-$\Norm(x) = \pm \sqrt{d}$ in $\O$. If there are no solutions, return ``no''.
-\item{}[Lift to $H_f$?]   For each solution (up to units), check whether it lies in $H_f$.
-\item{}[Isomorphic?]   If a solution $x$ lies in $H_f$, then return ``yes'' and $x\circ f^{-1}$.
-(Note that at this point we could also output $x\circ f^{-1}$ and continue
-on to return representatives for all isomorphisms up to units.)
+	\begin{enumerate}
+		\item{}[Equal?] If $A=B$, return ``yes'' and the identity map.
+		\item{}[Isogenous?]  Determine whether $A$ and $B$ are isogenous using Algorithm~\ref{}.
+		      If $A$ and $B$ are not isogenous then return ``no'', and if
+		      $A$ and $B$ are isogenous, let $f: B \to A$ be an isogeny.
+		\item{}[Degree of isogeny]  Compute $d = \deg(f)$. If $d$ is not a square, return ``no''.
+		\item{}[Endomorphism algebra]
+		      Compute the number field $K=\End(A)\tensor\Q$, and
+		      an embedding of $\End(A)$ into $K$ using Algorithm~\ref{}.
+		\item{}[Hom space] Compute $\Hom(A,B)$ using Algorithm~\ref{}.
+		\item{}[Image of Hom space]  Compute the image $H_f$ of $\Hom(A,B)$ in $\End(A)$
+		      got by composing with $f$.
+		\item{}[Endomorphism ring] Compute the order $\O$ in $K$ equal to $\End(A)$
+		      using Algorithm~\ref{}.
+		\item{}[Solve norm equation] Find solutions (up to units of $\O$) of the norm equations
+		      $\Norm(x) = \pm \sqrt{d}$ in $\O$. If there are no solutions, return ``no''.
+		\item{}[Lift to $H_f$?]   For each solution (up to units), check whether it lies in $H_f$.
+		\item{}[Isomorphic?]   If a solution $x$ lies in $H_f$, then return ``yes'' and $x\circ f^{-1}$.
+		      (Note that at this point we could also output $x\circ f^{-1}$ and continue
+		      on to return representatives for all isomorphisms up to units.)
 
-\item{}[Not isomorphic?]   If none of the solutions lies in $H_f$, return ``no''.
-\end{enumerate}
+		\item{}[Not isomorphic?]   If none of the solutions lies in $H_f$, return ``no''.
+	\end{enumerate}
 \end{algorithm}
 \begin{proof}
-  Let $f:B \to A$ be an isogeny and denote its degree by $d$. Define
-  $$H_f = \{f \circ g: g \in \Hom(A,B)\} \subset \End(A).$$
-  Since
-  degree is multiplicative, $A$ and $B$ are isomorphic if and only if
-  the subset $H_f$ of $\End(A)$ contains an element of degree $d$. Embed $\End(A)$ into the
-  number field $K =
-  \End(A) \otimes \Q$ and let $\O$ be the order in $K$ that is the image of
-  $\End(A)$. By \cite[Prop~12.12]{milne:abvars}, for
-  $x \in K$ we have $\Norm(x)^2 = \deg(x)$. Thus, finding an element
-  of degree $d$ in $H_f$ is equivalent to finding $x \in \O$ with
-  $\Norm(x) = \pm \sqrt{d}$, such that $x \in H_f$, where we view
-$H_f$ as a subset of~$K$ using the above inclusions.
+	Let $f:B \to A$ be an isogeny and denote its degree by $d$. Define
+	$$H_f = \{f \circ g: g \in \Hom(A,B)\} \subset \End(A).$$
+	Since
+	degree is multiplicative, $A$ and $B$ are isomorphic if and only if
+	the subset $H_f$ of $\End(A)$ contains an element of degree $d$. Embed $\End(A)$ into the
+	number field $K =
+		\End(A) \otimes \Q$ and let $\O$ be the order in $K$ that is the image of
+	$\End(A)$. By \cite[Prop~12.12]{milne:abvars}, for
+	$x \in K$ we have $\Norm(x)^2 = \deg(x)$. Thus, finding an element
+	of degree $d$ in $H_f$ is equivalent to finding $x \in \O$ with
+	$\Norm(x) = \pm \sqrt{d}$, such that $x \in H_f$, where we view
+	$H_f$ as a subset of~$K$ using the above inclusions.
 
-Using Algorithm~\ref{}, we find all $x$ such that $\Norm(x) = \pm
-\sqrt{d}$, up to units of $\O$.  There are may be infinitely many
-units, e.g., if $K$ is a real quadratic field, so there are often
-infinitely many solutions to the norm equation and we cannot directly
-check whether at least one of these infinitely many are in $H_f$.
-However, because there are only finitely many solutions up to units,
-it will suffice to show that $H_f$ is stable under units and to check
-whether each representative solution is in $H_f$.  Thus to finish
-the proof of correctness of the algorithm, we verify that $x\in H_f$ if
-and only if $xu \in H_f$, where $u$ is any unit of $\O$.  If $x = f
-\circ g$ for some $g \in \Hom(A,B)$, then $xu = f \circ (g \circ u)$
-is in $H_f$ since $g \circ u \in \Hom(A,B)$.  Conversely, if $xu\in
-H_f$, then by what we have just shown $x = xuu^{-1} \in H_f$.
+	Using Algorithm~\ref{}, we find all $x$ such that $\Norm(x) = \pm
+		\sqrt{d}$, up to units of $\O$.  There are may be infinitely many
+	units, e.g., if $K$ is a real quadratic field, so there are often
+	infinitely many solutions to the norm equation and we cannot directly
+	check whether at least one of these infinitely many are in $H_f$.
+	However, because there are only finitely many solutions up to units,
+	it will suffice to show that $H_f$ is stable under units and to check
+	whether each representative solution is in $H_f$.  Thus to finish
+	the proof of correctness of the algorithm, we verify that $x\in H_f$ if
+	and only if $xu \in H_f$, where $u$ is any unit of $\O$.  If $x = f
+		\circ g$ for some $g \in \Hom(A,B)$, then $xu = f \circ (g \circ u)$
+	is in $H_f$ since $g \circ u \in \Hom(A,B)$.  Conversely, if $xu\in
+		H_f$, then by what we have just shown $x = xuu^{-1} \in H_f$.
 \end{proof}
 
 Discuss how non-simple case works.  Still just need to solve a norm
@@ -1018,54 +1018,54 @@ equation but solving it is more complicated (?).
 
 A small extension of Algorithm~\ref{} gives us the minimal degree of any
 isogeny between two isogenous modular abelian varieties.
-[[delete below and just say that we run through all square multiples
-of $d$ instead of just $d$ in the algorithm above.  the below
-is riddled with errors anyways.]]
+	[[delete below and just say that we run through all square multiples
+				of $d$ instead of just $d$ in the algorithm above.  the below
+				is riddled with errors anyways.]]
 
 
 \begin{algorithm}{Minimal Isogeny}
-Given simple modular abelian varieties $A$ and $B$,
-this algorithm checks if $A$ and $B$ are isogenous and if so returns the
-minimal degree of an isogeny $A \to B$ together with an isogeny of
-that degree.
-\begin{enumerate}
-\item{} [Equal?]  If $A=B$, return 1 and the identity map.
-\item{} [Isogenous?]  Determine whether $A$ and $B$ are isogenous using Algorithm~\ref{}.
-       If $A$ and $B$ are not isogenous then return ``not isogenous'', and if
-       $A$ and $B$ are isogenous, let $f : B \to A$ be some isogeny.
-\item{} [Degree of some isogeny] Compute $\deg(f)$ using Algorithm~\ref{}. Write $\deg(f)$ as $a b^2$, where
-          $a$ is squarefree.
-\item{} [Endomorphism algebra] Compute the number field $K=\End(A)\tensor\Q$, and
-      an embedding of $\End(A)$ into $K$ using Algorithm~\ref{}.
-\item{} [Hom space] Compute $\Hom(A,B)$ using Algorithm~\ref{}.
-\item{} [Image of Hom space] Compute the image $H_f$ of $\Hom(A,B)$ in $\End(A)$
-      got by composing with $f$...
-\item{} [Endomorphism ring] Compute the order $\O$ in $K$ generated by $\End(A)$
-Algorithm~\ref{}.
-\item{} [Initialize] Let $i = 0$.
-\item{} [Solve norm equation]\label{step:increasei} Increase $i$ by one and find the solutions (up to units of $\O$) of the norm equations
-$\Norm(x) = \pm a b i$ in $\O$. If there are no solutions, repeat this step.
-\item{} [Lift to $H_f$?] For each solution (up to units), check whether it lies in $H_f$.
-\item{} [Isogenous of degree $ai^2$?] If a solution $x$ lies in $H_f$, then return $a  i^2$ and $x\circ f^{-1}$.
-\item{} [Should try isogeny of higher degree] If none of the solutions lies in $H_f$, return
-to Step~\ref{step:increasei}.
-\end{enumerate}
+	Given simple modular abelian varieties $A$ and $B$,
+	this algorithm checks if $A$ and $B$ are isogenous and if so returns the
+	minimal degree of an isogeny $A \to B$ together with an isogeny of
+	that degree.
+	\begin{enumerate}
+		\item{} [Equal?]  If $A=B$, return 1 and the identity map.
+		\item{} [Isogenous?]  Determine whether $A$ and $B$ are isogenous using Algorithm~\ref{}.
+		      If $A$ and $B$ are not isogenous then return ``not isogenous'', and if
+		      $A$ and $B$ are isogenous, let $f : B \to A$ be some isogeny.
+		\item{} [Degree of some isogeny] Compute $\deg(f)$ using Algorithm~\ref{}. Write $\deg(f)$ as $a b^2$, where
+		      $a$ is squarefree.
+		\item{} [Endomorphism algebra] Compute the number field $K=\End(A)\tensor\Q$, and
+		      an embedding of $\End(A)$ into $K$ using Algorithm~\ref{}.
+		\item{} [Hom space] Compute $\Hom(A,B)$ using Algorithm~\ref{}.
+		\item{} [Image of Hom space] Compute the image $H_f$ of $\Hom(A,B)$ in $\End(A)$
+		      got by composing with $f$...
+		\item{} [Endomorphism ring] Compute the order $\O$ in $K$ generated by $\End(A)$
+		      Algorithm~\ref{}.
+		\item{} [Initialize] Let $i = 0$.
+		\item{} [Solve norm equation]\label{step:increasei} Increase $i$ by one and find the solutions (up to units of $\O$) of the norm equations
+		      $\Norm(x) = \pm a b i$ in $\O$. If there are no solutions, repeat this step.
+		\item{} [Lift to $H_f$?] For each solution (up to units), check whether it lies in $H_f$.
+		\item{} [Isogenous of degree $ai^2$?] If a solution $x$ lies in $H_f$, then return $a  i^2$ and $x\circ f^{-1}$.
+		\item{} [Should try isogeny of higher degree] If none of the solutions lies in $H_f$, return
+		      to Step~\ref{step:increasei}.
+	\end{enumerate}
 \end{algorithm}
 \begin{proof}
-Let $f:A \to B$ be an isogeny and denote its degree by $d = ab^2$, where $a$ is
-squarefree. Define $H_f = \{\phi \circ f: \phi \in
-\Hom(B,A)\} \subset \End(A)$. Since degree is multiplicative, $B$ and $A$ are
-isogenous via an isogeny of degree $d'$ if and only if $H_f$ contains an element
-of degree $d d'$. Embed
-$\End(A)$ into $K = \End(A) \otimes \Q$ and let $\O$ be the order in $K$
-generated by $\End(A)$. By Proposition 12.12. in Milne's "Abelian Varieties"
-for $x \in K$ we have $\Norm^2(x) = \deg(x)$. Thus, finding an element of
-degree $dd'$ in $H_f$ is equivalent to finding $x \in \O$ with $\Norm(x) =
-\pm \sqrt{dd'}$, such that $x$ actually comes from $H_f$. Hence, the possible
-values for $d'$ are $a i^2$ for $i \in \N$. We can find all $x$
-such that $\Norm(x) = \pm \sqrt{dd'}$ up to units of $\O$.
-The proof that this suffices is the same as the end of the
-proof of Algorithm~\ref{alg:isom}.
+	Let $f:A \to B$ be an isogeny and denote its degree by $d = ab^2$, where $a$ is
+	squarefree. Define $H_f = \{\phi \circ f: \phi \in
+		\Hom(B,A)\} \subset \End(A)$. Since degree is multiplicative, $B$ and $A$ are
+	isogenous via an isogeny of degree $d'$ if and only if $H_f$ contains an element
+	of degree $d d'$. Embed
+	$\End(A)$ into $K = \End(A) \otimes \Q$ and let $\O$ be the order in $K$
+	generated by $\End(A)$. By Proposition 12.12. in Milne's "Abelian Varieties"
+	for $x \in K$ we have $\Norm^2(x) = \deg(x)$. Thus, finding an element of
+	degree $dd'$ in $H_f$ is equivalent to finding $x \in \O$ with $\Norm(x) =
+		\pm \sqrt{dd'}$, such that $x$ actually comes from $H_f$. Hence, the possible
+	values for $d'$ are $a i^2$ for $i \in \N$. We can find all $x$
+	such that $\Norm(x) = \pm \sqrt{dd'}$ up to units of $\O$.
+	The proof that this suffices is the same as the end of the
+	proof of Algorithm~\ref{alg:isom}.
 \end{proof}
 
 
@@ -1105,20 +1105,20 @@ Mention open problems.
 
 
 \subsubsection{Local $L$-factors}
- via characteristic poly of Frobenius in complete
+via characteristic poly of Frobenius in complete
 generality: factor as newform abvars, use Hecke polys
 
 
 \subsubsection{Numerical Evaluation at any Point}
- anywhere (via Dokchitser)
+anywhere (via Dokchitser)
 
 \subsubsection{The Rational Part of the Special Value}
- (generalize Agashe-Stein?)
+(generalize Agashe-Stein?)
 
 \subsubsection{Order of Vanishing (Analytic Rank)}
 
 \subsubsection{Zeros in the Critical Strip}
- (Rubinstein)
+(Rubinstein)
 
 \subsection{$p$-adic $L$-Series}
 
@@ -1130,8 +1130,8 @@ Factor up to isogeny using newforms; compute series for that,
 except if there is a $p$ in isogeny degree, in which case give up (?) or?
 Generalize wuthrich-stein to dimension $>1$.  Help from Robert Bradshaw.
 
-[[Do the computation in $M[T]$ where $M$ is a modular symbols module, like
-in Mazur-Tate-Teitelbaum.  It's just that sum and projection.]]
+	[[Do the computation in $M[T]$ where $M$ is a modular symbols module, like
+				in Mazur-Tate-Teitelbaum.  It's just that sum and projection.]]
 
 \subsubsection{Computing the Leading Coefficient and Order of Vanishing}
 
@@ -1148,12 +1148,12 @@ Shimura subgroup, cut out using Hecke operators when the dimension is
 bigger than $1$, etc.)
 
 \begin{example}
-We show that the $\Q$-isogeny class of {\bf 43B} contains at least three
-non-isomorphic abelian varieties.
+	We show that the $\Q$-isogeny class of {\bf 43B} contains at least three
+	non-isomorphic abelian varieties.
 
-[[replace by sage]]
+		[[replace by sage]]
 
-\begin{verbatim}
+	\begin{verbatim}
 > J := JZero(43);
 > A := J(2);
 > A;
@@ -1233,7 +1233,7 @@ Here we make this more precise. Suppose that $N$ is prime. Let $A$ be
 a simple modular abelian variety and let $f$ be the associated
 normalized newform. Denote by $\O$ the finite $\Z$-algebra generated
 by the coefficients of $f$ and consider $H = \Cl(\O)$.  Let $S =
-\{\mathfrak{q}_i \}$ be a set of representatives for $H$ such that
+	\{\mathfrak{q}_i \}$ be a set of representatives for $H$ such that
 $\mathfrak{q}_i$ has odd residual characteristic and is
 non-Eisenstein. Then the following proposition describes all possible
 simple abelian varieties that are isogenous to $A$ with an isogeny
@@ -1241,14 +1241,14 @@ whose kernel has support outside the Eisenstein primes and primes of
 residual characteristic 2.
 
 \begin{proposition}\label{prop:noneis}
-Let $\varphi : A \to A'$ be an isogeny whose kernel has support outside the
-Eisenstein primes and primes of residual characteristic 2. Then $A' \simeq
-A/A[\mathfrak{q}]$ for some $\mathfrak{q} \in H$.
+	Let $\varphi : A \to A'$ be an isogeny whose kernel has support outside the
+	Eisenstein primes and primes of residual characteristic 2. Then $A' \simeq
+		A/A[\mathfrak{q}]$ for some $\mathfrak{q} \in H$.
 \end{proposition}
 
 This method gives us at least part of the isogeny class.  [[Note that at the
-end of his notes Frank mentions a relation between the Eisenstein
-primes and non-trivial isogenies.]]
+				end of his notes Frank mentions a relation between the Eisenstein
+				primes and non-trivial isogenies.]]
 
 
 \subsection{Eisenstein Isogenies}
@@ -1282,28 +1282,28 @@ Also for each $N\leq 49$ (say), compute all modabvars for $J_H(N)$ for
 all $H$.  Also do $J_0(389)$, say.
 For each compute:
 \begin{enumerate}
-\item Field $F = \End(A)\tensor \Q)$; $disc(F)$; description of $O=\End(A) \subset F$ and of $\T'\subset \End(A)$.
-\item first few coefficients of $q$-expansion
-\item all non-isomorphic elements of the isogeny class (found using our methods),
-which we label
-\item a graph showing the isogenies with their structure (degree, etc.)
-\item the matrix showing structure of intersections between all simple new
-abvars of level $N$
-\item index of $\T$ in $\End(A_f)$
-\item discriminant of $\End(A_f)$
-\item modular degree; modular kernel with Hecke action (?)
-\item cuspidal subgroup
-\item rational cuspidal subgroup
-\item torsion subgroup (if possible)
-\item real volume to some precision
-\item component group orders (or bounds) -- this will require
-implementing quaternion algebra ideal arithmetic.
-\item tamagawa numbers
-\item analytic rank
-\item rational part of special value
-\item first 10 zeros in the critical strip
-\item leading coefficient of $p$-adic $L$-series
-for first $10$ good primes.
+	\item Field $F = \End(A)\tensor \Q)$; $disc(F)$; description of $O=\End(A) \subset F$ and of $\T'\subset \End(A)$.
+	\item first few coefficients of $q$-expansion
+	\item all non-isomorphic elements of the isogeny class (found using our methods),
+	      which we label
+	\item a graph showing the isogenies with their structure (degree, etc.)
+	\item the matrix showing structure of intersections between all simple new
+	      abvars of level $N$
+	\item index of $\T$ in $\End(A_f)$
+	\item discriminant of $\End(A_f)$
+	\item modular degree; modular kernel with Hecke action (?)
+	\item cuspidal subgroup
+	\item rational cuspidal subgroup
+	\item torsion subgroup (if possible)
+	\item real volume to some precision
+	\item component group orders (or bounds) -- this will require
+	      implementing quaternion algebra ideal arithmetic.
+	\item tamagawa numbers
+	\item analytic rank
+	\item rational part of special value
+	\item first 10 zeros in the critical strip
+	\item leading coefficient of $p$-adic $L$-series
+	      for first $10$ good primes.
 \end{enumerate}
 
 \subsection{Factors of $J_0(N)$ for $N\leq 125$}
@@ -1318,8 +1318,8 @@ for first $10$ good primes.
 
 Connections with computing curves $X$ whose Jacobian is an $A_f$.
 
-[[Papers of people about this, and they care about whether $A_f$
-is isomorphic to its dual.  Frey students...]]
+	[[Papers of people about this, and they care about whether $A_f$
+				is isomorphic to its dual.  Frey students...]]
 
 \subsection{Birch and Swinnerton-Dyer}
 Connections with BSD.  Away from $2$ and minimal degree of isogeny,
@@ -1331,7 +1331,7 @@ with [[william will find]].
 \subsection{Other Examples}
 $J_0(389)$.
 
-[[move this into the paper itself]]
+	[[move this into the paper itself]]
 
 \subsection{Level $35$}
 It's not obvious that $A_f$ is iso. to its dual.
@@ -1362,25 +1362,25 @@ isomorphic to $A_f^{\vee}$}
 
 
 Let $A$ be the second factor in the decomposition of $J_0(69)$.
-[[Say $\dim(A) = 2$, etc., which determines $A$.]]
- Then $A$ is
+	[[Say $\dim(A) = 2$, etc., which determines $A$.]]
+Then $A$ is
 not isomorphic to its dual $A^\vee$ because there are no solutions to the norm
 equation [...].
 A minimal isogeny between $A$ and $A^\vee$ is of degree 4 and is given on the integral
 homology by
 \[ \left( \begin{matrix}
-\hfill 1 & \hfill 0 & \hfill 2 & -2 \\
-\hfill 0 & \hfill 1 & \hfill 0 & \hfill 0 \\
--2 & \hfill 1 &\hfill  0 &\hfill  2 \\
-\hfill 4 & -2 & \hspace{1.2ex} 2 & -4 \end{matrix} \right)\]
+			\hfill 1 & \hfill 0 & \hfill 2         & -2        \\
+			\hfill 0 & \hfill 1 & \hfill 0         & \hfill 0  \\
+			-2       & \hfill 1 & \hfill  0        & \hfill  2 \\
+			\hfill 4 & -2       & \hspace{1.2ex} 2 & -4\end{matrix} \right)\]
 [[That's meaningless without a basis!]]
 
 
 \subsection{Level $195$: An $A_f$ not isomorphic to
-its dual, though there are solutions to the norm equation}
+	its dual, though there are solutions to the norm equation}
 
 $[195, 5, 3, [ 4, 4, 4, 4, 176, 176 ], 0, 6, x^6 - 14*x^4 - 4*x^3 + 49*x^2 +
-28*x + 4] $
+			28*x + 4] $
 
 There are solutions to the norm equation, but none of them works.
 

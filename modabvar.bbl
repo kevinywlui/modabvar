@@ -17,6 +17,12 @@ J.\thinspace{}E. Cremona, \emph{Algorithms for modular elliptic curves}, second
 Frank Calegari and William Stein, \emph{A non-{G}orenstein {E}isenstein
   descent}, In Preparation.
 
+\bibitem[DSW03]{dummigan-stein-watkins:motives}
+N.~Dummigan, W.\thinspace{}A. Stein, and M.~Watkins, \emph{{Constructing
+  Elements in Shafarevich-Tate Groups of Modular Motives}}, Number theory and
+  algebraic geometry, ed. by Miles Reid and Alexei Skorobogatov \textbf{303}
+  (2003), 91--118.
+
 \bibitem[Edi06]{MR2282913}
 Bas Edixhoven, \emph{On the computation of the coefficients of a modular form},
   Algorithmic number theory, Lecture Notes in Comput. Sci., vol. 4076,
@@ -35,6 +41,12 @@ E.\thinspace{}V. Flynn, F.~\protect{Lepr\'{e}vost}, E.\thinspace{}F. Schaefer,
   \emph{Empirical evidence for the {B}irch and {S}winnerton-{D}yer conjectures
   for modular {J}acobians of genus 2 curves}, Math. Comp. \textbf{70} (2001),
   no.~236, 1675--1697 (electronic). \MR{1 836 926}
+
+\bibitem[KW10]{MR2827796}
+Chandrashekhar Khare and Jean-Pierre Wintenberger, \emph{Serre's modularity
+  conjecture}, Proceedings of the {I}nternational {C}ongress of
+  {M}athematicians. {V}olume {II}, Hindustan Book Agency, New Delhi, 2010,
+  pp.~280--293. \MR{2827796}
 
 \bibitem[LO91]{MR1141458}
 San Ling and Joseph Oesterl\'{e}, \emph{The {S}himura subgroup of {$J_0(N)$}},
@@ -81,6 +93,11 @@ J-P. Serre, \emph{Sur les repr\'esentations modulaires de degr\'e \protect{$2$}
 \bibitem[Shi73]{shimura:factors}
 G.~Shimura, \emph{On the factors of the jacobian variety of a modular function
   field}, J. Math. Soc. Japan \textbf{25} (1973), no.~3, 523--544.
+
+\bibitem[SP10]{pernet-stein:hnf}
+William Stein and Clement Pernet, \emph{Fast computation of hermite normal
+  forms of random integer matrices}, J. Number Theory \textbf{130} (2010),
+  no.~7, 1675--1683, \url{http://wstein.org/papers/hnf/}.
 
 \bibitem[Ste82]{MR670070}
 Glenn Stevens, \emph{Arithmetic on modular curves}, Progress in Mathematics,

@@ -19,17 +19,18 @@
 \maketitle
 \tableofcontents
 \begin{abstract}
-	We lay the foundations for a computational theory of abelian
-	varieties over $\Q$ of $\GL_2$-type, or equivalently, with factors
-	of modular Jacobians $J_1(N)$.  This will make it possible to
-	generalize Cremona's tables of elliptic curves to higher dimension.
-	We describe algorithms for enumerating and decomposing $\GL_2$-type
-	abelian varieties, isomorphism testing, computation of endomorphism
-	and homomorphism rings, arithmetic with finite subgroups, computing
-	the modular degree, computing special values of $L$-functions, and
-	computing Tamagawa numbers.  None of our algorithms use defining
-	equations for varieties, and as such they work in a great degree of
-	generality allowing us to treat all dimensions uniformly.
+	We lay the foundations for a computational theory of abelian varieties over
+	$\Q$ of $\GL_2$-type, or equivalently, with factors of modular Jacobians
+	$J_1(N)$.  This will make it possible to generalize Cremona's tables of
+	elliptic curves to higher dimension.  We describe algorithms for
+	enumerating and decomposing $\GL_2$-type abelian varieties, isomorphism
+	testing, computation of endomorphism and homomorphism rings, arithmetic
+	with finite subgroups, computing the modular degree, computing special
+	values of $L$-functions, enumeration of the isogeny class, and computing
+	Tamagawa numbers. Though we do not completely solve all problems listed
+	above, none of our algorithms use defining equations for varieties, and as
+	such they work in a great degree of generality, allowing us to treat all
+	dimensions uniformly.
 \end{abstract}
 
 
@@ -63,7 +64,7 @@ included in Sage (which is free open source software \cite{sage}).
 In this paper we mostly ignore issues of computational complexity,
 since our goal is to describe how it is {\em practical at all} to
 compute explicitly with modular abelian varieties.  Except for [[...??
-				norm equations]], the algorithm discussed in this paper mostly amount
+				norm equations]], the algorithms discussed in this paper mostly amount
 to linear algebra and have complexity that is polynomial time in the
 level $N$ of the abelian variety.
 
@@ -94,8 +95,8 @@ variety is of $\GL_2$-type.  His paper also shows
 \cite[Thm.~4.4]{ribet:abvars} that Serre's conjectures
 \cite{serre:conjectures} on modularity of odd irreducible
 two-dimensional mod~$p$ Galois representations imply the converse.
-Since Khare and Wintenberger have now completely proved Serre's
-conjecture, we have the following theorem.
+Since Khare and Wintenberger~\cite{MR2827796} have now completely proved
+Serre's conjecture, we have the following theorem.
 
 \begin{theorem}[Khare, Wintenberger]\label{conj:ribmod}
 	Every $\GL_2$-type abelian variety over $\Q$ is modular.
@@ -114,12 +115,14 @@ rest of this paper.
 	exists a finite degree morphism $A\to J_1(N)$ over $K$ for some
 	$N$. The main complication is that the endomorphism ring over
 	$\Qbar$ of a simple modular abelian variety $A$ over $\Q$ need not
-	be commutative.  Fortunately much is known about its structure (see
+	be commutative.  Fortunately, much is known about its structure (see
 	\cite{ribet:twistsendoalg}).
 
 	Also many of the algorithms in this paper naturally generalize to
 	the context of Grothendieck motives attached to modular forms.  This
-	is also a topic for future investigation.
+	is also a topic for future investigation, and we expect that many of the
+	algorithms we give here generalize to that
+	context~\cite{dummigan-stein-watkins:motives}.
 \end{remark}
 
 
@@ -141,17 +144,17 @@ $$
 	0\ar[r]& G \ar[r]& B\ar@{^(->}[u] \ar[r]& A\ar[r] \ar@/^/[l]\ar[ul]_{f} & 0
 	}
 $$
-In other words we can represent any modular abelian variety by giving
-$G\subset B\subset J$, all defined over $\QQ$.  It remains to explain
-how we explicitly specify $B$ and $G$.
+In other words we can represent any modular abelian variety by giving $G\subset
+	B\subset J$, all defined over $\QQ$. We explicitly specify $J$ by computing a
+basis for $\H_1(J,\Z)$ and $\H_1(J,\Q)=\H_1(J,\Z)\tensor \QQ$ using modular
+symbols \cite{stein:modform}. It remains to explain how we explicitly specify
+$B$ and $G$.
 
 	{\em We specify $B$ as follows.}  The inclusion $B \hookrightarrow J$
 induces an inclusion of rational homology $\H_1(B, \Q) \hookrightarrow
 	\H_1(J, \Q)$ and $B$ is determined by the image $V$ of $\H_1(B,\Q)$ in
-the $\Q$-vector space $\H_1(J,\Q)$.  We explicitly compute a basis for
-$\H_1(J,\Z)$ and $\H_1(J,\Q)=\H_1(J,\Z)\tensor \QQ$ using modular
-symbols \cite{stein:modform}, and specify $B$ by giving a basis in
-reduced echelon form for a subspace $V \subset \H_1(J, \Q)$.  Of
+the $\Q$-vector space $\H_1(J,\Q)$.  So we specify $B$ by giving a basis in
+reduced echelon form for a subspace $V \subset \H_1(J, \Q)$. Of
 course, not every subspace corresponds to a modular abelian variety,
 but we can determine whether or not a given $V$ corresponds to a valid
 abelian subvariety (see Section \ref{sec:decomp_verify}).
@@ -168,8 +171,9 @@ In particular,
 $$
 	B(\C)_{\tor} \cong V/\Lambda,
 $$
-and we specify $G\subset B(\C)_{\tor}$ by giving the lattice $L$ with
-$\Lambda \subset L\subset V$ such that $L/\Lambda \isom G$.
+and we specify $G\subset B(\C)_{\tor}$ by giving a Hermite normal form basis
+for the lattice $L$ with $\Lambda \subset L\subset V$ such that $L/\Lambda
+	\isom G$.
 
 %giving a finite list $g_i$ of
 %elements of $V$ that generate the elementary factors.  More precisely,
@@ -371,7 +375,7 @@ varieties with subvarieties $A_1=(W_1, L_1, J_1)\subset B_1$ and $A_2=(W_2,
 	L_2, J_2)\subset B_2)$. Then the product $A_1\times A_2\subset B_1\times
 	B_2$ is given by $(W_1\times W_2, L_1\times L_2, J_1\times J_2)$.
 
-\subsubsection{Intersection}
+\subsubsection{Intersections}
 
 
 Suppose $A = (V,J)$ and $A' = (V', J)$ are abelian subvarieties of a
@@ -662,7 +666,8 @@ when computing $\End(A)$ and $\Hom(A,B)$.
 
 	\begin{enumerate}
 		\item{} [Hermite Normal Form] Find the Hermite Normal Form $H$ of $M^t$.
-		\item{} [Inverse] Compute $S = (H^t)^{-1} M$ using the ``last big row'' trick.
+		\item{} [Inverse] Compute $S = (H^t)^{-1} M$ using the ``last big row''
+		      trick~\cite{pernet-stein:hnf}.
 		      Then output $S$ whose rows are a basis for the saturation of $L$.
 	\end{enumerate}
 \end{algorithm}
@@ -675,10 +680,10 @@ when computing $\End(A)$ and $\Hom(A,B)$.
 Note that one could instead replace $H$ by an LLL reduced basis for
 the rowspace of $M^t$, but this is usually much slower because the
 $p$-adic/modular algorithm \cite{blah} for computing Hermite normal
-form is fast.
+form is so fast in this case.
 
 
-If $A$ is an abelian variety of dimension $2$ then after chosing a basis for
+Let $A$ is an abelian variety of dimension $d$. After chosing a basis for
 $\Lambda = \H_1(A,\Z)$, we have
 $$
 	\End(\Lambda)\isom \Mat_{2d\times 2d}(\Z) \ncisom \Z^{(2d)^2}.

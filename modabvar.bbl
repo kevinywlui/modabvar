@@ -42,6 +42,10 @@ E.\thinspace{}V. Flynn, F.~\protect{Lepr\'{e}vost}, E.\thinspace{}F. Schaefer,
   for modular {J}acobians of genus 2 curves}, Math. Comp. \textbf{70} (2001),
   no.~236, 1675--1697 (electronic). \MR{1 836 926}
 
+\bibitem[JS04]{primitive_element}
+Brawley J. and Gao S, \emph{On density of primitive elements for field
+  extensions}, \url{http://www.math.clemson.edu/~sgao/papers/prim-ele.pdf}.
+
 \bibitem[KW10]{MR2827796}
 Chandrashekhar Khare and Jean-Pierre Wintenberger, \emph{Serre's modularity
   conjecture}, Proceedings of the {I}nternational {C}ongress of
@@ -53,14 +57,14 @@ San Ling and Joseph Oesterl\'{e}, \emph{The {S}himura subgroup of {$J_0(N)$}},
   Ast\'{e}risque (1991), no.~196-197, 6, 171--203 (1992), Courbes modulaires et
   courbes de Shimura (Orsay, 1987/1988). \MR{1141458}
 
-\bibitem[Man72]{manin:parabolic}
-J.\thinspace{}I. Manin, \emph{Parabolic points and zeta functions of modular
-  curves}, Izv. Akad. Nauk SSSR Ser. Mat. \textbf{36} (1972), 19--66. \MR{47
-  \#3396}
-
 \bibitem[Mil86]{milne:abvars}
 J.\thinspace{}S. Milne, \emph{Abelian varieties}, Arithmetic geometry (Storrs,
   Conn., 1984), Springer, New York, 1986, pp.~103--150.
+
+\bibitem[PZ89]{MR1033013}
+M.~Pohst and H.~Zassenhaus, \emph{Algorithmic algebraic number theory},
+  Encyclopedia of Mathematics and its Applications, vol.~30, Cambridge
+  University Press, Cambridge, 1989. \MR{1033013}
 
 \bibitem[Rib80]{ribet:twistsendoalg}
 K.\thinspace{}A. Ribet, \emph{Twists of modular forms and endomorphisms of
@@ -93,6 +97,11 @@ J-P. Serre, \emph{Sur les repr\'esentations modulaires de degr\'e \protect{$2$}
 \bibitem[Shi73]{shimura:factors}
 G.~Shimura, \emph{On the factors of the jacobian variety of a modular function
   field}, J. Math. Soc. Japan \textbf{25} (1973), no.~3, 523--544.
+
+\bibitem[Shi94]{shimura:intro}
+\bysame, \emph{Introduction to the arithmetic theory of automorphic functions},
+  Princeton University Press, Princeton, NJ, 1994, Reprint of the 1971
+  original, Kan Memorial Lectures, 1.
 
 \bibitem[SP10]{pernet-stein:hnf}
 William Stein and Clement Pernet, \emph{Fast computation of hermite normal

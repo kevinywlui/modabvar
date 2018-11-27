@@ -226,9 +226,36 @@ where $H$ is a normal subgroup of $(\ZZ/N\ZZ)^*$ given by a list of generators.
 \subsection{Enumerating New Simple Modular Abelian Varieties}
 
 \begin{algorithm}{Enumerate Modular Abelian Varieties}
+    \label{alg:new_simple_subs}
     Given a modular Jacobian $J$ this algorithm outputs a list of
     abelian subvarieties of $J$ in each isogeny class of simple modular
     abelian varieties of level $N$.
+    \begin{enumerate}
+        \item{} [Compute new modular symbols space]
+            Compute the new cuspidal modular symbol space
+            $\mathbb{S}_2(N)_\mathrm{new}$ using the techniques in \cite[\S
+            8]{stein:modform}.
+        \item{} [Factor into Hecke eigenspaces]
+            The new modular symbol space decomposes into 1-dimensional complex
+            simultaneous eigenspaces for $\T$. We can factor the new modular
+            symbols space by computing the eigenspaces with respect to a
+            sufficiently generic element of the Hecke algebra.
+            \begin{enumerate}
+                \item{} [Randomly pick from Hecke Algebra]
+                    Randomly pick $T\in \T$.
+                \item{} [Factor characteristic polynomial]
+                    Let $\prod f_j ^{e_j}$ be a factorization of the characteristic
+                    polynomial of $T$ so that each $f_j$ is irreducible and
+                    distinct. Since elements of $\T$ are $\CC$-linear, each
+                    $e_j$ to be even.
+                \item{} [Irreducible?]
+                    If any $e_j/2 > 1$, some eigenspace of $T$ has complex
+                    dimension greater than 1 so return to step (a). Otherwise,
+                    Compute the eigenspace decomposition $\{W_{k}\}$ of
+                    $\mathbb{S}_2(N)_\mathrm{new}$
+            \end{enumerate}
+    \end{enumerate}
+>>>>>>> develop
 \end{algorithm}
 
 
@@ -241,29 +268,9 @@ where $H$ is a normal subgroup of $(\ZZ/N\ZZ)^*$ given by a list of generators.
     of abelian subvarieties $A_i$ with finite intersection and that sums to
     $J$. Let $L_1,\ldots, L_r$ be the divisors of $N$.
     \begin{enumerate}
-        \item{} [Compute new modular symbols space]
-            For each divisor $L_i$, compute the new cuspidal modular symbol
-            space $\mathbb{S}_2(L_i)_\mathrm{new}$ using the techniques in
-            \cite[\S 8]{stein:modform}.
-        \item{} [Factor into Hecke eigenspaces]
-            The new modular symbol space decomposes into 1-dimensional complex
-            simultaneous eigenspaces for $\T$. So for each divisor $L_i$, we can
-            factor the new modular symbols space by computing the eigenspaces
-            with respect to a sufficiently generic element of the Hecke algebra.
-            \begin{enumerate}
-                \item{} [Randomly pick from Hecke Algebra]
-                    Randomly pick $T\in \T$.
-                \item{} [Factor characteristic polynomial]
-                    Let $\prod f_j ^{e_j}$ be a factorization of the characteristic
-                    polynomial of $T$ so that each $f_j$ is irreducible and
-                    distinct. Since elements of $\T$ are $\CC$-linear, each
-                    $e_j$ to be even.
-                \item{} [Irreducible?]
-                    If any $e_j/2 > 1$, some eigenspace of $T$ has complex
-                    dimension greater than 1 so return to step (a). Otherwise,
-                    Compute the eigenspace decomposition $\{W_{ik}\}$ of
-                    $\mathbb{S}_2(L_i)_\mathrm{new}$
-            \end{enumerate}
+        \item{} [Simple factors of level $L_i$]
+            For each $L_i$, compute the decomposition $\{W_{ik}\}$ of the new
+            subvariety $J_H(L)$ using Algorithm~\ref{alg:new_simple_subs}.
         \item{} [Return image under degeneracy maps]
             For each divisor $L_i$, and each divisor $t_{il}$ of $N/L_i$, let
             $d_{L_i, t_{il}}$ (See Section~\ref{sec:natural_maps}) and compute
@@ -897,7 +904,14 @@ We will use the following lemma in the proof of Proposition~\ref{prop:end}.
 
 \subsubsection{Computing Discriminants of Endomorphism Rings}
 
-Let $\T=\ZZ[T_1,T_2,\ldots]$ be the Hecke algebra.
+Let $A$ be a modular abelian variety of dimension $d$ with Hecke algebra $\T$.
+The Hecke algebra is a $\ZZ$-algebra that is free of finite rank as a
+$\ZZ$-module
+
+To compute a $\ZZ$-basis for $\T$, we can naively
+embed $\T$ in $\Mat_{d\times d}(\QQ)$. This is a bigger ambient ring than
+necessary. Instead, there is a method to embed $\T$ inside of $\QQ^d$ as is
+done here~\cite{MR2137350}.
 
 \subsubsection{The Hecke Subring}
 computing its index; structure of quotient in full ring.
@@ -1139,13 +1153,36 @@ Tate module of $A_{\F_p}$ for $\ell\not\mid pN$ is given by
 \subsubsection{Numerical Evaluation at any Point}
 anywhere (via Dokchitser)
 
+In~\cite{dokchitser:lfunc}, Dokchitser gives a method of evaluating motivic
+$L$-functions and their derivatives at any point using Mellin Transformations.
+This method of made rigorous as part of Robert Bradshaw's Ph.D.
+thesis~\cite{bradshaw:phd}. This has been implemented in PARI by Dokchitser and
+given a Sage interface by the third author.
+
 \subsubsection{The Rational Part of the Special Value}
-(generalize Agashe-Stein?)
+
+Suppose that $L(A,1)\neq 0$. When computing the conjectural order of $\Sha(A)$,
+we are interested in the rational part of $L(A, 1)$ defined by $L(A,
+1)/\Omega_A\in \QQ$. In~\cite{agashe-stein:bsd}, a formula for this fraction is
+given up to the Manin constant (which is conjecturally equal to 1 for optimal
+quotients).  
 
 \subsubsection{Order of Vanishing (Analytic Rank)}
 
+Let $\Phi_f:\MM_k(N, \epsilon; \ZZ)\to \CC^d$ be the period map~\ref{} of
+$f$ and $\e=\{0,\infty\}$ be the winding element. We can determine the
+positivivty of the analytic rank by observing $|L(A_f, 1)| = [\ZZ^d:
+\Phi_f(\e)\ZZ^d]$, where $d=\deg K_f$. While there is no known general
+algorithm for determining the exact value of the analytic rank, in practice,
+one can a good guess at the analytic rank because the nonzero values are often
+large.
+
 \subsubsection{Zeros in the Critical Strip}
-(Rubinstein)
+
+In~\cite{MR2697494}, Rubinstein gives a procedure for finding the zeros of
+various $L$-functions, including those coming from modular forms. In addition,
+Rubinstein has create a C++ library with a SAGE wrapper for doing such
+computations.
 
 \subsection{$p$-adic $L$-Series}
 

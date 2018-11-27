@@ -8,10 +8,27 @@
 \providecommand{\href}[2]{#2}
 \begin{thebibliography}{FpS{\etalchar{+}}01}
 
+\bibitem[AS05]{agashe-stein:bsd}
+Agashe Agashe and William Stein, \emph{Visible evidence for the {B}irch and
+  {S}winnerton-{D}yer conjecture for modular abelian varieties of analytic rank
+  zero}, Math. Comp. \textbf{74} (2005), no.~249, 455--484 (electronic), With
+  an appendix by J.\ Cremona and B.\ Mazur,
+  \url{http://wstein.org/papers/shacomp/}. \MR{2085902}
+
+\bibitem[Bra10]{bradshaw:phd}
+Robert Bradshaw, \emph{Provable {C}omputation of {M}otivic {$L$}-functions},
+  University of Washington Ph.D. Thesis under William Stein (2010),
+  \url{http://www.sagemath.org/files/thesis/bradshaw-thesis-2010.pdf}.
+
 \bibitem[Cre97]{cremona:algs}
 J.\thinspace{}E. Cremona, \emph{Algorithms for modular elliptic curves}, second
   ed., Cambridge University Press, Cambridge, 1997,
   \url{http://www.warwick.ac.uk/~masgaj/book/fulltext/}.
+
+\bibitem[CS04]{MR2137350}
+Frank Calegari and William~A. Stein, \emph{Conjectures about discriminants of
+  {H}ecke algebras of prime level}, Algorithmic number theory, Lecture Notes in
+  Comput. Sci., vol. 3076, Springer, Berlin, 2004, pp.~140--152. \MR{2137350}
 
 \bibitem[CS08]{calegari-stein:eisenstein}
 Frank Calegari and William Stein, \emph{A non-{G}orenstein {E}isenstein
@@ -79,6 +96,11 @@ Kenneth~A. Ribet, \emph{Congruence relations between modular forms}, Proc.
 K.\thinspace{}A. Ribet, \emph{Abelian varieties over {${\bf Q}$} and modular
   forms}, Algebra and topology 1992 (Taej\u on), Korea Adv. Inst. Sci. Tech.,
   Taej\u on, 1992, pp.~53--79. \MR{94g:11042}
+
+\bibitem[Rub98]{MR2697494}
+Michael~Oded Rubinstein, \emph{Evidence for a spectral interpretation of the
+  zeros of {L}-functions}, ProQuest LLC, Ann Arbor, MI, 1998, Thesis
+  (Ph.D.)--Princeton University. \MR{2697494}
 
 \bibitem[S{\etalchar{+}}11]{sage}
 W.\thinspace{}A. Stein et~al., \emph{{S}age {M}athematics {S}oftware ({V}ersion

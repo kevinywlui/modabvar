@@ -192,8 +192,8 @@ congruence subgroups $\Gamma_0(N)$, $\Gamma_1(N)$, and $\Gamma_H(N)$.
 We use the notation $(V,J)$ as a shorthand for $L=\Lambda$.  
 
 Because $V = \QQ L$ and $\Lambda$ is the saturation~\ref{alg:saturate} of $L$
-in $J$, $A$ be also be given explicit by the pair $(L, J)$. We refer to $L$ as
-the \emph{defining lattice} of $A$.
+in $J$, $V$ can be recovered from $J$ so $A$ be also be given explicit by the
+pair $(L, J)$. We refer to $L$ as the \emph{defining lattice} of $A$.
 
 
 
@@ -237,17 +237,17 @@ where $H$ is a normal subgroup of $(\ZZ/N\ZZ)^*$ given by a list of generators.
             8]{stein:modform}.
         \item{} [Factor into Hecke eigenspaces]
             The new modular symbol space decomposes into 1-dimensional complex
-            simultaneous eigenspaces for $\T$. We can factor the new modular
-            symbols space by computing the eigenspaces with respect to a
-            sufficiently generic element of the Hecke algebra.
+            simultaneous eigenspaces of the Hecke algebra $\T$. We can factor
+            the new modular symbols space by computing the eigenspaces with
+            respect to a sufficiently generic element of the Hecke algebra.
             \begin{enumerate}
                 \item{} [Randomly pick from Hecke Algebra]
-                    Randomly pick $T\in \T$.
+                    Randomly pick a Hecke operator $T\in \T$.
                 \item{} [Factor characteristic polynomial]
                     Let $\prod f_j ^{e_j}$ be a factorization of the characteristic
                     polynomial of $T$ so that each $f_j$ is irreducible and
                     distinct. Since elements of $\T$ are $\CC$-linear, each
-                    $e_j$ to be even.
+                    $e_j$ is even.
                 \item{} [Irreducible?]
                     If any $e_j/2 > 1$, some eigenspace of $T$ has complex
                     dimension greater than 1 so return to step (a). Otherwise,
@@ -255,7 +255,6 @@ where $H$ is a normal subgroup of $(\ZZ/N\ZZ)^*$ given by a list of generators.
                     $\mathbb{S}_2(N)_\mathrm{new}$
             \end{enumerate}
     \end{enumerate}
->>>>>>> develop
 \end{algorithm}
 
 
@@ -322,6 +321,7 @@ algorithm will also give a decomposition of $V$ into simple subvarieties.
     $S:=wT'=\sum n_i d_i$ with $n_i\in \ZZ$.
 \end{proof}
 
+%TODO: give algorithm?
 
 \begin{algorithm}{Decomposing and Verifying Abelian Subvarieties}
     \label{alg:decomp_and_verify_subvarieties}
@@ -406,7 +406,8 @@ $$
 $$
 The component group is isomorphic to the torsion subgroup of kernel of
 the map $A \times A' \to J$ sending $(x,y)\to x-y$, which we compute
-using Section~\ref{sec:kernelmodabvar}; in particular, we have
+using Section~\ref{sec:kernelmodabvar}; in particular, when $A\cap A'$ is
+finite, we have
 $$
 \Phi \isom \left( \Lambda_J/(\Lambda_A + \Lambda_A')\right)_{\tor}.
 $$
@@ -533,8 +534,32 @@ subgroups of $A=(L, V, J)$ with $H\subset G$ so $\mathcal{L}_2\subset
 K_1K_2, A/H)$, where the computation of $A/H$ is given in
 Section~\ref{sec:quotients}.
 
+\subsubsection{The Shimura Subgroup}
+
+For any integer $N$, there exists a map between modular curves given
+on the non-cuspidal points (the points corresponding to actual elliptic curves)
+by
+\begin{align*}
+    s_N ^*: Y_1(N) & \to Y_0(N)                      \\
+    (E, P)         & \mapsto (E, \langle P \rangle).
+\end{align*}
+By Pic functoriality, this induces a map $s_N: J_0(N)\to J_1(N)$. The kernel of
+this map is the \emph{Shimura subgroup}, denoted $\Sigma(N)$.
+Ribet~\cite[Theorem 4.3]{ribet:congrel} shows that for any prime $p$ coprime to
+$N$, $\Sigma(N)=\ker(d_1 - d_p)$, where $d_1,d_p :J_0(N)\to J_0(pN)$ are the
+degeneracy maps (See Section~\ref{sec:natural_maps}.
+
+Ling and Oesterle~\cite[Theorem 1,2]{MR1141458} gives a formula for the group
+invariants of the Shimura subgroup as an abstract abelian group. Roughly
+speaking, the Shimura subgroup is $(\ZZ/N\ZZ)^*$ quotiented out by a small
+subgroup of order a product of powers of 2 and 3. Moreover, if $e$ is the
+exponent of the Shimura subgroup then the points are defined over $\QQ(\mu_e)$
+and the Galois action is given by the cyclotomic character of
+$\Gal(\QQ(\mu_e)/\QQ)$.
+
 
 \subsubsection{The Cuspidal Subgroup}
+\label{sec:cuspidal_subgroup}
 
 The cusps of $X_H(N)$ are the equivalence classes of $\P^1(\QQ)$ under
 $\Gamma_H(N)$. We will denote the elements by $[x/y]_{\Gamma_H(N)}$. The
@@ -560,38 +585,94 @@ where $dd'\equiv 1 \mod{N}$. We are now able to compute the
 
 \subsubsection{The Rational Torsion Subgroup}
 
-point counting over finite fields
+In this section, we aim to compute give methods for computing the rational
+torsion subgroup. There is no known general algorithm for computing the
+rational torsion subgroup but we can compute lower and upper bounds.
+Since the rational cuspidal subgroup is contained in the rational torsion
+subgroup, we have a lower bound. We have already discussed computing the
+rational cuspidal subgroup in Section~\ref{sec:cuspidal_subgroup} so we will
+dedicate this section to computing an upper bound.
 
-divisor, multiple of order
+Let $J = J_H(N)$. For any prime $\ell\nmid N$, let $J(\F_{\ell})$ denote the
+group of points over $\F_{\ell}$ on the special fiber of the N\'eron model of
+$J$ modulo $\ell$. Let $S = J(\Q)_{\tor}$.
 
+\begin{lemma}\label{lem:injred}
+  For any prime $\ell \nmid 2N$, we have $S\hookrightarrow
+  J(\F_{\ell})$.
+\end{lemma}
+\begin{proof}
+  See \cite[Appendix]{katz:torsion}.
+\end{proof}
+\begin{remark}
+  The above lemma also extends to $\ell\mid N$ if we let
+  $J(\F_{\ell})$ denote the group of points on the special fiber of
+  the N\'eron model.
+\end{remark}
 
-In general
+For any prime $\ell\nmid 2N$, let
+$
+  \eta_{\ell} = T_{\ell} - (1+\dbd{\ell} \ell) \in \End(J).
+$
+\begin{lemma}\label{lem:etakills}
+For every $\ell\nmid 2N$,
+we have $S \subset J(\R)[\eta_{\ell}]$.
+\end{lemma}
+\begin{proof}
+The Eichler-Shimura relation (see, e.g., \cite[Thm.~5.16]{ribet-stein:serre})
+asserts that on $J_{\F_{\ell}}$ we have
+$$
+ T_{\ell} \equiv F + \dbd{\ell} F^{\vee},
+$$
+where $F$ is Frobenius and $F^{\vee}$ is the dual of Frobenius, so
+$F^{\vee} \circ F = F \circ F^{\vee} = [\ell]$.
+If $x \in J(\F_{\ell})$, then $F(x)=x$, so $\ell x = F^{\vee} \circ
+F(x) = F^{\vee}(x)$.  For any $P\in S$, the rational torsion points
+$T_{\ell}(P)$ and $P + \dbd{\ell} \ell P$ both reduce to the same
+element of $J(\F_{\ell})$, so Lemma~\ref{lem:injred} implies that
+$T_{\ell}(P) = P + \dbd{\ell} \ell P$, so $\eta_{\ell}(P) = 0$.
+Finally note that $S\subset J(\Q)\subset J(\R)$.
+\end{proof}
 
-An upper bound can be
-..william's thing..
+Let $I$ be the ideal generated by $\eta_{\ell}$ for $\ell\nmid 2N$,
+and let $$J[I] = \bigcap_{\ell\nmid 2N} J[\eta_{\ell}].$$
+Lemma~\ref{lem:etakills} implies that $S \subset J[I](\R)$.  Let $C$ be
+the {\em cuspidal subgroup}, which is the subgroup of $J(\Qbar)$
+generated by differences of cusps. When $J[I](\R)\subset C$, we thus have
+$S=C(\Q)$, which is useful in practice since $C(\Q)$ is computable
+(see \cite{stevens:thesis}).
 
-\subsubsection{The Shimura Subgroup}
+Passing from $J[I](\C)$ to $J[I](\R)$ is crucial to our strategy,
+because often $J[I]$ is strictly larger than $C$.  For example,
+consider $J=J_0(p)$, with $p$ prime.  Then $C=\langle (0)-(\infty)
+\rangle$ is cyclic of order the numerator $n$ of $(p-1)/12$.  The
+$\eta_{\ell} = T_{\ell}-(1+\ell)$ generate the ideal $I$, which is
+contained in (see \cite[pg.~95]{mazur:eisenstein}) the Eisenstein ideal
+$\mathcal{I} = I + (1+w)$, where $w$ is the Atkin-Lehner involution.
+By \cite[Prop.~11.1 on pg.~98 and Prop.~11.7 on pg.~100]{mazur:eisenstein}
+$J[\mathcal{I}]$ contains both the cuspidal subgroup $C$, and the
+Shimura subgroup $\Sigma$ (also of order $n$), which is $\mu$-type.
+We conclude that (usually) $J[I]$ is not equal to $C$.  More
+concretely, when $p=11$, we have $J[I]= J[5]\isom (\Z/5\Z)^2$, but
+$C\isom (\Z/5\Z)$.  Continuing our discussion with $p=11$ in which $J$
+is an elliptic curve, any construction involving Hecke operators (even
+including bad primes) or Atkin-Lehner operators cannot result in an
+ideal $I'$ such that $J[I'] =C$, since $\End_\C(J)=\Z$, so
+$J[I']=(\Z/m\Z)^2$ (some $m$) for all nonzero ideals $I'$.  However,
+by introducing the $*$-involution, we obtain a bigger ring $\T^* =
+\T[*]$, which is {\em not} a subring of $\End(J)$, but for which there
+is an ideal $I^*$ with $J(\C)[I^*] = C$ in this case.  The ring $\T^*$
+acts via endomorphisms of the abelian group $J(\C)$, but not as a ring
+of endomorphisms of the abelian variety $J$.
 
-For any integer $N$, there exists a map between modular curves given
-on the non-cuspidal points (the points corresponding to actual elliptic curves)
-by
-\begin{align*}
-    s_N ^*: Y_1(N) & \to Y_0(N)                      \\
-    (E, P)         & \mapsto (E, \langle P \rangle).
-\end{align*}
-By Pic functoriality, this induces a map $s_N: J_0(N)\to J_1(N)$. The kernel of
-this map is the \emph{Shimura subgroup}, denoted $\Sigma(N)$.
-Ribet~\cite[Theorem 4.3]{ribet:congrel} shows that for any prime $p$ coprime to
-$N$, $\Sigma(N)=\ker(d_1 - d_p)$, where $d_1,d_p :J_0(N)\to J_0(pN)$ are the
-degeneracy maps (See Section~\ref{sec:natural_maps}.
+Henceforth we let $I^*$ denote the ideal in $\T^* \subset \End(J(\C))$
+generated by $I$ and $*-1$.
+We call $I^*$ the {\em real Eisenstein ideal}, and let
+$$
+  E = E(J) = J(\C)[I^*] = J[I](\R),
+$$
+which is a finite group that contains $S = J(\Q)_{\tor}$.
 
-Ling and Oesterle~\cite[Theorem 1,2]{MR1141458} gives a formula for the group
-invariants of the Shimura subgroup as an abstract abelian group. Roughly
-speaking, the Shimura subgroup is $(\ZZ/N\ZZ)^*$ quotiented out by a small
-subgroup of order a product of powers of 2 and 3. Moreover, if $e$ is the
-exponent of the Shimura subgroup then the points are defined over $\QQ(\mu_e)$
-and the Galois action is given by the cyclotomic character of
-$\Gal(\QQ(\mu_e)/\QQ)$.
 
 \subsection{Morphisms Between Modular Abelian Varieties}
 
@@ -675,6 +756,29 @@ pi)^0 = B_2$. This morphism is not unique.
 Let $\Phi:A\to B$ be a morphism between modular abelian varieties $A=(L, V, J)$
 and $B=(L', V', J')$. 
 
+\subsubsection{Factoring out Component Group}
+\label{sec:factor_component}
+
+Let $F:A\to B$ be a morphism between modular abelian varieties $A=(L, V, J)$
+and $B=(L', V', J')$. Then the kernel $K = \ker F'$ is the extension of its
+identity component $K^0$ by a finite component group $\Phi$. There exists an
+isogeny $F':A\to B'$ such that $\ker F'$ is exactly $K^0$.
+
+\begin{algorithm}{Factoring out Component Group}
+    We will compute a finite subgroup $G$ of $B$ such that the kernel of the
+    composition $g:A\to B\to B/G$ has component group exactly $A[n]$ for some
+    positive integer $n$. This implies that there exists a morphism $h$ such
+    that $g \circ [n] = h$. This $h$ is the desired isogeny.
+    \begin{enumerate}
+        \item{} [Compute the saturation of $\Im F$]
+            Let $\Lambda$ be the defining lattice of the image of
+            $F$~\ref{sec:image} and $\Lambda_sat$~\ref{alg:saturate} the
+            saturation of $\Lambda$.
+        \item{} [Determine $n$]
+            Solve the matrix equation $XM = B$, where $B$ is the 
+    \end{enumerate}
+\end{algorithm}
+
 
 \subsection{Endomorphism Rings and Hom Spaces}
 
@@ -682,11 +786,6 @@ and $B=(L', V', J')$.
 
 The following saturation algorithm will be important
 when computing $\End(A)$ and $\Hom(A,B)$.
-
-[[insert very quick summary of Hermite and smith forms]]
-
-[[this should go in paper on hnf, etc. writing with
-Clement Pernet]]
 
 \begin{algorithm}{Saturate}
     \label{alg:saturate}
@@ -831,8 +930,9 @@ We will use the following lemma in the proof of Proposition~\ref{prop:end}.
         \item{} [Initialize] Let $d=\dim(A_f)$, let $n=1$, and let $V$ be the
             zero subspace of $\End(A_f)\tensor\Q$.
         \item{} [Compute Hecke operator]\label{step:heckeop} Using
-            Algorithm~\ref{}, compute the restriction of the Hecke operator
-            $T_n$ to $A_f$, as an element of $\End(A_f)\tensor\Q$.
+            Algorithm~\ref{sec:natural_maps}, compute the restriction of the
+            Hecke operator $T_n$ to $A_f$, as an element of
+            $\End(A_f)\tensor\Q$.
         \item{} [Increase $V$] Replace $V$ by $V+\Q\cdot T_n$.
         \item{} [Finished?]  If $\dim(V) < d$, increase $n$ and go to
             Step~\ref{step:heckeop}.
@@ -908,16 +1008,42 @@ Let $A$ be a modular abelian variety of dimension $d$ with Hecke algebra $\T$.
 The Hecke algebra is a $\ZZ$-algebra that is free of finite rank as a
 $\ZZ$-module
 
-To compute a $\ZZ$-basis for $\T$, we can naively
-embed $\T$ in $\Mat_{d\times d}(\QQ)$. This is a bigger ambient ring than
-necessary. Instead, there is a method to embed $\T$ inside of $\QQ^d$ as is
-done here~\cite{MR2137350}.
+To compute a $\ZZ$-basis for $\T$, we can naively embed $\T$ in $\Mat_{d\times
+d}(\QQ)$. This then involves computations in a $d^2$-dimensional space.
+Instead, there is a method to embed $\T$ inside of $\QQ^d$ as is done
+here~\cite{MR2137350}.
 
 \subsubsection{The Hecke Subring}
 computing its index; structure of quotient in full ring.
 
+The Hecke algebra $\T$ is generated for $T_1,\ldots,T_s$ as a
+$\ZZ$-module. This gives the following algorithm.
+\begin{algorithm}{Compute $\T$}
+    Given a modular abelian variety $A$, this algorithm compute a $\ZZ$-basis
+    for $\T$ as elements of $\End(A)$.
+    \begin{enumerate}
+        \item{} [Compute endomorphism ring]
+            Use Algorithm~\ref{alg:end_A} to compute a $\ZZ$-basis for
+            $\End(A)$.
+        \item{} [Initialize]
+            Set $n=1$ and $L$ to be the zero submodule of $\End(A)$.
+        \item{} [Compute Hecke operator]
+            Using Algorithm~\ref{sec:natural_maps}, compute the Hecke operator
+            $T_n$ as an element of $\End(A)$.
+        \item{} [Increase $L$]
+            Replace $L$ by $L+\ZZ\cdot T_n$.
+        \item{} [Finished?]
+            If $n=s$ or $L=\End(A)$, we are finished with $L$ being the Hecke
+            algebra.
+    \end{enumerate}
+\end{algorithm} 
 
 \subsubsection{Atkin-Lehner Operators}
+
+Let $A=(L, V, J)$ be a modular abelian variety of level $N$. Then for any exact
+divisor $q$ of $N$, there exists an Atkin-Lehner operator $w_q\in \End_0(A)$.
+
+%TODO: fill in
 
 \subsubsection{The $I$-torsion Subgroup for any Ideal $I$}
 
@@ -942,7 +1068,8 @@ using~\ref{sec:modabvar_intersections},~\ref{sec:finitegroup_intersection}.
     \begin{enumerate}
         \item{} [$A$, $B$ both simple] When $A$ and $B$ are both simple they
             are isogenenous to abelian varieties $A_f$ and $A_g$ attached to
-            newforms; we can find explicit isogenies using Algorithm~\ref{}.
+            newforms; we can find explicit isogenies using
+            Algorithm~\ref{alg:integral_degen}.
             Then $A$ is isogenous to $B$ if and only if $A_f = A_g$, i.e., $f$
             and $g$ are Galois conjugate.
 
@@ -1169,7 +1296,7 @@ quotients).
 
 \subsubsection{Order of Vanishing (Analytic Rank)}
 
-Let $\Phi_f:\MM_k(N, \epsilon; \ZZ)\to \CC^d$ be the period map~\ref{} of
+Let $\Phi_f:\M_k(N, \epsilon; \ZZ)\to \CC^d$ be the period map~\ref{} of
 $f$ and $\e=\{0,\infty\}$ be the winding element. We can determine the
 positivivty of the analytic rank by observing $|L(A_f, 1)| = [\ZZ^d:
 \Phi_f(\e)\ZZ^d]$, where $d=\deg K_f$. While there is no known general

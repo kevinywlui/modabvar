@@ -63,6 +63,10 @@ E.\thinspace{}V. Flynn, F.~\protect{Lepr\'{e}vost}, E.\thinspace{}F. Schaefer,
 Brawley J. and Gao S, \emph{On density of primitive elements for field
   extensions}, \url{http://www.math.clemson.edu/~sgao/papers/prim-ele.pdf}.
 
+\bibitem[Kat81]{katz:torsion}
+N.\thinspace{}M. Katz, \emph{Galois properties of torsion points on abelian
+  varieties}, Invent. Math. \textbf{62} (1981), no.~3, 481--502. \MR{82d:14025}
+
 \bibitem[KW10]{MR2827796}
 Chandrashekhar Khare and Jean-Pierre Wintenberger, \emph{Serre's modularity
   conjecture}, Proceedings of the {I}nternational {C}ongress of
@@ -73,6 +77,11 @@ Chandrashekhar Khare and Jean-Pierre Wintenberger, \emph{Serre's modularity
 San Ling and Joseph Oesterl\'{e}, \emph{The {S}himura subgroup of {$J_0(N)$}},
   Ast\'{e}risque (1991), no.~196-197, 6, 171--203 (1992), Courbes modulaires et
   courbes de Shimura (Orsay, 1987/1988). \MR{1141458}
+
+\bibitem[Maz77]{mazur:eisenstein}
+B.~Mazur, \emph{Modular curves and the \protect{Eisenstein} ideal}, Inst.
+  Hautes \'Etudes Sci. Publ. Math. (1977), no.~47, 33--186 (1978),
+  \url{http://archive.numdam.org/article/PMIHES_1977__47__33_0.pdf}.
 
 \bibitem[Mil86]{milne:abvars}
 J.\thinspace{}S. Milne, \emph{Abelian varieties}, Arithmetic geometry (Storrs,
@@ -96,6 +105,12 @@ Kenneth~A. Ribet, \emph{Congruence relations between modular forms}, Proc.
 K.\thinspace{}A. Ribet, \emph{Abelian varieties over {${\bf Q}$} and modular
   forms}, Algebra and topology 1992 (Taej\u on), Korea Adv. Inst. Sci. Tech.,
   Taej\u on, 1992, pp.~53--79. \MR{94g:11042}
+
+\bibitem[RS01]{ribet-stein:serre}
+K.\thinspace{}A. Ribet and W.\thinspace{}A. Stein, \emph{Lectures on {S}erre's
+  conjectures}, Arithmetic algebraic geometry (Park City, UT, 1999), IAS/Park
+  City Math. Ser., vol.~9, Amer. Math. Soc., Providence, RI, 2001,
+  \url{http://wstein.org/papers/serre/}, pp.~143--232. \MR{2002h:11047}
 
 \bibitem[Rub98]{MR2697494}
 Michael~Oded Rubinstein, \emph{Evidence for a spectral interpretation of the
@@ -130,7 +145,11 @@ William Stein and Clement Pernet, \emph{Fast computation of hermite normal
   forms of random integer matrices}, J. Number Theory \textbf{130} (2010),
   no.~7, 1675--1683, \url{http://wstein.org/papers/hnf/}.
 
-\bibitem[Ste82]{MR670070}
+\bibitem[Ste82a]{stevens:thesis}
+G.~Stevens, \emph{Arithmetic on modular curves}, Birkh\"auser Boston Inc.,
+  Boston, Mass., 1982. \MR{87b:11050}
+
+\bibitem[Ste82b]{MR670070}
 Glenn Stevens, \emph{Arithmetic on modular curves}, Progress in Mathematics,
   vol.~20, Birkh\"{a}user Boston, Inc., Boston, MA, 1982. \MR{670070}
 

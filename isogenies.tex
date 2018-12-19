@@ -1,0 +1,80 @@
+\documentclass{article}
+
+\bibliographystyle{amsalpha}
+\usepackage{url}
+\usepackage{hyperref}
+\usepackage{fullpage}
+\include{macros}
+
+\begin{document}
+
+\section{Enumerating Isogenies}
+
+Let $N$ be prime, $J=J_0(N)$, and $A\subseteq J_\mathrm{new}$ be a simple
+subvariety.  Let $\TT$ be the Hecke algebra of $J_0(N)$. Let $\Phi:A\to A'$ be
+a $\QQ$-isogeny with kernel $K$. Let $G=\Gal(\QQbar/\QQ)$.
+
+\begin{proposition}
+    Suppose $K$ is supported away from 2. Then $K$ is a $\TT[G]$-module.
+\end{proposition}
+\begin{proof}
+    Let $0=K_0\subseteq K_1\subseteq \cdots \subseteq K_m = K$ be a composition
+    series of $K$. Let $X_i = K_i/K_{i-1}$ and $Y_i = \TT X_i$ for
+    $i=1,\ldots,m$. It suffices to show that $X_i=Y_i$ for all $i$. Fix an $i$.
+    Since $X_i$ is irreducible as a $G$-module, $Y_i$ is irreducible as a
+    $\TT[G]$-module. Therefore, $\Ann_\TT Y_i$ is a maximal ideal of $\TT$
+    which does not contain 2, by assumption. This implies that $Y_i$ is
+    isomorphic as a $\TT[G]$-module to a subquotient of $A[M]$ and, hence,
+    $J[M]$. We now consider the case where $M$ is Eisenstein and non-Eisenstein
+    separately.
+    \begin{itemize}
+        \item
+            Suppose $M$ is Eisenstein. Then by~\cite[16.2, pg.
+            125]{mazur:eisenstein}, $J[M] = C[p]\oplus\Sigma[p]$, where $p$ is
+            the residue characteristic of $M$, $C$ is the cuspidal subgroup and
+            $\Sigma$ is the Shimura subgroup.
+
+            We first show that both $C[p]$ and $\Sigma[p]$ are $\TT[G]$-modules.
+            Let $T\in \TT$ and $x \in C[p]\subseteq J[M]$. Then $T(x) = c+s$,
+            where $c\in C$ and $s\in \Sigma$. For any $g\in G$,
+            \[
+                c+s = T(g(x)) = g(T(x)) = g(c+s) = g(c) + g(s) = c+g(s),
+            \]
+            but $\Sigma$ is $\mu$-type so $s=0$ and $C[p]$ is $\TT$-module.
+            Similarly, let $T\in \TT$ and $y\in \Sigma[p]$. Then $T(y) = c+s$,
+            where $c\in C$ and $s\in \Sigma$. Let $g\in G$ be such that $g(s) =
+            (p-2)s$. Then
+            \[
+                (p-2)c + (p-2)s=T((p-2)y)=T(g(y)) = g(T(y)) = g(c+s) =
+                g(c)+g(s) = c + (p-2)s,
+            \]
+            which implies $c=0$.
+
+            The group $X_i$ is an irreducible $G$-subquotient of $J[M]$ so
+            $X_i$ is isomorphic to some $G$-submodule of $C[p]$ or $\Sigma[p]$.
+            In either case, since $C[p]$ and $\Sigma[p]$ are cyclic
+            $\TT$-module, the $\TT$-action is scalar multiplication by an
+            integer. Hence, $X_i = Y_i$.
+        \item 
+            Suppose $M$ is non-Eisenstein. Then by~\cite[14.12, pg.
+            122]{mazur:eisenstein}, $J[M]$ is an irreducible $G$-module.
+            Therefore, $X_i \cong J[M]$ so $X_i = Y_i$.
+    \end{itemize}
+\end{proof}
+
+\begin{proposition}
+    Suppose $K$ is supported away from 2 and Eisenstein primes. Then the
+    composition factors $X_i$ of $K$ are all isomorphic to $A[M_i]$ for some
+    non-Eisenstein prime $M_i$.
+\end{proposition}
+\begin{proof}
+    This is just the previous proposition when we ignore the Eisenstein primes.
+\end{proof}
+
+And from here, I'm stuck. My hope is that in the non-Eisenstein case, I can find
+an ideal $I$ of $\TT$ such that $K=A[I]$. From the previous proposition, 
+we have that $K \subseteq A[\prod_i M_i]$ and I've been trying to
+prove/convince myself this might be an equality.
+
+\bibliography{biblio}
+\end{document}

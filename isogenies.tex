@@ -19,11 +19,11 @@ a $\QQ$-isogeny with kernel $K$. Let $G=\Gal(\QQbar/\QQ)$.
 \end{proposition}
 \begin{proof}
     Let $0=K_0\subseteq K_1\subseteq \cdots \subseteq K_m = K$ be a composition
-    series of $K$. Let $X_i = K_i/K_{i-1}$ and $Y_i = \TT X_i$ for
-    $i=1,\ldots,m$. It suffices to show that $X_i=Y_i$ for all $i$. Fix an $i$.
+    series of $K$ [[as a $\ZZ[G]$-module?]]. Let $X_i = K_i/K_{i-1}$ and $Y_i = \TT X_i$ for
+    $i=1,\ldots,m$. It suffices to show that $X_i=Y_i$ for all $i$ [[since our claim is that $X_m=Y_m$]]. Fix an $i$.
     Since $X_i$ is irreducible as a $G$-module, $Y_i$ is irreducible as a
     $\TT[G]$-module. Therefore, $\Ann_\TT Y_i$ is a maximal ideal of $\TT$
-    which does not contain 2, by assumption. This implies that $Y_i$ is
+    which does not contain 2, by assumption [[I don't see why $\Ann_\TT Y_i$ is maximal.  If $Y_i$ where an irreducible $\TT$-module, then $\Ann_\TT Y_i$ would be maximal; however, you only have that $\Ann_\TT Y_i$ is an irreducible $\TT[G]$-module...  Another concern is that you have not yet used your hypothesis that $A$ is simple or anything special about being a subvariety of $J_0(N)$; in particular, $A=E\times E$ with ``$\TT=M_2(\ZZ)$'' would satisfy the {\em hypotheses you have actually used}.  Also, could you prove the proposition first under the weaker hypothesis that $K$ is an irreducible $G$-module, to avoid confusion?  If that special case is true, then you can easily induct to get the general case anyways.    In your email you talked about Ribet's explicit description of irreducible modular representations and I think probably this is how one can prove what you want, at least in the irreducible case.  Basically, if $K\subset A[\ell]$ is an irreducible $G$-module, then I vaguely recall in the 1990s at Berkeley that Ribet and Lenstra proved some structure theorem about $A[\ell]$ being built out of copies of $J[\mathfrak{m}]$....  I never understood why they cared about that result... but maybe I do now!!  This was something called "Boston-Lenstra-Ribet" -- https://math.berkeley.edu/~ribet/Articles/blr.pdf]]. This implies that $Y_i$ is
     isomorphic as a $\TT[G]$-module to a subquotient of $A[M]$ and, hence,
     $J[M]$. We now consider the case where $M$ is Eisenstein and non-Eisenstein
     separately.
@@ -55,7 +55,7 @@ a $\QQ$-isogeny with kernel $K$. Let $G=\Gal(\QQbar/\QQ)$.
             In either case, since $C[p]$ and $\Sigma[p]$ are cyclic
             $\TT$-module, the $\TT$-action is scalar multiplication by an
             integer. Hence, $X_i = Y_i$.
-        \item 
+        \item
             Suppose $M$ is non-Eisenstein. Then by~\cite[14.12, pg.
             122]{mazur:eisenstein}, $J[M]$ is an irreducible $G$-module.
             Therefore, $X_i \cong J[M]$ so $X_i = Y_i$.
@@ -72,7 +72,7 @@ a $\QQ$-isogeny with kernel $K$. Let $G=\Gal(\QQbar/\QQ)$.
 \end{proof}
 
 And from here, I'm stuck. My hope is that in the non-Eisenstein case, I can find
-an ideal $I$ of $\TT$ such that $K=A[I]$. From the previous proposition, 
+an ideal $I$ of $\TT$ such that $K=A[I]$. From the previous proposition,
 we have that $K \subseteq A[\prod_i M_i]$ and I've been trying to
 prove/convince myself this might be an equality.
 

@@ -1,0 +1,185 @@
+\documentclass{article}
+
+\bibliographystyle{amsalpha}
+\usepackage{url}
+\usepackage{hyperref}
+\usepackage{fullpage}
+\include{macros}
+
+\begin{document}
+
+\section{Connectedness of certain subrings of the Hecke Algebra}
+
+\subsection{Motivation}
+
+For $J=J_0(N)$ with $N$ prime, Mazur~\cite[Proposition 10.6]{mazur:eisenstein}
+proves that $\Spec \TT$ is connected by appealing to the fact that $J_0(N)$
+cannot decomposed into a direct sum of subvarieties. This is not the case for
+general $N$ even when $N$ is squarefree. For example,
+$J=J_0(22)=\delta_1(J_0(11))\oplus (\delta_1-\delta_2)(J_0(11))$.
+
+We prove the following 2 propositions and give an example where $\Spec\TT$ is
+disconnected.
+
+\begin{proposition}
+    Suppose that $J=J_{\new}$. Then $\Spec\TT$ is connected.
+\end{proposition}
+
+\begin{proposition}
+    Suppose $\TT'$ is the anemic Hecke algebra for $J$. Then $\Spec\TT'$ is connected.
+\end{proposition}
+\setcounter{theorem}{9}
+\begin{example}
+    The spectrum of the Hecke algebra of $J_0(22)$ is disconnected.
+\end{example}
+\begin{proof}
+    We have a direct sum decomposition $J_0(22)=\delta_1(J_0(11))\oplus
+    (\delta_1-\delta_2)(J_0(11))$. The $\QQ$-endomorphism ring of elliptic curves is
+    $\ZZ$ so $\End_{\QQ} J_0(22)\isom M_2(\ZZ)$. We can verify computationally
+    that $\TT=\End_{\QQ} J_0(22)$.
+    \begin{lstlisting}[language=Sage]
+sage: J = J0(22)
+sage: E = J.endomorphism_ring()
+sage: E == E.image_of_hecke_algebra()
+True
+    \end{lstlisting}
+    Therefore, $\TT \isom M_2(\ZZ)$ has idempotents different from $0$ and $1$
+    so $\Spec \TT$ is disconnected.
+\end{proof}
+
+\subsection{Notation/Conventions/Assumptions}
+\begin{itemize}
+    \item
+        Let $N$ be squarefree and $J=J_0(N)$ so $J$ is a semistable abelian
+        variety. Ribet~\cite[Corollary 1.4]{ribet:endo} shows that
+        endomorphisms, isogenies, and subvarieties of $J$ (a priori defined
+        over $\QQbar$) are defined over $\QQ$. We will use this fact freely in
+        the following and often make no mention of the field of definitions
+        since everything will be over characteristic zero fields.
+    \item 
+        Let $K$ be a semistable Jacobian of a curve over $\QQ$.
+    \item
+        The abelian variety $A_f$ is the subvariety of $J_0(N)$ associated to a
+        newform $f$ of level $N$.
+    \item
+        For any subvariety $A$ of $K$, let $V_A$ be the sum of all subvarieties
+        of $K$ isogenous to $A$. In the case of $K=J$ and $A\sim A_f$, let $V_f =
+        V_{A_f}$.
+    \item
+        Let $L$ be a divisor of $N$. For every divisor $d$ of $N/L$, there is a
+        degeneracy map $\delta_{d,L}:J_0(L)\to J_0(N)$ which we write as
+        $\delta_d$ when the domain is clear.
+    \item
+        Let $L$ be a divisor of $N$ and $d_1,\ldots,d_s$ be the set of divisors
+        of $N/L$. Let $\Phi_L:J_0 ^s(L)\to J_0(N)$ be defined by
+        \[
+            \Phi_L(x_1,\ldots,x_s) = \delta_1(x_1)+\cdots+\delta_r(x_s).
+        \] 
+        If $f$ is a newform of level $L$, then let $\Phi_f = (\Phi_L)|_{A_f}$.
+        So $\Im \Phi_L = V_f$.
+\end{itemize}   
+
+
+\subsection{Generalities}
+
+\begin{theorem}
+    \label{thm:theta_irred}
+    Any Jacobian $K$ taken with its principal polarization cannot be decomposed
+    into a nontrivial direct sum of principally polarized abelian varieties.
+\end{theorem}
+\begin{proof}
+    Any such decomposition would give a decomposition of the $\Theta$-divisor
+    attached to $K$ which contradicts the irreducibility of the
+    $\Theta$-divisor~\cite[\S 4(a)]{MR0349687}.
+\end{proof}
+
+\begin{lemma}
+    \label{lemma:decomp_isogeny}
+    Suppose $K$ decomposes nontrivially as the direct sum of subvarieties
+    $A\oplus B$. Then $A$ must share an isogenous factor with $B$.
+\end{lemma}
+\begin{proof}
+    We proceed via contradiction. Suppose $A$ and $B$ share no isogenous
+    factors. Let $\lambda:K\to \hat{K}$ be the principal polarization induced
+    by its $\Theta$-divisor. Since $A$ shares no isogenous factors with $B$,
+    $\lambda(A)=\hat{A}$ so $\lambda|_A$ is a polarization of $A$. Similarly,
+    $\lambda|_B$ is a polarization of $B$. This now contradicts
+    Theorem~\ref{thm:theta_irred}.
+\end{proof}
+
+\begin{lemma}
+    \label{lemma:faithful}
+    Let $R$ be a ring acting faithfully on $K$. Let $S=\{A_1,\ldots,A_k\}$ be a
+    set of representatives of the isogeny class of subvarieties of $K$. 
+    Suppose that for all $A\in S$, and every idempotent $r\in R$, either
+    $rV_A=0$ or $rV_A=V_A$. Then $\Spec R$ is connected.
+\end{lemma}
+\begin{proof}
+    Recall that $\Spec R$ is connected if and only if $R$ contains an
+    idempotent $r$ different from $0$ or $1$. We proceed via by contradiction. 
+    Let $r\in R$ be an idempotent different from $0$ or $1$. Then $K = rK
+    \oplus (1-r) K$ is a decomposition of $K$ into subvarieties. Moreover, this
+    decomposition is nontrivial because $R$ acts faithfully.
+    
+    Let $S_1=\{A\in S:rV_A=V_A\}$ and $S_2=\{A\in S:(1-r)V_A=V_A\}$. Observe
+    that $r$ and $1-r$ kill every element of $S_2$ and $S_1$, respectively, so
+    $S=S_1\sqcup S_2$. We can rewrite the previous decomposition as
+    \[
+        K 
+        = rK \oplus (1-r)K
+        = \left(\sum_{A\in S_1} V_A \right)
+        \oplus \left(\sum_{A\in S_2} V_A \right).
+    \]
+    The big summands share no isogenous factors which contradicts
+    Lemma~\ref{lemma:decomp_isogeny}.
+\end{proof}
+
+\subsection{Application to Modular Abelian Varieties}
+
+The goal now is to apply Lemma~\ref{lemma:faithful} to the case of semistable
+$J$ and subrings of the Hecke algebra $\TT$. Recall that the action of the
+Hecke algebra on $J$ is faithful.
+
+\begin{proposition}
+    Suppose that $J=J_{\new}$. Then $\Spec\TT$ is connected.
+\end{proposition}
+\begin{proof}
+    When all subvarieties are new, they appear with multiplicity 1 so the
+    conditions of Lemma~\ref{lemma:faithful} are automatic.
+\end{proof}
+
+\begin{proposition}
+    Suppose $\TT'$ is the anemic Hecke algebra for $J$. Then $\Spec\TT'$ is connected.
+\end{proposition}
+\begin{proof}
+    By Lemma~\ref{lemma:faithful}, it suffices to show that for any newform
+    $f$, and $r\in \TT'$, $rV_f=V_f$ or $rV_f=0$. Fix a newform $f$ of level
+    $L$ and $r\in \TT'$. For prime $\ell\nmid N$,
+    \[
+        T_\ell(\Phi_f(x_1,\ldots,x_s))
+        = \Phi_f(T_\ell(x_1),\ldots,T_\ell(x_s)).
+    \]
+    [[
+    Ribet presents the above formula without proof in the 'Formulaire'
+    section~\cite{MR1085264} for semiprime $N$ but I think this generalizes to
+    any $N$ and any $\ell\nmid N$. The proof would be to write $T_\ell$ the
+    composition of the pushforward and pullback of degeneracy maps then use the
+    fact that this will commute with any degeneracy map $\delta_d$ with $d$
+    dividing $N$ since relatively prime torsion structure are 'independent'.
+    ]]
+    It follows that
+    \[
+        r(\Phi_f(x_1,\ldots,x_s))
+        = \Phi_f(rx_1,\ldots,rx_s).
+    \]
+    We are abusing notation here by overloading $T_\ell$ and $r$ as operators
+    on both $A_f$ and $J_0(N)$. Therefore,
+    \[
+        rV_f = r(\Phi_f(A_f)) = \Phi_f(rA_f,\ldots,rA_f)
+    \]
+    but $A_f$ is simple so either $rA_f=A_f$ or $rA_f=0$. Therefore, by
+    Lemma~\ref{lemma:faithful}, $\Spec\TT'$ is connected.
+\end{proof}
+
+\bibliography{biblio}
+\end{document}

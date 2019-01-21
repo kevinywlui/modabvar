@@ -1,0 +1,29 @@
+\providecommand{\bysame}{\leavevmode\hbox to3em{\hrulefill}\thinspace}
+\providecommand{\MR}{\relax\ifhmode\unskip\space\fi MR }
+% \MRhref is called by the amsart/book/proc definition of \MR.
+\providecommand{\MRhref}[2]{%
+  \href{http://www.ams.org/mathscinet-getitem?mr=#1}{#2}
+}
+\providecommand{\href}[2]{#2}
+\begin{thebibliography}{Kem73}
+
+\bibitem[Kem73]{MR0349687}
+George Kempf, \emph{On the geometry of a theorem of {R}iemann}, Ann. of Math.
+  (2) \textbf{98} (1973), 178--185. \MR{0349687}
+
+\bibitem[Maz77]{mazur:eisenstein}
+B.~Mazur, \emph{Modular curves and the \protect{Eisenstein} ideal}, Inst.
+  Hautes \'Etudes Sci. Publ. Math. (1977), no.~47, 33--186 (1978),
+  \url{http://archive.numdam.org/article/PMIHES_1977__47__33_0.pdf}.
+
+\bibitem[Rib75]{ribet:endo}
+K.\thinspace{}A. Ribet, \emph{Endomorphisms of semi-stable abelian varieties
+  over number fields}, Ann. Math. (2) \textbf{101} (1975), 555--562. \MR{51
+  \#8120}
+
+\bibitem[Rib91]{MR1085264}
+Kenneth~A. Ribet, \emph{The old subvariety of {$J_0(pq)$}}, Arithmetic
+  algebraic geometry ({T}exel, 1989), Progr. Math., vol.~89, Birkh\"{a}user
+  Boston, Boston, MA, 1991, pp.~293--307. \MR{1085264}
+
+\end{thebibliography}

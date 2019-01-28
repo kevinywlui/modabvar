@@ -21,3 +21,4 @@ refs/
 misc/
 *syncdb
 *.bak[0-9]
+*.bbl

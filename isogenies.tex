@@ -52,6 +52,33 @@ We begin by using Mazur's work to understand the $G$-subquotients of $J[\ell]$
 for prime $\ell>2$.
 
 \begin{theorem}\label{theorem:irreducible_G_sub}
+    Let $K$ be an irreducible $G$-subquotient of $J[\ell]$. Then either $K\cong_G
+    J[\gM]$ for some non-Eisenstein maximal ideal of $\TT$ or $K$ is a
+    subquotient of $J[\gM]$ for some Eisenstein maximal $\gM$ with $K$
+    isomorphic as $G$-modules to either $\ZZ/\ell$ or $\mu_\ell$.
+\end{theorem}
+\begin{proof}
+    This is essentially~\cite[\S 14]{mazur:eisenstein}. We start by showing any
+    irreducible $T[G]$-subquotient of $J[\ell]$ is also irreducible as a
+    $G$-module and has the required form.
+
+    Let $V$ be an irreducible $R$-module. Let $\gM$ be the annihilator of $V$
+    in $\TT$. By Cherry Street work, $\gM$ is maximal. We have that $V$ is a
+    subquotient of $J[\gM]$. Either $\gM$ is Eisenstein or non-Eisenstein.
+    \begin{enumerate}[(a)]
+        \item
+            If $\gM$ is Eisenstein, then the action of $\TT$ factors through
+            $\ZZ$, so $V$ is irreducible as a $G$-module. Moreover, $V$ is
+            isomorphic as $G$-modules to either $\ZZ/\ell$ or $\mu_\ell$.
+        \item
+            If $\gM$ is non-Eisenstein, then by~\cite[Proposition
+            14.2]{mazur:eisenstein} $J[\gM]$ is irreducible as a $G$-module.
+            Hence, $V\cong J[\gM]$.
+    \end{enumerate}
+    This proves that any $R$-composition series of $J[\ell]$ is also a
+    $G$-composition series of $J[\ell]$. The conclusion now follows from the
+    Jordan-Holder Theorem.
+\end{proof} 
 
 \subsection{Non-Eisenstein case gives Hecke module}
 

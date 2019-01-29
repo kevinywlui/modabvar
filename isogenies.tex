@@ -14,16 +14,22 @@
 The goal is to enumerate the isogeny class of simple abelian subvarieties $A$
 of $J_0(N)$ for $N$ prime, up to isomorphism. The main objective is to prove
 
-\begin{theorem}\ref{theorem:non_eisen_iso_classify}
+\begin{theorem}\label{theorem:non_eisen_iso_classify}
     Let $A$ be a simple subvariety of $J_0(N)$ with $N$ prime. Let
     $\O=\ZZ[a_i]$, where $a_i$ are the Hecke coefficients of the newform
     attached to $A$. Let $H$ be a set of representatives of the class group
-    (Picard group?) of $\O$.
+    (I'm assuming class group means Picard group here?) of $\O$.
 
     Let $\varphi:A\to A'$ be an isogeny whose kernel has support outside the
     Eisenstein primes and primes of residue characteristic 2. Then $A'\isom
     A/A[q]$ for some $q\in H$.
 \end{theorem}
+
+Non-maximal orders are not well-supported by Sage. But the Picard group of the
+maximal order surjects onto the Picard group of a sub-order. So assuming the
+theorem, there are non-trivial non-Eisenstein isogenies away from 2 up to level
+262? (or whatever level give us the first field with class number greater than
+1).
 
 I haven't figured it out fully. But I think I can show finite $G$-modules
 supported away from 2 are Hecke module. Here's very brief sketch of the main
@@ -159,14 +165,16 @@ The goal of this section is to prove
     Under this isomorphism, we have that $\Frob_p$ corresponds to the Frobenius
     $F$ in $J_{/\F_p}$ (See~\cite[\S 5.3]{ribet-stein:serre}.) Hence,
     \[
-    \tau(T_p X_s}) 
+    \tau(T_p X_s) 
     = T_p\tau(X_s) 
     = (F+p/F)\tau(X_s)
-    = \tau(\Frob_p+p/\Frob_p)X_s)
+    = \tau((\Frob_p+p/\Frob_p)X_s)
     \subseteq \tau(X_s)
     \]
     so $T_p X_s\subseteq X_s$, as desired.
 \end{proof}
+
+\subsection{Classifying non-Eisenstein isogenies}
 
 
  

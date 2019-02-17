@@ -1,0 +1,47 @@
+\documentclass{article}
+
+\include{macros}
+\usepackage{fullpage}
+
+\begin{document}
+    
+\section{Enumerating Isogenies of Prime Level Subvarieties}
+
+The goal of this section is to enumerate the $\QQ$-isogeny class of simple
+abelian subvarieties $A_f$ of $J_0(N)$ for $N$ prime, up to isomorphism and
+2-isogenies, under experimentally mild conditions.
+
+By Mazur and Ribet, $\TT_f=\End(A_f)$ is isomorphic to an order $\O$ of the
+number field $K_f$ given by adjoining the Hecke eigenvalues to $\QQ$. Let
+$m_f=[\O_{K_f}:\O]$. We prove 
+
+\begin{theorem}
+    Let $A_f$ be a simple subvariety of $J_0(N)$ with $\QQ$-isogeny $\psi:A\to
+    A'$ of degree $d$ coprime to $m_f$ supported on the non-Eisenstein primes
+    of odd residue characteristic then
+    \[
+        A' \isom A/A[\mathfrak{q}],
+    \]
+    for some representatives $\mathfrak{q}$ of $\Cl(\O)$.
+\end{theorem}
+\begin{proof}
+    Let $K$ be the kernel of $\psi$. By Proposition~\ref{future}, $K=A[I]$,
+    where $I=\Ann_{\TT}(K)$. Since $d\in I$ is coprime to $m_f\in
+    \mathfrak{f}_{\O}$, $I$ is invertible in $\O$. Moreover, $A/[I]\isom
+    A[\alpha I]$ for any $\alpha\in \TT$ by the multiplication by $\alpha$ map.
+    Hence, the isomorphism class of $A$ depends only on the class of $I$ in
+    $\Cl(\O)$.
+\end{proof}
+
+\begin{remark}
+    Using \sage, we can that for prime level less than 400, $m_f=1$ except for
+    257b, 271b, 293b, 337b, 359d, 389e. Moreover, except for 271b, $m_f$ is a
+    power of 2 (which we are ignoring anyways).
+\end{remark}
+
+The goal is to now prove Proposition~\ref{future}. The idea is to show Mazur
+and Helm.
+
+\subsection{
+
+\end{document}

@@ -15,7 +15,6 @@ abelian subvarieties $A_f$ of $J_0(N)$ for $N$ prime, up to isomorphism and
 By Mazur and Ribet, $\TT_f=\End(A_f)$ is isomorphic to an order $\O$ of the
 number field $K_f$ given by adjoining the Hecke eigenvalues to $\QQ$. Let
 $m_f=[\O_{K_f}:\O]$. We prove 
-
 \begin{theorem}
     Let $A_f$ be a simple subvariety of $J_0(N)$ with $\QQ$-isogeny $\psi:A\to
     A'$ of degree $d$ coprime to $m_f$ supported on the non-Eisenstein primes
@@ -29,7 +28,7 @@ $m_f=[\O_{K_f}:\O]$. We prove
     Let $K$ be the kernel of $\psi$. By
     Theorem~\ref{theorem:non_eisenstein_kernel_hecke}, $K=A[I]$, where
     $I=\Ann_{\TT}(K)$. Since $d\in I$ is coprime to $m_f\in \mathfrak{f}_{\O}$,
-    $I$ is invertible in $\O$. Moreover, $A/[I]\isom A[\alpha I]$ for any
+    $I$ is invertible in $\O$. Moreover, $A/A[I]\isom A/A[\alpha I]$ for any
     $\alpha\in \TT$ by the multiplication by $\alpha$ map. Hence, the
     isomorphism class of $A$ depends only on the class of $I$ in $\Cl(\O)$.
 \end{proof}
@@ -37,11 +36,8 @@ $m_f=[\O_{K_f}:\O]$. We prove
 Using this theorem, we perform some computations to show that non-Eisenstein
 isogenies are rare.
 \begin{proposition}
-    Suppose $A$ is a simple abelian subvariety of prime level less than 400.
-    Then the isogeny class of $A$ away from 2 is Eisenstein, meaning, if
-    $\psi:A\to A'$ is isogeny supported away from 2, then $A'\isom A/K$, where
-    $K$ is supported is supported only on the Eisensten primes so $K\subseteq
-    A[\mathcal{I}^\infty]$.
+    The only abelian subvariety of prime level less than 400 with a
+    non-Eisenstein isogeny away from 2 is 271b.
 \end{proposition}
 \begin{proof}
     Using \sage, we can that for prime level less than 400, $m_f=1$ except for
@@ -157,6 +153,14 @@ $\TT$-module. We say $K$ is Eisenstein if the support consists only of
 Eisenstein primes and we say $K$ is non-Eisenstein if the support consists
 only of non-Eisenstien primes.
 
+
+\subsection{Non-Eisenstein modules are kernels of Hecke}%
+\label{sub:non_eisenstein_modules_are_kernels_of_hecke}
+
+The goal now is to classify the non-Eisenstein modules supported away from 2 by
+identifying them by their $\TT$-annihilator. Using
+Theorem~\ref{theorem:G_modules_are_Hecke}, we can already do this in the
+irreducible case.
 \begin{corollary}
     Suppose $K$ is an irreducible $G$-module supported on a non-Eisenstein
     prime $\m$ of odd residue characteristic. Then $K=J[\m]$.
@@ -168,16 +172,20 @@ only of non-Eisenstien primes.
     $G$-module~\cite[Proposition 14.2]{mazur:eisenstein} so $K=J[\m]$.
 \end{proof}
 
-\subsection{Non-Eisenstein modules are kernels of Hecke}%
-\label{sub:non_eisenstein_modules_are_kernels_of_hecke}
+[[
+The general case is an argument by Helm that I only somewhat understand and
+cites some French papers so I'm going to try to extract the key parts and
+reproduce it here.
+]]
 
+Let $\rho_\m$ be the Galois 
 \begin{theorem}\label{theorem:non_eisenstein_kernel_hecke}
     Let $K$ be a finite $G$-module supported away from the Eisenstein primes
     and primes of residue characteristic 2. Then $K=J[I]$, where $I=\Ann_\TT
     K$.
 \end{theorem}
 \begin{proof}
-    This is Helm.   
+    This is Helm.    
 \end{proof}
 
 

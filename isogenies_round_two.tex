@@ -26,22 +26,30 @@ $m_f=[\O_{K_f}:\O]$. We prove
     for some representatives $\mathfrak{q}$ of $\Cl(\O)$.
 \end{theorem}
 \begin{proof}
-    Let $K$ be the kernel of $\psi$. By Proposition~\ref{future}, $K=A[I]$,
-    where $I=\Ann_{\TT}(K)$. Since $d\in I$ is coprime to $m_f\in
-    \mathfrak{f}_{\O}$, $I$ is invertible in $\O$. Moreover, $A/[I]\isom
-    A[\alpha I]$ for any $\alpha\in \TT$ by the multiplication by $\alpha$ map.
-    Hence, the isomorphism class of $A$ depends only on the class of $I$ in
-    $\Cl(\O)$.
+    Let $K$ be the kernel of $\psi$. By
+    Theorem~\ref{theorem:non_eisenstein_kernel_hecke}, $K=A[I]$, where
+    $I=\Ann_{\TT}(K)$. Since $d\in I$ is coprime to $m_f\in \mathfrak{f}_{\O}$,
+    $I$ is invertible in $\O$. Moreover, $A/[I]\isom A[\alpha I]$ for any
+    $\alpha\in \TT$ by the multiplication by $\alpha$ map. Hence, the
+    isomorphism class of $A$ depends only on the class of $I$ in $\Cl(\O)$.
 \end{proof}
 
-\begin{remark}
+Using this theorem, we perform some computations to show that non-Eisenstein
+isogenies are rare.
+\begin{proposition}
+    Suppose $A$ is a simple abelian subvariety of prime level less than 400.
+    Then the isogeny class of $A$ away from 2 is Eisenstein, meaning, if
+    $\psi:A\to A'$ is isogeny supported away from 2, then $A'\isom A/K$, where
+    $K$ is supported is supported only on the Eisensten primes so $K\subseteq
+    A[\mathcal{I}^\infty]$.
+\end{proposition}
+\begin{proof}
     Using \sage, we can that for prime level less than 400, $m_f=1$ except for
     257b, 271b, 293b, 337b, 359d, 389e. Moreover, except for 271b, $m_f$ is a
-    power of 2 (which we are ignoring anyways).
-\end{remark}
+    power of 2 which we are ignoring anyways. We then verify that the Hecke
+    eigenvalue fields of newforms of prime level have trivial class group.
+\end{proof}
 
-The goal is to now prove Proposition~\ref{future}. The idea is to show Mazur
-and Helm.
 
 \subsection{Simple Galois Modules of $J[\ell]$}\label{subsection:simple_galois_ell}
 
@@ -142,6 +150,36 @@ for prime $\ell>2$. We start with a commutative algebra lemma.
     \]
     hence, $T_p X_s\subseteq X_s$, as desired.
 \end{proof}
+
+Now that we've established every finite Galois module $K$ supported away from 2
+is a Hecke module, it makes sense to talk about the support of $K$ as a
+$\TT$-module. We say $K$ is Eisenstein if the support consists only of
+Eisenstein primes and we say $K$ is non-Eisenstein if the support consists
+only of non-Eisenstien primes.
+
+\begin{corollary}
+    Suppose $K$ is an irreducible $G$-module supported on a non-Eisenstein
+    prime $\m$ of odd residue characteristic. Then $K=J[\m]$.
+\end{corollary}
+\begin{proof}
+    By Theorem~\ref{theorem:G_modules_are_Hecke}, $K$ is an $R$-module and by
+    Lemma~\ref{lemma:cherry_street}, the annihilator of $K$ is $\m$. Hence,
+    $K\subseteq J[\m]$ but $J[\m]$ is an irreducible
+    $G$-module~\cite[Proposition 14.2]{mazur:eisenstein} so $K=J[\m]$.
+\end{proof}
+
+\subsection{Non-Eisenstein modules are kernels of Hecke}%
+\label{sub:non_eisenstein_modules_are_kernels_of_hecke}
+
+\begin{theorem}\label{theorem:non_eisenstein_kernel_hecke}
+    Let $K$ be a finite $G$-module supported away from the Eisenstein primes
+    and primes of residue characteristic 2. Then $K=J[I]$, where $I=\Ann_\TT
+    K$.
+\end{theorem}
+\begin{proof}
+    This is Helm.   
+\end{proof}
+
 
 \bibliography{biblio}
 \end{document}

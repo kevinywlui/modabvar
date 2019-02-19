@@ -3,37 +3,125 @@
 \bibliographystyle{amsalpha}
 \usepackage{url}
 \usepackage{hyperref}
+\usepackage{tikz-cd}
 \usepackage{fullpage}
 \usepackage{enumerate}
 \include{macros}
 
+
 \begin{document}
 
-\section{Enumerating Isogenies}
+\section{Enumerating Isogenies of Prime Level Optimal Subvarieties}
 
-The goal is to enumerate the isogeny class of simple abelian subvarieties $A$
-of $J_0(N)$ for $N$ prime, up to isomorphism. The main objective is to prove
+The goal of this section is to enumerate the isogeny class of simple abelian
+subvarieties $A$ of $J_0(N)$ for $N$ prime, up to isomorphism and 2-isogenies.
+
+We will prove
+\begin{theorem}
+    Let $A$ be a simple abelian subvariety of $J_0(N)$ for $N$ prime. Suppose
+    $\psi: A\to A'$ is an isogeny over $\QQ$ with kernel $K = \Ker \psi$
+    supported away from 2. Then for some $\mathfrak{q} \in \Cl(\O)$, $A'\isom
+    A/(A[\mathfrak{q}]\oplus K[I])$, where $I$ is the Eisenstein ideal.
+\end{theorem}
+\begin{proof}
+    This follows from future theorems red and blue.
+\end{proof}
+
+\begin{lemma}\label{lemma:factor_isogeny}
+    Suppose $\psi:A \to A'$ is a $\QQ$-isogeny with kernel $K$ supported away from
+    2. Then we can factor $\psi$ as 
+    \[
+        \begin{tikzcd}
+            A 
+            \arrow[r, "\delta"] 
+            \arrow[rr, bend left=30, "\psi"] 
+            &
+            A'' 
+            \arrow[r, "\eps"]
+            &
+            A'
+        \end{tikzcd},
+    \]
+    where $\ker\delta$ is supported away from the Eisenstein primes and
+    $\ker\eps$ is supported on the Eisenstein primes.
+\end{lemma}
+\begin{proof}
+    From the proof of Theorem~\ref{theorem:G_modules_are_Hecke}, the
+    Jordan-Holder factors of $K$ as an $\TT$-module are subquotients of $A[\m]$
+    for some maximal ideal $\m$ of $\TT$ so
+    \[  
+        K \subseteq 
+        A[\m_1 ^{e_i}\ldots \m_t ^{e_t} I^k]
+    \]
+    for non-Eisenstein maximals $\m_i$ and sufficiently large $k$. By
+    Theorem~\cite[5.2(c)]{ribet:modreps}, the non-Eisenstein are coprime with
+    the Eisenstein ideal. Hence, by~\cite[\S II, Prop 18]{MR1492449}, $A[\m_1
+    ^{e_1}\ldots \m_t ^{e_t} I^k] = A[\m_1 ^{e_1}\ldots \m_t ^{e_t}] \oplus
+    A[I^k]$. Now take $\delta$ to be the isogeny associated to $K \cap A[\m_1
+    ^{e_1} \ldots \m_t ^{e_t}]$ and $\eps$ to be the isogeny associated to
+    $K\cap A[I^k]$.
+\end{proof}
+
+\begin{corollary}
+    Suppose $\Cl(\O)$ is trivial. Then all isogenies of $A$ are supported only
+    on the Eisenstein primes and 2.
+\end{corollary}
+
+A natural question is to come up with an example of a non-Eisenstein isogeny.
+By Theorem?, this requires coming up with a newform $f$ with Hecke eigenvalue
+field $K_f$ with non-trivial class group. However, we have not been able to
+produce an example of such a field. In fact, we make this conjecture.
+
+\begin{conjecture}
+    The Hecke eigenvalue field for any newform of prime level has trivial class
+    group.
+\end{conjecture}
+
+We have verified it here.
+
+\begin{proposition}
+    Assume the Generalized Riemann Hypothesis (for computational expedience).
+    For all Hecke eigenvalue fields $K_f$ of degree less than 30 attached to
+    newforms $f$ of prime level less than 5000, the class group $\Cl(\O_K)$ is
+    trivial.
+\end{proposition}
+
+Comments about totally real fields and hueristics.
+
 
 \begin{theorem}\label{theorem:non_eisen_iso_classify}
     Let $A$ be a simple subvariety of $J_0(N)$ with $N$ prime. Let
     $\O=\ZZ[a_i]$, where $a_i$ are the Hecke coefficients of the newform
-    attached to $A$. Let $H$ be a set of representatives of the class group
-    (I'm assuming class group means Picard group here?) of $\O$.
+    attached to $A$. Let $H$ be a set of representatives of the class group of
+    $\O$.
 
     Let $\varphi:A\to A'$ be an isogeny whose kernel has support outside the
     Eisenstein primes and primes of residue characteristic 2. Then $A'\isom
     A/A[q]$ for some $q\in H$.
 \end{theorem}
 
-Non-maximal orders are not well-supported by Sage. But the Picard group of the
-maximal order surjects onto the Picard group of a sub-order. So assuming the
-theorem, there are non-trivial non-Eisenstein isogenies away from 2 up to level
-262? (or whatever level give us the first field with class number greater than
-1).
+\begin{corollary}\label{corollary:compute_class_group_trivial}
+    Assume the Generalized Riemann Hypotheis. For all prime $N<5000$, if $A$ is
+    a simple subvariety of $J_0(N)$ with $\dim A< 30$, then the isogeny class
+    of $A$ is Eisenstein away from 2.
+\end{corollary}
+\begin{proof}
+    By Theorem~\ref{theorem:non_eisen_iso_classify}, it suffices it show that
+    $\Cl(\O)$ is trivial. There is a surjective map $\Cl(\O_K)\onto \Cl(\O)$,
+    where $\O_K$ is the maximal order of the Hecke eigenvalue field associated
+    to $A$. For exactly the situation described in the hypothesis, it has been
+    computionally verified that $\Cl(\O_K)$ is trivial.
+\end{proof}
 
-I haven't figured it out fully. But I think I can show finite $G$-modules
-supported away from 2 are Hecke module. Here's very brief sketch of the main
-ideas. I prove it in detail below.
+\begin{conjecture}\label{conjecture:class_group_trivial}
+    If $f$ is a newform of prime level, then the class group of its Hecke
+    eigenvalue field is trivial. This sugguests the conjecture that there are
+    infinitely many number fields with class group 1. However, it requires an
+    additional proof that there infinitely many distinct number fields coming
+    from Hecke eigenvalue fields of newforms of prime level.
+\end{conjecture}
+
+Here's very brief sketch of the main ideas. I prove it in detail below.
 \begin{itemize}
     \item
         Reduce to the $\ell$-primary case for odd prime $\ell>2$.
@@ -55,17 +143,6 @@ ideas. I prove it in detail below.
         use the Eichler-Shimura relation to write $T_p$ using $\Frob_p$. This
         does it since $V$ is a $G$-module.
 \end{itemize}
-
-The next steps should be to use~\cite[Corollary 4.8]{MR2342491} to establish
-Theorem~\ref{theorem:non_eisen_iso_classify}. David Helm gives some fairly
-general results so it shouldn't be too hard to use it. Though the hypothesis
-needed are not all listed together so I need to be careful. 
-
-OR perhaps, there's something obvious I'm missing. Suppose $K$ is
-non-Eisenstein $G$-module then by the work below, as a $\TT[G]$-module,
-$K^{ss}\cong \prod_i J[\gM_i]^{e_i}$. So we atleast have $K\subseteq J[\prod_i
-\gM_i ^{e_i}]$. In the case where $K^{ss} \cong J[\gM_1 \gM_2]$ with $\gM_1\neq
-\gM_2$, I can show equality.
 
 
 \subsection{Notations/Conventions/Assumptions}
@@ -91,7 +168,7 @@ $K^{ss}\cong \prod_i J[\gM_i]^{e_i}$. So we atleast have $K\subseteq J[\prod_i
 \subsection{Simple Galois subquotients of $J[\ell]$}
 
 We begin by using Mazur's work to understand the $G$-subquotients of $J[\ell]$
-for prime $\ell>2$.
+for prime $\ell>2$. 
 
 \begin{theorem}\label{theorem:irreducible_G_sub}
     Let $V$ be an irreducible $G$-subquotient of $J[\ell]$. Then either $V\cong_G
@@ -138,10 +215,9 @@ understand the ramified of the corresponding Galois representations.
 
 \subsection{Galois modules are Hecke modules}
 
-The goal of this section is to prove
-\begin{theorem}
-    Suppose $K$ is a finite $G$-module supported away from $2$. Then $K$ is a
-    $\TT$-module, meaning $K=\TT K$.
+\begin{theorem}\label{theorem:G_modules_are_Hecke}
+    Suppose $K$ is a finite $G$-module supported away from $2$. Then $K$
+    $\TT$-stable, meaning $K=\TT K$.
 \end{theorem}
 
 \begin{proof}
@@ -182,7 +258,24 @@ The goal of this section is to prove
 
 \subsection{Classifying non-Eisenstein isogenies}
 
+% TODO
 
- 
+\begin{theorem}
+    THINGS ARE GIVEN BY ANN
+\end{theorem}
+
+\begin{theorem}[Calegari, F.]
+    Suppose $\psi:A\to A'$ is a $\QQ$-isogeny with kernel $K$ supported away
+    from the Eisenstein primes and primes of residue characteristic 2. Then
+    $A'\isom A/A[\mathfrak{q}]$ for some $\mathfrak{q}\in H$.
+\end{theorem}
+\begin{proof}
+    
+\end{proof}
+
+\subsection{Enumerating Eisenstein isogenies}
+
+We can compute Hecke operators on the quotient.
+
 \bibliography{biblio}
 \end{document}

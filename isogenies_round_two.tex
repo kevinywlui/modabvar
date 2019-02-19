@@ -1,0 +1,249 @@
+\documentclass{article}
+
+\bibliographystyle{amsalpha}
+\include{macros}
+\usepackage{fullpage}
+
+\begin{document}
+    
+\section{Enumerating Isogenies of Prime Level Subvarieties}
+
+The goal of this section is to enumerate the $\QQ$-isogeny class of simple
+abelian subvarieties $A_f$ of $J_0(N)$ for $N$ prime, up to isomorphism and
+2-isogenies.
+
+
+By Mazur and Ribet, $\TT_f=\End(A_f)$ is isomorphic to an order $\O$ of the
+number field $K_f$ given by adjoining the Hecke eigenvalues to $\QQ$. Let
+$m_f=[\O_{K_f}:\O]$. 
+
+The idea will be to
+\begin{itemize}
+    \item 
+        Determine all the non-Eisenstein isogenies away from $2m_f$ using
+        Theorem~\ref{theorem:non_eisenstein_no_conductor}.
+    \item
+        Determine all the non-Eisenstein isogenies with degree the odd part of
+        $m_f$.
+    \item
+        Determine the Eisenstein isogenies.
+\end{itemize}
+
+\begin{theorem}\label{theorem:non_eisenstein_no_conductor}
+    Let $A_f$ be a simple subvariety of $J_0(N)$ with $\QQ$-isogeny $\psi:A\to
+    A'$ of degree $d$ coprime to $m_f$ supported on the non-Eisenstein primes
+    of odd residue characteristic then
+    \[
+        A' \isom A/A[\mathfrak{q}],
+    \]
+    for some representatives $\mathfrak{q}$ of $\Cl(\O)$.
+\end{theorem}
+\begin{proof}
+    Let $K$ be the kernel of $\psi$. By
+    Theorem~\ref{theorem:non_eisenstein_kernel_hecke}, $K=A[I]$, where
+    $I=\Ann_{\TT}(K)$. Since $d\in I$ is coprime to $m_f\in \mathfrak{f}_{\O}$,
+    $I$ is invertible in $\O$. Moreover, $A/A[I]\isom A/A[\alpha I]$ for any
+    $\alpha\in \TT$ by the multiplication by $\alpha$ map. Hence, the
+    isomorphism class of $A$ depends only on the class of $I$ in $\Cl(\O)$.
+\end{proof}
+
+Using this theorem, we perform some computations to show that non-Eisenstein
+isogenies are rare.
+\begin{proposition}
+    The only abelian subvariety of prime level less than 400 with a
+    non-Eisenstein isogeny away from 2 is 271b.
+\end{proposition}
+\begin{proof}
+    Using \sage, we can that for prime level less than 400, $m_f=1$ except for
+    257b, 271b, 293b, 337b, 359d, 389e. Moreover, except for 271b, $m_f$ is a
+    power of 2 which we are ignoring anyways. We then verify that the Hecke
+    eigenvalue fields of newforms of prime level have trivial class group.
+\end{proof}
+
+
+\subsection{Simple Galois Modules of $J[\ell]$}\label{subsection:simple_galois_ell}
+
+We begin by using Mazur's work to understand the $G$-subquotients of $J[\ell]$
+for prime $\ell>2$. We start with a commutative algebra lemma.
+
+\begin{lemma}\label{lemma:cherry_street}
+    Let $V$ be an irreducible $R$-subquotient of $J[\ell]$. Then $\Ann_\TT V$
+    is a maximal ideal of $\TT$.
+\end{lemma}
+\begin{proof}
+    Let $I=\Ann_\TT V$. Since $\ell\in I$, $\TT/I$ is a finite ring so it
+    suffices to show that $I$ is prime. Let $a,b\in \TT\setminus I$. Since $G$
+    commutes with $\TT$, $aV$ and $bV$ are both $R$-submodules of $V$. By
+    $R$-irreducibility of $V$, $aV=bV=V$. Consequently, $abV=V$ so $ab\notin I$
+    and $I$ is prime.
+\end{proof}
+
+\begin{theorem}\label{theorem:irreducible_G_sub}
+    Let $V$ be an irreducible $G$-subquotient of $J[\ell]$. Then either
+    \begin{itemize}
+        \item
+            $V\cong_G \ZZ/\ell$ or $V\cong_G \mu_\ell$ and is unramified away
+            from $\ell$ or
+        \item 
+            $V\cong_G J[\m]$ for some non-Eisenstein maximal $\m$ and is
+            unramified away from $\ell N$.
+    \end{itemize}
+    So in any case, $V$ is unramified away from $\ell N$.
+\end{theorem}
+\begin{proof}
+    This is essentially~\cite[\S 14]{mazur:eisenstein}. 
+
+    Let $V$ be an irreducible $R$-module. By Lemma~\ref{lemma:cherry_street},
+    the annihilator of $V$ in $\TT$ is a maximal ideal $\m$ of $\TT$. Then $V$
+    is $R$-isomorphic to a subquotient of $J[\m]$. Either $\m$ is Eisenstein or
+    $\m$ is non-Eisenstein.
+    \begin{enumerate}
+        \item
+            If $\m$ is Eisenstein, then the action of $\TT$ factors through
+            $\ZZ$, so $V$ is irreducible as a $G$-module. By~\cite[Proposition
+            14.1]{mazur:eisenstein}, $J[\m]$ has a $G$-composition series
+            consisting of $\ZZ/\ell$ and $\mu_\ell$ (this is what Mazur calls
+            admissible) so $V$ is isomorphic as $G$-module to either $\ZZ/\ell$
+            or $\mu_\ell$.
+        \item
+            If $\m$ is non-Eisenstein, then by~\cite[Proposition
+            14.2]{mazur:eisenstein} $J[\m]$ is irreducible as a $G$-module so
+            $V\cong_G J[\m]$. which is unramified away from $\ell N$
+            by~\cite[Theorem 6.7]{deligne-serre}. Hence, $V\cong_G J[\m]$ is
+            irreducible as a $G$-module. By~\cite[Theorem 6.7]{deligne-serre},
+            $V$ is unramified away $\ell N$.
+    \end{enumerate}
+    This proves that any $R$-composition series of $J[\ell]$ is also a
+    $G$-composition series of $J[\ell]$. The conclusion now follows from the
+    Jordan-Holder Theorem.
+\end{proof} 
+
+\subsection{Finite Galois Modules are Hecke}
+
+\begin{theorem}\label{theorem:G_modules_are_Hecke}
+    Suppose $K$ is a finite $G$-module supported away from $2$. Then $K$ is
+    $\TT$-stable so $K$ is an $R$-module.
+\end{theorem}
+\begin{proof}
+    It suffices to prove this for each $\ell$-primary part. Let $\ell>2$ and
+    assume $K\subseteq J(\QQbar)[\ell^\infty]$. Let
+    \[
+        0 = K_0 \subseteq \ldots \subseteq K_n = K
+    \]
+    be a maximal $G$-composition series of $K$ with composition factors $X_i =
+    K_i/K_{i-1}$. We proceed by induction on on $n$ with the base
+    case being the trivial $n=0$ case. 
+    
+    Assume $K_{s-1}$ is an $R$-module. We will show $K_s$ is an $R$-module.
+    Since $K_{s-1}$ is an $R$-module, for each $t\in \TT$, we have a
+    well-defined map $t:X_s\to J(\QQbar)/K_{s-1}$. The goal is to show
+    $t(X_s)\subseteq X_s$. Then by~\cite[Prop. 6.1]{MR1610883}, $\TT/\ell \TT$
+    is generated by $T_p$ for $p\nmid \ell N$ so it suffices to show
+    $T_p(X_s)\subseteq X_s$ for prime $p\nmid \ell N$.
+
+    Fix a prime $p\nmid \ell N$. By Theorem~\ref{theorem:irreducible_G_sub},
+    the Galois representation associated to $X_s$ is unramified away from $\ell
+    N$ so let $\Frob_p$ be a choice of Frobenius. By the proof of~\cite[Lemma
+    12.6.2]{ribet-stein:mod}, the reduction map induces an isomorphism
+    \[
+        \tau:J(\QQ)[\ell^\infty] \riso J_{/\F_p} (\Fpbar)[\ell^\infty].
+    \]
+    Under this isomorphism, we have that $\Frob_p$ corresponds to the Frobenius
+    $F$ in $J_{/\F_p}$ (See~\cite[\S 5.3]{ribet-stein:serre}.) By
+    Eicher-Shimura, $T_p = F+p/F$ so
+    \[
+    \tau(T_p X_s) 
+    = T_p\tau(X_s) 
+    = (F+p/F)\tau(X_s)
+    = \tau((\Frob_p+p/\Frob_p)X_s)
+    \subseteq \tau(X_s)
+    \]
+    hence, $T_p X_s\subseteq X_s$, as desired.
+\end{proof}
+
+Now that we've established every finite Galois module $K$ supported away from 2
+is a Hecke module, it makes sense to talk about the support of $K$ as a
+$\TT$-module. We say $K$ is Eisenstein if the support consists only of
+Eisenstein primes and we say $K$ is non-Eisenstein if the support consists
+only of non-Eisenstien primes.
+
+
+\subsection{Non-Eisenstein modules are kernels of Hecke}%
+\label{sub:non_eisenstein_modules_are_kernels_of_hecke}
+
+The goal now is to classify the non-Eisenstein modules supported away from 2 by
+identifying them by their $\TT$-annihilator. Using
+Theorem~\ref{theorem:G_modules_are_Hecke}, we can already do this in the
+irreducible case.
+\begin{corollary}
+    Suppose $K$ is an irreducible $G$-module supported on a non-Eisenstein
+    prime $\m$ of odd residue characteristic. Then $K=J[\m]$.
+\end{corollary}
+\begin{proof}
+    By Theorem~\ref{theorem:G_modules_are_Hecke}, $K$ is an $R$-module and by
+    Lemma~\ref{lemma:cherry_street}, the annihilator of $K$ is $\m$. Hence,
+    $K\subseteq J[\m]$ but $J[\m]$ is an irreducible
+    $G$-module~\cite[Proposition 14.2]{mazur:eisenstein} so $K=J[\m]$.
+\end{proof}
+
+[[
+The general case is an argument by Helm that I only somewhat understand and
+cites some French papers so I'm going to try to extract the key parts and
+reproduce it here.
+]]
+
+\begin{theorem}\label{theorem:non_eisenstein_kernel_hecke}
+    Let $K$ be a finite $G$-module supported only the non-Eisenstein primes of
+    odd residue characteristic. Then $K=J[I]$, where $I=\Ann_\TT K$.
+\end{theorem}
+We will prove this locally on each non-Eisenstein prime of odd residue
+characteristic. Let $\m$ be a non-Eisenstein prime of odd residue
+characteristic $\ell$. Let $T_\m J\isom \Hom(J[\m^\infty], \QQ_\ell/\ZZ_\ell)$
+be the contravariant Tate module at $\m$ and $\overline{\rho}_\m$ be the Galois
+representation modeled by $J[\m]^\vee$.
+
+\begin{lemma}\label{lemma:finite_index}
+    Let $M$ be a $G$-stable submodule of $T_\m J$ of finite index. Then
+    $M=IT_\m J$ for some ideal $I$ of $\T$.
+\end{lemma}
+\begin{proof}
+    Here I'm just writing down Helm's Lemma 4.6 almost verbatim.
+
+    We proceed by induction on the maximal $G$-composition series of $T_\m J/M$
+    with the base case being the trivial length zero case. Let 
+    \[
+        M = M_n \subseteq M_{n-1} \subseteq \cdots \subseteq M_0 = T_\m J
+    \]
+    be a $G$-composition series. By induction, $M_{n-1} = I'T_\m J$ for some
+    $I$.
+
+    Consider $\m M_{n-1} + M$. This is a $G$-module sitting between $M$ and
+    $M_{n-1}$. So it must be either $M$ or $M_{n-1}$. By Nakayama's lemma, if
+    $\m M_{n-1} M + M = M_{n-1}$, then $M=M_{n-1}$ which is a contradiction.
+    Hence, $\m M_{n-1}+M=M$ so $M$ contains $\m M_{n-1}$.
+
+    The module $M_{n-1}/\m M_{n-1}$ is $G$-isomorphic to $(I'/\m I')\otimes_{\T/\m}
+    J[\m]^\vee$, where $G$ acts trivially on $I'/\m I'$. Let $V$ be the image
+    of $M$ in $M_{n-1}/\m M_{n-1}$. Since $V$ is $G$-invariant, and
+    $J[\m]^\vee$ is irreducible, $V$ is given by $\hat{V}\otimes J[\m]^\vee$
+    for some subspace $\hat{V}$ of $I'/\m I'$. Let $I$ be the preimage of
+    $\hat{V}$ in $I'$. Then $IT_m J = M$, since both contain $\m M_{n-1}$ and
+    map to $V$ modulo $\m M_{n-1}$.
+\end{proof}
+
+\begin{proof}[proof of Theorem~\ref{theorem:non_eisenstein_kernel_hecke}]
+    The map $\phi$ induces an exact sequence
+    \[
+        0 \to T_\m A' \to T_m A \to (\ker \phi)^\vee _\m 
+        \to 0 A \to (\ker \phi)^\vee _\m \to 0.
+    \]
+    In particular, the image of $T_\m A'$ under $\phi$ is a $G$-stable
+    submodule of $T_\m A$. By Lemma~\ref{lemma:finite_index}, we can find an
+    ideal $I'$ of $\T$ such that the image of $T_\m A'$ is $I' _\m T_\m A$ for
+    all $\m$ outside $S$. Then we have $[\ker \phi]^\vee _\m = T_\m A / I' T_\m
+    A$. Hence, $I' _\m = I_\m$. Since $T_\m A/IT_\m A= A[I]_\m ^\vee$.
+\end{proof}
+
+
+\bibliography{biblio}
+\end{document}

@@ -178,16 +178,36 @@ cites some French papers so I'm going to try to extract the key parts and
 reproduce it here.
 ]]
 
-Let $\rho_\m$ be the Galois 
 \begin{theorem}\label{theorem:non_eisenstein_kernel_hecke}
-    Let $K$ be a finite $G$-module supported away from the Eisenstein primes
-    and primes of residue characteristic 2. Then $K=J[I]$, where $I=\Ann_\TT
-    K$.
+    Let $K$ be a finite $G$-module supported only the non-Eisenstein primes of
+    odd residue characteristic. Then $K=J[I]$, where $I=\Ann_\TT K$.
 \end{theorem}
-\begin{proof}
-    This is Helm.    
-\end{proof}
+We will prove this locally on each non-Eisenstein prime of odd residue
+characteristic. Let $\m$ be a non-Eisenstein prime of odd residue
+characteristic $\ell$. Let $T_\m J\isom \Hom(J[\m^\infty], \QQ_\ell/\ZZ_\ell)$
+be the contravariant Tate module at $\m$ and $\overline{\rho}_\m$ be the Galois
+representation modeled by $J[\m]^\vee$.
 
+\begin{lemma}\label{lemma:finite_index}
+    Let $M$ be a $G$-stable submodule of $T_\m J$ of finite index. Then
+    $M=IT_\m J$ for some ideal $I$ of $\T$.
+\end{lemma}
+\begin{proof}
+    Here I'm just writing down Helm's Lemma 4.6 almost verbatim.
+
+    We proceed by induction on the maximal $G$-composition series of $T_\m J/M$
+    with the base case being the trivial length zero case. Let 
+    \[
+        M = M_n \subseteq M_{n-1} \subseteq \cdots \subseteq M_0 = T_\m J
+    \]
+    be a $G$-composition series. By induction, $M_{n-1} = I'T_\m J$ for some
+    $I$.
+
+    Consider $\m M_{n-1} + M$. This is a $G$-module sitting between $M$ and
+    $M_{n-1}$. So it must be either $M$ or $M_{n-1}$. By Nakayama's lemma, if
+    $\m M_{n-1} M + M = M_{n-1}$, then $M=M_{n-1}$ which is a contradiction.
+    Hence, $\m M_{n-1}+M=M$ so $M$ contains $\m M_{n-1}$.
+\end{proof}
 
 \bibliography{biblio}
 \end{document}

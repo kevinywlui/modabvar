@@ -10,12 +10,26 @@
 
 The goal of this section is to enumerate the $\QQ$-isogeny class of simple
 abelian subvarieties $A_f$ of $J_0(N)$ for $N$ prime, up to isomorphism and
-2-isogenies, under experimentally mild conditions.
+2-isogenies.
+
 
 By Mazur and Ribet, $\TT_f=\End(A_f)$ is isomorphic to an order $\O$ of the
 number field $K_f$ given by adjoining the Hecke eigenvalues to $\QQ$. Let
-$m_f=[\O_{K_f}:\O]$. We prove 
-\begin{theorem}
+$m_f=[\O_{K_f}:\O]$. 
+
+The idea will be to
+\begin{itemize}
+    \item 
+        Determine all the non-Eisenstein isogenies away from $2m_f$ using
+        Theorem~\ref{theorem:non_eisenstein_no_conductor}.
+    \item
+        Determine all the non-Eisenstein isogenies with degree the odd part of
+        $m_f$.
+    \item
+        Determine the Eisenstein isogenies.
+\end{itemize}
+
+\begin{theorem}\label{theorem:non_eisenstein_no_conductor}
     Let $A_f$ be a simple subvariety of $J_0(N)$ with $\QQ$-isogeny $\psi:A\to
     A'$ of degree $d$ coprime to $m_f$ supported on the non-Eisenstein primes
     of odd residue characteristic then
@@ -207,7 +221,29 @@ representation modeled by $J[\m]^\vee$.
     $M_{n-1}$. So it must be either $M$ or $M_{n-1}$. By Nakayama's lemma, if
     $\m M_{n-1} M + M = M_{n-1}$, then $M=M_{n-1}$ which is a contradiction.
     Hence, $\m M_{n-1}+M=M$ so $M$ contains $\m M_{n-1}$.
+
+    The module $M_{n-1}/\m M_{n-1}$ is $G$-isomorphic to $(I'/\m I')\otimes_{\T/\m}
+    J[\m]^\vee$, where $G$ acts trivially on $I'/\m I'$. Let $V$ be the image
+    of $M$ in $M_{n-1}/\m M_{n-1}$. Since $V$ is $G$-invariant, and
+    $J[\m]^\vee$ is irreducible, $V$ is given by $\hat{V}\otimes J[\m]^\vee$
+    for some subspace $\hat{V}$ of $I'/\m I'$. Let $I$ be the preimage of
+    $\hat{V}$ in $I'$. Then $IT_m J = M$, since both contain $\m M_{n-1}$ and
+    map to $V$ modulo $\m M_{n-1}$.
 \end{proof}
+
+\begin{proof}[proof of Theorem~\ref{theorem:non_eisenstein_kernel_hecke}]
+    The map $\phi$ induces an exact sequence
+    \[
+        0 \to T_\m A' \to T_m A \to (\ker \phi)^\vee _\m 
+        \to 0 A \to (\ker \phi)^\vee _\m \to 0.
+    \]
+    In particular, the image of $T_\m A'$ under $\phi$ is a $G$-stable
+    submodule of $T_\m A$. By Lemma~\ref{lemma:finite_index}, we can find an
+    ideal $I'$ of $\T$ such that the image of $T_\m A'$ is $I' _\m T_\m A$ for
+    all $\m$ outside $S$. Then we have $[\ker \phi]^\vee _\m = T_\m A / I' T_\m
+    A$. Hence, $I' _\m = I_\m$. Since $T_\m A/IT_\m A= A[I]_\m ^\vee$.
+\end{proof}
+
 
 \bibliography{biblio}
 \end{document}

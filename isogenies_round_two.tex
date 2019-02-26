@@ -8,9 +8,103 @@
     
 \section{Enumerating Isogenies of Prime Level Subvarieties}
 
-The goal of this section is to enumerate the $\QQ$-isogeny class of simple
-abelian subvarieties $A_f$ of $J_0(N)$ for $N$ prime, up to isomorphism and
-2-isogenies.
+The goal of this section is to give an algorithm to enumerate the odd-degree
+$\QQ$-isogeny class of simple abelian subvarieties $A_f$ of $J_0(N)$ for $N$
+prime, up to isomorphism. Given a $\QQ$-isogeny $\psi:A_f\to A'$ with kernel $K$, so
+\[
+    0 \to K \to A_f \overset{\psi}{\to} A' \to 0.
+\]
+Since the isogeny is defined over $\QQ$, $K$ is a finite $G_\QQ$-submodule of
+$A_f(\QQbar)$ which determines $A'$, up to isomorphism. Conversely, for every
+$G_\QQ$-submodule $K$ of $A_f(\QQbar)$, there exists an isogeny of $A_f$ with
+kernel $K$. Therefore, we will enumerate the odd-degree isogeny class of $A_f$,
+by enumerating the finite odd-order $G_\QQ$-submodules of $A_f(\QQbar)$, up to
+isomorphism of the image of the corresponding isogeny. 
+
+We now fix notation and terminology. 
+\begin{itemize}
+    \item
+        $A=A_f$
+    \item
+        $\TT$ is image of $\TT$ in blah 
+    \item
+        $m_f$ is the index
+    \item
+        For finite $G_\QQ$-modules $K$ and $K'$, we define a relation $\sim$,
+        by $K\sim K'$ if and only if $A/K\isom_\QQ A/K'$. In this section, by
+        enumerating the finite $G$-submodules of $A$, we mean enumeration up to
+        this relation. 
+    \item
+        Isogenies are equivalent if their images are isomorphic.
+\end{itemize}
+    
+In subsection~\ref{}, we will prove that if $K$ is a finite odd-order
+$G_\QQ$-submodule of $A(\QQbar)$, then $K$ is a $\TT$-module. Let
+$\mathcal{I}$ be the Eisenstein ideal and $\m_1,\ldots,\m_r$ be the
+non-Eisenstein primes in the support of $K$ as a $\T$-module. This gives a
+decomposition of $K$ into the submodule supported on the Eisenstein primes and
+the submodule supported on the non-Eisenstein primes so $K=K_e \oplus K_{ne}$,
+where $K_e\subseteq K[\mathcal{I}^\infty]$ and $K_{ne}\subseteq
+K[(\m_1\ldots\m_r)^\infty]$. We further decompose $K_{ne}$ into $K_{ne}=K_{ne}'
+\oplus K_{ne} ''$, where $K_{ne}'=K_{ne}[m_f ^\infty]$ and $K_{ne}'' =
+K_{ne}[(\prod_{p\nmid m_f} p)^\infty]$. In other words, to enumerate finite
+odd-order $G$-submodules, it suffices to 
+\begin{itemize}
+    \item 
+        enumerate the odd-order $G$-submodules supported on the Eisenstein
+        primes,
+    \item
+        enumerate the odd-order $G$-submodules supported on the non-Eisenstein
+        primes not dividing $m_f$,
+    \item
+        enumerate the odd-order $G$-submodules supported on the non-Eisenstein
+        primes dividing $m_f$.
+\end{itemize}
+
+\begin{algorithm}{TODO}
+\end{algorithm}
+
+\begin{remark}
+    An abelian variety has a 2-isogeny if and only if it has a rational
+    2-torsion point. We have $A_f(\QQ)_{\tor} \subseteq J_0(N)(\QQ)_{\tor}$ and
+    by~\cite[Theorem 1]{mazur:eisenstein}, $\# J_0(N)(\QQ)_{\tor} =
+    \mathrm{num}(\frac{N-1}{12})$. So if $8\nmid N-1$, $A_f$ has no 2-isogeny,
+    and our method enumerates the entire $\QQ$-isogeny class.
+\end{remark}
+
+Non-trivial isogenies equivalent to one whose kernel is supported on the
+Eisenstein primes are plentiful. For example, if $A_f$ is an elliptic curve,
+then all isogenies are equivalent to one whose kernel is supported on the
+Eisenstein primes. However, non-trivial odd isogenies not equivalent to one
+whose kernel is supported on the Eisenstein primes are much harder to find.
+
+\begin{example}
+    Let $A_f$ be the unique subvariety of $J_0(499)$ of dimension 23. We have
+    that $[\O_K:\O]=3$. By~\cite[pg. 199]{shimura:intro}, there exists an
+    isogenous abelian variety $A'$ given by $A/A[3\O_K]$ so that
+    $\End(A')=\O_K$ so $A\not\isom A'$. Since $3\nmid n$, $A'$ is not
+    isomorphic to the image of any isogeny supported on the Eisenstein primes.
+\end{example}
+
+The main tool for enumerating $K_{ne}$ will be a theorem by Frank Calegari,
+\begin{theorem}\label{theorem:non_eisenstein_no_conductor}
+    Let $\psi:A\to A'$ be an odd-degree isogeny of degree $d$ coprime to $m_f$,
+    then
+    \[
+        A' \isom A/A[\mathfrak{q}],
+    \]
+    for some representatives $\mathfrak{q}$ of $\Cl(\TT)$. In other words, 
+\end{theorem}
+\begin{proof}
+    Let $K$ be the kernel of $\psi$. By
+    Theorem~\ref{theorem:non_eisenstein_kernel_hecke}, $K=A[I]$, where
+    $I=\Ann_{\TT}(K)$. Since $d\in I$ is coprime to $m\in \mathfrak{f}_{\O}$,
+    $I$ is invertible in $\O$. Moreover, $A/A[I]\isom A/A[\alpha I]$ for
+    any $\alpha\in \TT$ by the multiplication by $\alpha$ map. Hence, the
+    isomorphism class of $A$ depends only on the class of $I$ in $\Cl(\TT)$.
+\end{proof}
+
+
 
 
 By Mazur and Ribet, $\TT_f=\End(A_f)$ is isomorphic to an order $\O$ of the

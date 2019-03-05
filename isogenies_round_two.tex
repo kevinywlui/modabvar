@@ -91,20 +91,15 @@ algorithm.
     \end{itemize}
 \end{algorithm}
 
-
-Using this theorem, we perform some computations to show that non-Eisenstein
-isogenies are rare.
-\begin{proposition}
-    The only abelian subvariety of prime level less than 400 with a
-    non-Eisenstein isogeny away from 2 is 271b.
-\end{proposition}
-\begin{proof}
-    Using \sage, we can that for prime level less than 400, $m_f=1$ except for
-    257b, 271b, 293b, 337b, 359d, 389e. Moreover, except for 271b, $m_f$ is a
-    power of 2 which we are ignoring anyways. We then verify that the Hecke
-    eigenvalue fields of newforms of prime level have trivial class group.
-\end{proof}
-
+\begin{example}[Non-Eisenstein isogeny]
+    Let $A,B,C$ be the abelian subvarieties of $J_0(499)$ in increasing
+    dimension. Note that 499 is a prime number and that
+    $\mathrm{num}\frac{499-1}{12}$ is not divisible by 3. Using Sage, we
+    determine that $[\O_K:\TT]=3$. Moreover, by a theorem of Mazur,
+    $\TT=\End(J_0(499)$. There is a 2-isogeny from $(A+B)\times C$ to
+    $J_0(499)$, therefore, $\TT=\End(A)$. So by a theorem of Shimura, there is
+    a 3-isogeny from $A\to A'$ with $\End(A')=\O_K$.
+\end{example}
 
 \subsection{Finite odd-order Galois Modules are Hecke}%
 \label{sub:finite_odd_order_galois_modules_are_hecke}
@@ -212,39 +207,7 @@ shows that this is enough.
 \subsection{Odd-order Eisenstein modules}%
 \label{sub:odd_order_eisenstein_modules}
 
-The goal of this subsection is to enumerate the odd-order finite $G$-modules
-supported only on the Eisenstein primes. We reduce to the case of
-enumerating odd-order finite $G$ modules supported on a single Eisenstein prime
-$\p$ of residue characterisitic $\ell>2$. Equivalently, we enumerate the
-$G$-modules of $A[\p^r]$. The $r=1$ case is given by~\cite[Corollary
-16.3]{mazur:eisenstein}
-\[
-    A[\p]\subseteq J_0(N)[\p] = C[\ell] \oplus \Sigma[\ell],
-\]
-where $C$ and $\Sigma$ are the cuspidal and Shimura subgroups of $J_0(N)$ and
-we know how to enumerate the subgroups of $C$ and $\Sigma$. For $r>1$, 
-there is an $R$-monomorphism of $A[\p^{r+1}]/A[\p^r]$ to $A[\p]^t$ given by
-\[
-    x+A[\p^r]\mapsto (a_1x,\ldots,a_tx).
-\]
-
-\begin{algorithm}{Enumerate $G$-submodules of ${A[\p^\infty]}$}
-    This algorithm enumerates all $G$-submodules of $A[\p^\infty]$, up to
-    equivalence.
-    \begin{enumerate}
-        \item{} [Initialize]
-            Let $r=1$
-        \item{} [$G$-submodules of $A[\p^r]$ containing $A[\p^{r-1}]$]
-            Let $\Phi_r:A[\p^r]/A[\p^{r-1}]\to \bigoplus A[\p^r]$ be the map
-            defined. Let $S_r '$ be the set of pullbacks of $G$-submodules of the
-            image of $\Phi_r$. This is the set of $G$-submodules containing
-            $A[\p^{r-1}]$.
-        \item{} [$G$-submodules of $A[\p^r]$]
-            Let $x_1,\ldots, x_t\in A[\p^{r-1}]$ be elements who cosets
-            generates the quotient 
-    \end{enumerate}
-\end{algorithm}
-
+THIS PROP NEEDS A HOME.
 \begin{proposition}\label{prop:powers_of_primes}
     Let $\p$ be any maximal ideal of $\TT$. Let $S_r$ be a set of
     representatives of equivalence classes of $G$-submodules of $A[\p^r]$. If
@@ -263,6 +226,48 @@ there is an $R$-monomorphism of $A[\p^{r+1}]/A[\p^r]$ to $A[\p]^t$ given by
     $T_r$ are equivalent to ones in $T_{r+1}$. So if $T_k=T_{k+1}$, then
     $T_k=T_\infty$ by induction.
 \end{proof}
+
+The goal of this subsection is to enumerate the odd-order finite $G$-modules
+supported only on the Eisenstein primes. We reduce to the case of
+enumerating odd-order finite $G$ modules supported on a single Eisenstein prime
+$\p$ of residue characterisitic $\ell>2$. Equivalently, we enumerate the
+$G$-modules of $A[\p^r]$. The $r=1$ case is given by~\cite[Corollary
+16.3]{mazur:eisenstein}
+\[
+    A[\p]\subseteq J_0(N)[\p] = C[\ell] \oplus \Sigma[\ell],
+\]
+where $C$ and $\Sigma$ are the cuspidal and Shimura subgroups of $J_0(N)$ and
+we know how to enumerate the subgroups of $C$ and $\Sigma$. For $r>1$, 
+there is an $R$-monomorphism of $A[\p^{r+1}]/A[\p^r]$ to $A[\p]^t$ given by
+\[
+    F_r:x+A[\p^r]\mapsto (a_1x,\ldots,a_tx).
+\]
+So the $G$-submodules of $A[\p^{r+1}]$ containing $A[\p^r]$ are in
+correspondence with $G$-submodules of $\Im F_r$.
+
+What if we consider $G$-submodules of $A[\p^{r+1}]$ that do not contain
+$A[\p^r]$? This will probably be some inductive process. So let's consider the
+nicer example, $K\subsetneq A[\p]$ and we wish to enumerate all $G$-submodules
+of $A[\p^2]$. The $G$-structure of $A[\p]/K$ is well-understood since
+$A[\p]=C[p]\oplus \Sigma[p]$, where $p$ is the residue characteristic of $\p$
+and $C$ and $\Sigma$ are the Shirmura and cuspidal subgroups.
+
+\begin{algorithm}{Enumerate $G$-submodules of ${A[\p^\infty]}$}
+    This algorithm enumerates all $G$-submodules of $A[\p^\infty]$, up to
+    equivalence.
+    \begin{enumerate}
+        \item{} [Initialize]
+            Let $r=1$
+        \item{} [$G$-submodules of $A[\p^r]$ containing $A[\p^{r-1}]$]
+            Let $\Phi_r:A[\p^r]/A[\p^{r-1}]\to \bigoplus A[\p^r]$ be the map
+            defined. Let $S_r '$ be the set of pullbacks of $G$-submodules of the
+            image of $\Phi_r$. This is the set of $G$-submodules containing
+            $A[\p^{r-1}]$.
+        \item{} [$G$-submodules of $A[\p^r]$]
+            Let $x_1,\ldots, x_t\in A[\p^{r-1}]$ be elements who cosets
+            generates the quotient...
+    \end{enumerate}
+\end{algorithm}
 
 \subsection{Non-Eisenstein modules are kernels of Hecke}%
 \label{sub:non_eisenstein_modules_are_kernels_of_hecke}

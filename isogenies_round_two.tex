@@ -10,7 +10,8 @@
 
 The goal of this section is to give an algorithm to enumerate the odd-degree
 $\QQ$-isogeny class of simple abelian subvarieties $A_f$ of $J_0(N)$ for $N$
-prime, up to isomorphism. Given a $\QQ$-isogeny $\psi:A_f\to A'$ with kernel $K$, so
+prime, up to isomorphism. Given a $\QQ$-isogeny $\psi:A_f\to A'$ with kernel
+$K$, so
 \[
     0 \to K \to A_f \overset{\psi}{\to} A' \to 0.
 \]
@@ -24,122 +25,72 @@ isomorphism of the image of the corresponding isogeny.
 We now fix notation and terminology. 
 \begin{itemize}
     \item
-        $A=A_f$
+        Let $A=A_f$ be the simple subvariety of $J_0(N)$ with $N$ prime.
     \item
-        $\TT$ is image of $\TT$ in blah 
+        Let $\TT_f$ denote the image in $\End(A_f)$ of the Hecke algebra $\TT(N)$
+        of $J_0(N)$. Let $\mathcal{I}_f\subseteq \TT_f$ be the image of the
+        Eisenstein ideal in $\End(A_f)$. For brevity, we write $\TT=\TT_f$ and
+        $\mathcal{I}=\mathcal{I}_f$.
     \item
-        $m_f$ is the index
+        Let $G=\Gal(\QQbar/\QQ)$ and $R=\TT[G]$.
     \item
-        For finite $G_\QQ$-modules $K$ and $K'$, we define a relation $\sim$,
-        by $K\sim K'$ if and only if $A/K\isom_\QQ A/K'$. In this section, by
-        enumerating the finite $G$-submodules of $A$, we mean enumeration up to
-        this relation. 
+        Let $K_f$ be the Hecke eigenvalue field of $f$. We have that $\TT$ is
+        isomorphic to an order $\O$ of $K_f$ so $K_f\isom \End(A)\otimes \QQ$.
+        We will fix an isomorphism $\TT\overset{\sim}{\to} \O$ which allows us
+        to use $\TT$ and $\End(A)\otimes \QQ$ interchangably with $\O$ and
+        $K_f$.
     \item
-        Isogenies are equivalent if their images are isomorphic.
-\end{itemize}
-    
-In subsection~\ref{}, we will prove that if $K$ is a finite odd-order
-$G_\QQ$-submodule of $A(\QQbar)$, then $K$ is a $\TT$-module. Let
-$\mathcal{I}$ be the Eisenstein ideal and $\m_1,\ldots,\m_r$ be the
-non-Eisenstein primes in the support of $K$ as a $\T$-module. This gives a
-decomposition of $K$ into the submodule supported on the Eisenstein primes and
-the submodule supported on the non-Eisenstein primes so $K=K_e \oplus K_{ne}$,
-where $K_e\subseteq K[\mathcal{I}^\infty]$ and $K_{ne}\subseteq
-K[(\m_1\ldots\m_r)^\infty]$. We further decompose $K_{ne}$ into $K_{ne}=K_{ne}'
-\oplus K_{ne} ''$, where $K_{ne}'=K_{ne}[m_f ^\infty]$ and $K_{ne}'' =
-K_{ne}[(\prod_{p\nmid m_f} p)^\infty]$. In other words, to enumerate finite
-odd-order $G$-submodules, it suffices to 
-\begin{itemize}
-    \item 
-        enumerate the odd-order $G$-submodules supported on the Eisenstein
-        primes,
+        Let $\O_K$ be the ring of integers of $K_f$ and $m_f=[\O_K:\O]$. The
+        best fact about $m_f$ is that $m_f$ is contained in the conductor
+        $\mathfrak{f}_{\O_K/\O}$ of
+        $\O_K$ over $\O$.
     \item
-        enumerate the odd-order $G$-submodules supported on the non-Eisenstein
-        primes not dividing $m_f$,
+        For finite $G$-modules $K$ and $K'$, we define an equivalence relation
+        $\sim$, by $K\sim K'$ if and only if $A/K\isom_\QQ A/K'$. In this
+        section, by enumerating the finite $G$-submodules of $A$, we mean
+        enumeration up to this relation. 
     \item
-        enumerate the odd-order $G$-submodules supported on the non-Eisenstein
-        primes dividing $m_f$.
+        Similarily, for 2 isogenies $\psi$ and $\psi'$, we define an
+        equivalence relation $\sim$, by $\psi\sim \psi'$ if and only if $\Im
+        \psi \isom_\QQ \Im \psi'$.
 \end{itemize}
 
-\begin{algorithm}{TODO}
+Let $K$ be some finite odd-order $G$-submodule of $A(\QQbar)$. In
+subsection~\ref{sub:non_eisenstein_modules_are_kernels_of_hecke}, we will
+prove $K$ is a $\TT$-module. Let $\m_1,\ldots,\m_t$ be the maximal ideals of
+$\TT$ in the support of $K$. Then is the direct sum of it's $\m_i$-adic parts
+so
+\[
+    K = K[\m_1 ^\infty] \oplus \cdots \oplus K[\m_t ^\infty].
+\]
+Therefore, to classify $K$, up to equivalence, it suffices to classify the
+$\m_i$-adic parts of $K$, up to equivalence. This yields the following
+algorithm.
+\begin{algorithm}{Enumerating the odd-degree isogeny class}
+    Let $A$ be a simple abelian subvariety of $J_0(N)$ with $N$ prime. This
+    algorithm will enumerate all $\QQ$-isogenous abelian varieties $A'$ such
+    that there exists a odd-degree isogeny from $A$ to $A'$, up to isomorphism,
+    by enumerating finite odd-order $G$-submodules of $A(\QQbar)$, up to
+    equivalence.
+    \begin{itemize}
+        \item{} [Eisenstein part]
+            Use Algorithm~\ref{alg:eisenstein} to compute the enumeration
+            $S_e$ of the odd-order $G$-submodules supported on the Eisenstein
+            primes.
+        \item{} [Non-Eisenstein part not dividing $m_f$]
+            Use Algorithm~\ref{alg:non_eisenstein_not_dividing_mf} to compute the
+            enumeration $S_{ne} '$ of the odd-order $G$-submodules supported on
+            the non-Eisenstein primes not dividing $m_f$.
+        \item{} [Non-Eisenstein part dividing $m_f$]
+            Use Algorithm~\ref{alg:non_eisenstein_dividing_mf} to compute the
+            enumeration $S_{ne} ''$ of the odd-order $G$-submodules supported on
+            the non-Eisenstein primes dividing $m_f$.
+        \item{} [Combine]
+            Return the set $S_e+ S_{ne} ' + S_{ne} ''=\{K_e + K_{ne}' + K_{ne}
+            '': K_e\in S_1, K_{ne}'\in S_{ne}', K_{ne} '' \in S_{ne}''\}$.
+    \end{itemize}
 \end{algorithm}
 
-\begin{remark}
-    An abelian variety has a 2-isogeny if and only if it has a rational
-    2-torsion point. We have $A_f(\QQ)_{\tor} \subseteq J_0(N)(\QQ)_{\tor}$ and
-    by~\cite[Theorem 1]{mazur:eisenstein}, $\# J_0(N)(\QQ)_{\tor} =
-    \mathrm{num}(\frac{N-1}{12})$. So if $8\nmid N-1$, $A_f$ has no 2-isogeny,
-    and our method enumerates the entire $\QQ$-isogeny class.
-\end{remark}
-
-Non-trivial isogenies equivalent to one whose kernel is supported on the
-Eisenstein primes are plentiful. For example, if $A_f$ is an elliptic curve,
-then all isogenies are equivalent to one whose kernel is supported on the
-Eisenstein primes. However, non-trivial odd isogenies not equivalent to one
-whose kernel is supported on the Eisenstein primes are much harder to find.
-
-\begin{example}
-    Let $A_f$ be the unique subvariety of $J_0(499)$ of dimension 23. We have
-    that $[\O_K:\O]=3$. By~\cite[pg. 199]{shimura:intro}, there exists an
-    isogenous abelian variety $A'$ given by $A/A[3\O_K]$ so that
-    $\End(A')=\O_K$ so $A\not\isom A'$. Since $3\nmid n$, $A'$ is not
-    isomorphic to the image of any isogeny supported on the Eisenstein primes.
-\end{example}
-
-The main tool for enumerating $K_{ne}$ will be a theorem by Frank Calegari,
-\begin{theorem}\label{theorem:non_eisenstein_no_conductor}
-    Let $\psi:A\to A'$ be an odd-degree isogeny of degree $d$ coprime to $m_f$,
-    then
-    \[
-        A' \isom A/A[\mathfrak{q}],
-    \]
-    for some representatives $\mathfrak{q}$ of $\Cl(\TT)$. In other words, 
-\end{theorem}
-\begin{proof}
-    Let $K$ be the kernel of $\psi$. By
-    Theorem~\ref{theorem:non_eisenstein_kernel_hecke}, $K=A[I]$, where
-    $I=\Ann_{\TT}(K)$. Since $d\in I$ is coprime to $m\in \mathfrak{f}_{\O}$,
-    $I$ is invertible in $\O$. Moreover, $A/A[I]\isom A/A[\alpha I]$ for
-    any $\alpha\in \TT$ by the multiplication by $\alpha$ map. Hence, the
-    isomorphism class of $A$ depends only on the class of $I$ in $\Cl(\TT)$.
-\end{proof}
-
-
-
-
-By Mazur and Ribet, $\TT_f=\End(A_f)$ is isomorphic to an order $\O$ of the
-number field $K_f$ given by adjoining the Hecke eigenvalues to $\QQ$. Let
-$m_f=[\O_{K_f}:\O]$. 
-
-The idea will be to
-\begin{itemize}
-    \item 
-        Determine all the non-Eisenstein isogenies away from $2m_f$ using
-        Theorem~\ref{theorem:non_eisenstein_no_conductor}.
-    \item
-        Determine all the non-Eisenstein isogenies with degree the odd part of
-        $m_f$.
-    \item
-        Determine the Eisenstein isogenies.
-\end{itemize}
-
-\begin{theorem}\label{theorem:non_eisenstein_no_conductor}
-    Let $A_f$ be a simple subvariety of $J_0(N)$ with $\QQ$-isogeny $\psi:A\to
-    A'$ of degree $d$ coprime to $m_f$ supported on the non-Eisenstein primes
-    of odd residue characteristic then
-    \[
-        A' \isom A/A[\mathfrak{q}],
-    \]
-    for some representatives $\mathfrak{q}$ of $\Cl(\O)$.
-\end{theorem}
-\begin{proof}
-    Let $K$ be the kernel of $\psi$. By
-    Theorem~\ref{theorem:non_eisenstein_kernel_hecke}, $K=A[I]$, where
-    $I=\Ann_{\TT}(K)$. Since $d\in I$ is coprime to $m_f\in \mathfrak{f}_{\O}$,
-    $I$ is invertible in $\O$. Moreover, $A/A[I]\isom A/A[\alpha I]$ for any
-    $\alpha\in \TT$ by the multiplication by $\alpha$ map. Hence, the
-    isomorphism class of $A$ depends only on the class of $I$ in $\Cl(\O)$.
-\end{proof}
 
 Using this theorem, we perform some computations to show that non-Eisenstein
 isogenies are rare.
@@ -155,10 +106,15 @@ isogenies are rare.
 \end{proof}
 
 
-\subsection{Simple Galois Modules of $J[\ell]$}\label{subsection:simple_galois_ell}
+\subsection{Finite odd-order Galois Modules are Hecke}%
+\label{sub:finite_odd_order_galois_modules_are_hecke}
 
-We begin by using Mazur's work to understand the $G$-subquotients of $J[\ell]$
-for prime $\ell>2$. We start with a commutative algebra lemma.
+The goal of this subsection is to prove every finite odd-order Galois module is
+a Hecke module (Theorem~\ref{theorem:G_modules_are_Hecke}). We begin by using
+the techniques and results of~\cite[\S 14]{mazur:eisenstein} to determine the
+ramified primes of the associated Galois representation. Then we will reduce
+modulo the unramified primes and appeal to Eichler-Shimura. A theorem of Ribet
+shows that this is enough.
 
 \begin{lemma}\label{lemma:cherry_street}
     Let $V$ be an irreducible $R$-subquotient of $J[\ell]$. Then $\Ann_\TT V$
@@ -212,8 +168,6 @@ for prime $\ell>2$. We start with a commutative algebra lemma.
     Jordan-Holder Theorem.
 \end{proof} 
 
-\subsection{Finite Galois Modules are Hecke}
-
 \begin{theorem}\label{theorem:G_modules_are_Hecke}
     Suppose $K$ is a finite $G$-module supported away from $2$. Then $K$ is
     $\TT$-stable so $K$ is an $R$-module.
@@ -255,12 +209,60 @@ for prime $\ell>2$. We start with a commutative algebra lemma.
     hence, $T_p X_s\subseteq X_s$, as desired.
 \end{proof}
 
-Now that we've established every finite Galois module $K$ supported away from 2
-is a Hecke module, it makes sense to talk about the support of $K$ as a
-$\TT$-module. We say $K$ is Eisenstein if the support consists only of
-Eisenstein primes and we say $K$ is non-Eisenstein if the support consists
-only of non-Eisenstien primes.
+\subsection{Odd-order Eisenstein modules}%
+\label{sub:odd_order_eisenstein_modules}
 
+The goal of this subsection is to enumerate the odd-order finite $G$-modules
+supported only on the Eisenstein primes. We reduce to the case of
+enumerating odd-order finite $G$ modules supported on a single Eisenstein prime
+$\p$ of residue characterisitic $\ell>2$. Equivalently, we enumerate the
+$G$-modules of $A[\p^r]$. The $r=1$ case is given by~\cite[Corollary
+16.3]{mazur:eisenstein}
+\[
+    A[\p]\subseteq J_0(N)[\p] = C[\ell] \oplus \Sigma[\ell],
+\]
+where $C$ and $\Sigma$ are the cuspidal and Shimura subgroups of $J_0(N)$ and
+we know how to enumerate the subgroups of $C$ and $\Sigma$. For $r>1$, 
+there is an $R$-monomorphism of $A[\p^{r+1}]/A[\p^r]$ to $A[\p]^t$ given by
+\[
+    x+A[\p^r]\mapsto (a_1x,\ldots,a_tx).
+\]
+
+\begin{algorithm}{Enumerate $G$-submodules of ${A[\p^\infty]}$}
+    This algorithm enumerates all $G$-submodules of $A[\p^\infty]$, up to
+    equivalence.
+    \begin{enumerate}
+        \item{} [Initialize]
+            Let $r=1$
+        \item{} [$G$-submodules of $A[\p^r]$ containing $A[\p^{r-1}]$]
+            Let $\Phi_r:A[\p^r]/A[\p^{r-1}]\to \bigoplus A[\p^r]$ be the map
+            defined. Let $S_r '$ be the set of pullbacks of $G$-submodules of the
+            image of $\Phi_r$. This is the set of $G$-submodules containing
+            $A[\p^{r-1}]$.
+        \item{} [$G$-submodules of $A[\p^r]$]
+            Let $x_1,\ldots, x_t\in A[\p^{r-1}]$ be elements who cosets
+            generates the quotient 
+    \end{enumerate}
+\end{algorithm}
+
+\begin{proposition}\label{prop:powers_of_primes}
+    Let $\p$ be any maximal ideal of $\TT$. Let $S_r$ be a set of
+    representatives of equivalence classes of $G$-submodules of $A[\p^r]$. If
+    for some $k\geq 1$ and all finite $G$-submodules $K$ of $A[\p^{k+1}]$,
+    $K\sim L$ for some $L\in A[\p^k]$, then $S_k$ is a set of representatives
+    of equivalence classes of finite $G$-submodules of $A[\p^\infty]$.
+
+    Alternatively, let $T_r$ be a set of representatives of equivalence classes
+    of images of isogenies with kernel equivalent to a $G$-submodule of
+    $A[\p^r]$. Then if $T_{k}=T_{k+1}$, $T_k=T_\infty$.
+\end{proposition}
+\begin{proof}
+    Every $\p$-isogeny of $A$ can be factored into a sequence of irreducible
+    $\p$-isogenies. If $\phi:A'\to A''$ is irreducible, then $\ker\phi\subseteq
+    A'[\p]$. Therefore, the images of irreducible isogenies with domains in
+    $T_r$ are equivalent to ones in $T_{r+1}$. So if $T_k=T_{k+1}$, then
+    $T_k=T_\infty$ by induction.
+\end{proof}
 
 \subsection{Non-Eisenstein modules are kernels of Hecke}%
 \label{sub:non_eisenstein_modules_are_kernels_of_hecke}
@@ -337,6 +339,62 @@ representation modeled by $J[\m]^\vee$.
     all $\m$ outside $S$. Then we have $[\ker \phi]^\vee _\m = T_\m A / I' T_\m
     A$. Hence, $I' _\m = I_\m$. Since $T_\m A/IT_\m A= A[I]_\m ^\vee$.
 \end{proof}
+
+\subsection{Enumerating Non-Eisenstein Kernels On Conductor}%
+\label{sub:enumerating_non_eisenstein_kernels_on_conductor}
+
+\begin{algorithm}{Enumerate Non-Eisenstein Kernels on Conductor}%
+    \label{alg:enumerate_non_eisenstein_on_conductor}
+    Let $\m_1,\ldots,m_t$ be the set of maximal ideals of $\TT$ dividing
+    $\mathfrak{f}_{\O_{K_f}/\O}$. This algorithm will enumerate, up to
+    equivalence, all finite $G$-submodules of $A(\QQbar)$ supported on
+    $\m_1,\ldots,m_t$.
+    \begin{enumerate}
+        \item{} [Find $G$-submodules supported on $\m_i$]
+            For each $i=1,\ldots,t$, we enumerate, up to equivalence, the
+            $G$-submodules supported on $\m_i$. We call the enumeration $X_i$.
+            \begin{enumerate}
+                \item{} [Initialize]
+                    Set $r=1$, $S_0=\emptyset$.
+                \item{} [Enumerate the ideals]
+                    Compute $J_r=\{I \subseteq \TT: \m^r \subseteq I \subseteq
+                    \m^{r-1}\}$ somehow. 
+                \item{} [Compute the kernels]
+                    Let $T_r=\{A[I]: I\subseteq X_r\}$
+                \item{} [Done?]
+                    Check if every element of $T_r$ is equivalent to one in
+                    $S_{r-1}$. If so, we are done by
+                    Proposition~\ref{prop:powers_of_primes} and we return
+                    $X_i=S_{r-1}$. Otherwise, set $S_r=T_r\cup S_{r-1}$. Increment
+                    $r$ and return to step (b).
+            \end{enumerate}
+        \item{} [Combine]
+            Return the set $X= \left\{\sum_{i=1} ^t K_i:K_i\in X_i\right\}$.
+    \end{enumerate}
+\end{algorithm}
+
+\subsection{Enumerating Non-Eisenstein Kernels Away From Conductor}%
+\label{sub:enumerating_non_eisenstein_kernels_away_from_conductor}
+
+The main tool for enumerating $K_{ne}$ will be a theorem by Frank Calegari,
+\begin{theorem}\label{theorem:non_eisenstein_no_conductor}
+    Let $\psi:A\to A'$ be an odd-degree isogeny of degree $d$ coprime to $m_f$,
+    then
+    \[
+        A' \isom A/A[\mathfrak{q}],
+    \]
+    for some representatives $\mathfrak{q}$ of $\Cl(\TT)$. In other words, 
+\end{theorem}
+\begin{proof}
+    Let $K$ be the kernel of $\psi$. By
+    Theorem~\ref{theorem:non_eisenstein_kernel_hecke}, $K=A[I]$, where
+    $I=\Ann_{\TT}(K)$. Since $d\in I$ is coprime to $m\in \mathfrak{f}_{\O}$,
+    $I$ is invertible in $\O$. Moreover, $A/A[I]\isom A/A[\alpha I]$ for
+    any $\alpha\in \TT$ by the multiplication by $\alpha$ map. Hence, the
+    isomorphism class of $A$ depends only on the class of $I$ in $\Cl(\TT)$.
+\end{proof}
+
+
 
 
 \bibliography{biblio}

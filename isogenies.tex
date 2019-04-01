@@ -5,6 +5,7 @@
 \usepackage{microtype}
 \usepackage{tikz-cd}
 \renewcommand{\q}{\mathfrak{q}}
+\renewcommand{\f}{\mathfrak{f}}
 \newcommand{\I}{\mathcal{I}}
 \newcommand{\odd}{\mathrm{odd}}
 \tikzset{labl/.style={anchor=south, rotate=90, inner sep=.5mm}}
@@ -39,27 +40,27 @@ We now fix notation, terminology, assumptions.
     \item{} [Abelian subvariety notation]
         Let $A=A_f\subseteq J$ be a simple abelian subvariety of $J$. We will
         fix a single simple abelian subvariety $A$ and its isogeny class will
-        be our object of study. Let $\TT_A$ be the image of $\TT$ in $\End(A)$
-        and $\I_A$ be the image of the Eisenstein ideal in $\End(A)$. 
+        be our object of study. We have that $A$ is $\TT$-invariant so let
+        $\TT_A$ be the image of $\TT$ in $\End(A)$ and $\I_A$ be the image of
+        the Eisenstein ideal in $\End(A)$. 
     \item{} [Number theory of $\TT_A$ notation] 
         Let $K_f$ be the Hecke eigenvalue field of $f$ so $K_f$ is a number
         field of degree equal to $\dim A$. Moreover, $\TT_A$ is isomorphic to
         an order in $K_f$. We will implicitly fix some embedding of $\TT_A$ and
         treat $\TT_A$ as a subset of $K_f$. Let $\O_K$ be the ring of integers
-        of $K_f$ and $\mathfrak{f}$ be the conductor of $\O_K$ over $\TT_A$.
+        of $K_f$ and $\f$ be the conductor of $\O_K$ over $\TT_A$.
     \item{} [Galois-Hecke group ring notation]
         Let $G_\QQ=\Gal(\QQbar/\QQ)$. The Hecke operators are defined over
-        $\QQ$, so $\TT$ commutes with $G_\QQ$ and we can form the group ring
-        $R=\TT[G_\QQ]$.
+        $\QQ$, so $\TT_A$ commutes with $G_\QQ$ and we can form the group ring
+        $R=\TT_A[G_\QQ]$.
     \item{} [Equivalence relation notation]
-        For finite $G$-submodules $M$ and $M'$, we define a relationship $M\sim
-        M'$ if and only if $A/M \isom A/M'$. For any (possibly infinite)
-        $G$-submodule $P$, let $\M(P)$ be set of equivalence classes of
-        finite $G$-submodules of $P$. So the goal of this chapter can be
-        restated as enumerating a set of representatives of
-        $\M(A(\QQbar)_\odd)$.
+        For finite $G_\QQ$-submodules $M$ and $M'$, we define a relationship
+        $M\sim M'$ if and only if $A/M \isom A/M'$. For any $G$-submodule $P$
+        of $A(\QQbar)$, let $\M(P)$ be set of equivalence classes of finite
+        $G$-submodules of $P$. So the goal of this chapter can be restated as
+        enumerating a set of representatives of $\M(A(\QQbar)_\odd)$.
     \item{} [Sets of primes notation]
-        Let $S_0=\{\m\in \Spec\TT[\frac 12]: \m \not\mid
+        Let $S_0=\{\m\in \Spec\TT[\frac 12]: \m \nmid
         \mathfrak{f}\mathcal{I}\}$ and $S_1 = \Spec\TT[\frac 12]\setminus S_0$.
         The best fact about $S_0$ is that its elements are invertible and the
         best fact about $S_1$ is that it is finite.
@@ -67,18 +68,16 @@ We now fix notation, terminology, assumptions.
         For an $R$-module $M$ of $A(\QQbar)_\odd$, let $M_{S_i}$ be the largest
         $R$-submodule of $M$ supported on $S_i$ so $M_{S_i}=M[\prod_{\p\in S_i}
         \p^\infty]$. Observe that $M = M_{S_0}\oplus M_{S_1}$.
-    \item{} [Non-eisenstein modules]
-        We say an $R$-module $M$ is non-Eisenstein if it is supported only on
-        the non-Eisenstein primes.
 \end{itemize}
 
-Under this notation, the goal is to enumerate a set of reprsentatives for
-$\M(A(\QQbar)_\odd)$. 
+The goal of this section is Algorithm~\ref{alg:odd_isogeny_class} which
+enumerates the odd isogeny class of $A$ when $\TT_A$ is integrally closed. This
+occurs THIS OFTEN TODO!!!
 
 Let $M$ be a finite odd $G$-submodule of $A(\QQbar)_\odd$. In
 subsection~\ref{sub:finite_odd_order_galois_modules_are_hecke}, we will show
 that $M$ is an $R$-module. This is useful because the $\TT$-structure is more
-easily understand than the $G$-structure. For instance, when $M$ is an
+easily understood than the $G$-structure. For instance, when $M$ is an
 $R$-module, we can consider the support of $M$ as a $\TT$-module. Using
 Theorem~\ref{}, when we will give an explicit set $S$ such that every finite odd
 $G$-module is equivalent to one supported on $S$. Now using an idea from Mazur,
@@ -86,22 +85,26 @@ when $2\nmid \mathfrak{f}$, Algorithm~\ref{} enumerates a set of
 representatives of modules supported on $S$. In summary, we have the following
 algorithm.
 
-\begin{algorithm}{Enumerating the odd isogeny class}
-    Given a simple subvariety $A$ of $J_0(N)$ with $N$ prime and $2\nmid
-    \mathfrak{f}$ this algorithm will enumerate the odd isogeny class of $A$ by
-    enumerating a set of representatives for $\M(A(\QQbar)_\odd$.
+\begin{algorithm}{Odd isogeny class}%
+    \label{alg:odd_isogeny_class}
+    Let $A$ be a simple abelian subvariety with $\TT_A$ integrally closed. This
+    algorithm will enumerate the odd isogeny class of $A$ by giving a set of
+    representatives of $\M(A(\QQbar)_\odd)$.
     \begin{enumerate}
-        \item{} [Isogenies from ideal class group]
-            Compute a set of integral representatives $\q_1,\ldots,q_r$ for the
-            ideal class group of $\Cl(\TT_A)$ using~\cite{}.
-        \item{} [Compute the $S_1$-part]
-            For each $i$, using Algorithm~\ref{} to compute a set $W_i$ of
-            representatives for equivalence classes of modules of the form
-            $A[\q_i]\oplus M_{S_1}$ with $M_{S_1}$ supported on $S_1$.
-        \item{} [Output isogeny class]
-            Let $W=\bigcup W_i$. Form $V=\{A/M:M\in W\}$ and use the
-            isomorphism testing (Algorithm~\ref{}) to output a subset $V'$ of
-            $V$ of pairwise non-isomorphic abelian varieties.
+        \item{} [Class group]
+            Compute a set of odd integral representatives $\{\q_i\}$ of
+            $\Cl(\TT_A)$. Let $Q = (\prod \q_i)(\prod_{\p\in S_1} \p)$. 
+        \item{} [Initialize search]
+            Set $r=1$.
+        \item{} [$G$-submodules of $A[Q^r]$]
+            Compute the set of $G$-submodules of $A[Q^r]$ using Mazur's trick.
+            Call it $X_r$.
+        \item{} [Done?]
+            If for every $x\in X_r$, there exists $y\in X_{r-1}$, such that
+            $x\sim y$, then $X_r$ is contains a set of representatives for
+            $\M(A(\QQbar)_\odd)$.
+        \item{} [Output]
+            Use Algorithm~\ref{} to enumerate the odd isogeny class of $A$. 
     \end{enumerate}
 \end{algorithm}
 
@@ -478,7 +481,7 @@ gives of method of determining how large we need to take $r$.
     A[Q^{k+1}]$ so it suffices to show $\phi(M)\subseteq A[Q^{k+1}]$
     
     As in Corollary~\ref{cor:bound_support}, $\Supp\phi(M)\subseteq S$. For all
-    $\p\in S$, $v_\p(b)-\v_\p(a) = v_\p(\q)-v_\p(\m)=v_\p(\q)$ so by
+    $\p\in S$, $v_\p(b)-v_\p(a) = v_\p(\q)-v_\p(\m)=v_\p(\q)$ so by
     Lemma~\ref{lem:com_alg}, $\phi(M)\subseteq A[Q^{k+1}]$, as desired.
 \end{proof}
 
@@ -510,7 +513,7 @@ case $s=1$ from the work of Mazur.
 \end{proposition}
 \begin{proof}
     The Eisenstein case is~\cite[Corollary 16.3]{mazur:eisenstein} along with
-    the fact that $C[\ell]\isom_G \ZZ/\ell$ and $\Sigma[\ell]\isom_G \pu_\ell$.
+    the fact that $C[\ell]\isom_G \ZZ/\ell$ and $\Sigma[\ell]\isom_G \mu\ell$.
 
     The non-Eisenstein case is~\cite[Propositon 14.2]{mazur:eisenstein}.
 \end{proof}
@@ -521,7 +524,7 @@ $a_1,\ldots,a_t\in \p^s$ be a set of generators whose cosets generate
 $\p^{s-1}/\p^s$ as a $k_\p$-vector space. Then there is an $R$-inclusion
 \begin{align*}
     \phi_s: A[\p^s]/A[\p^{s-1}] & \to A[\p]^t, \\
-    x+A[\p^{s-1}] & \papsto (a_1x,\ldots,a_tx).
+    x+A[\p^{s-1}] & \mapsto (a_1x,\ldots,a_tx).
 \end{align*}
 The $G$-submodules of $A[\p^s]$ are the $\ZZ$-submodules $X$ of $A[\p^s]$ with
 the property $\phi(X)$ is a $G$-submodule of $A[\p]^t$ and $X\cap A[\p^{s-1}]$
@@ -531,27 +534,6 @@ $G$-submodules of $A[\p^s]$ for any $s$.
 We now all all the ingredients needed to enumerate the odd isogeny class of
 $A$ when $\TT_A$ is integrally closed.
 
-\begin{algorithm}{Odd isogeny class}
-    Let $A$ be a simple abelian subvariety with $\TT_A$ integrally closed. This
-    algorithm will enumerate the odd isogeny class of $A$ by giving a set of
-    representatives of $\M(A(\QQbar)_\odd)$.
-    \begin{enumerate}
-        \item{} [Class group]
-            Compute a set of odd integral representatives $\{\q_i\}$ of
-            $\Cl(\TT_A)$. Let $Q = (\prod \q_i)(\prod_{\p\in S_1} \p)$. 
-        \item{} [Initialize search]
-            Set $r=1$.
-        \item{} [$G$-submodules of $A[Q^r]$]
-            Compute the set of $G$-submodules of $A[Q^r]$ using Mazur's trick.
-            Call it $X_r$.
-        \item{} [Done?]
-            If for every $x\in X_r$, there exists $y\in X_{r-1}$, such that
-            $x\sim y$, then $X_r$ is contains a set of representatives for
-            $\M(A(\QQbar)_\odd)$.
-        \item{} [Output]
-            Use Algorithm~\ref{} to enumerate the odd isogeny class of $A$. 
-    \end{enumerate}
-\end{algorithm}
 
 \bibliography{biblio}
 \end{document}

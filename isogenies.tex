@@ -105,13 +105,13 @@ In summary, we have the following algorithm with forward references.
         \item{} [Initialize search]
             Set $r=1$ and $X_{r-1}=\emptyset$.
         \item{} [$G$-submodules of $A[Q^r]$]
-            Use Algorithm~\ref{} to give a set, $X_r$, of representatives for
-            $\M(A[Q^r])$.
+            Use Section~\ref{sub:enumerating_isogenies} to give a set, $X_r$,
+            of representatives for $\M(A[Q^r])$.
         \item{} [Done?]
-            By Proposition~\ref{}, if for all $x\in X_r$, $x\sim y$ for some
-            $y\in X_{r-1}$, then $X_r$ is a set of representatives for
-            $\M(A(\QQbar)_\odd)$. If this is not the case, increment $r$ and
-            repeat the last step.
+            By Corollary~\ref{cor:set_of_reps}, if for all $x\in X_r$, $x\sim
+            y$ for some $y\in X_{r-1}$, then $X_r$ is a set of representatives
+            for $\M(A(\QQbar)_\odd)$. If this is not the case, increment $r$
+            and repeat the last step.
         \item{} [Quotient and output]
             Output $A/x$ for $x\in X_r$.
     \end{enumerate}
@@ -119,14 +119,13 @@ In summary, we have the following algorithm with forward references.
 
 \begin{example}[A Non-Eisenstein isogeny]
     Let $A,B,C$ be the simple abelian subvarieties of $J_0(499)$ in decreasing
-    dimension. Let $K$ be the Hecke
-    eigenvalue field of the newform associated to $A$. Using Sage, we
-    determine that $[\O_K:\TT_A]=3$. Moreover, by a theorem of Mazur~\cite{},
-    $\TT=\End(J_0(499)$. There is a 2-isogeny from $A\times (B+C)$ to
-    $J_0(499)$, therefore, $\TT_A=\End(A)$. So by a theorem of Shimura, there
-    is a rational 3-isogeny from $A\to A'$ with $\End(A')=\O_K$. This isogeny
-    is not Eisenstein as $3$ does not dividing $\# \TT/\I = \mathrm{num}
-    \left(\frac{N-1}{12}\right)$.
+    dimension. Let $K$ be the Hecke eigenvalue field of the newform associated
+    to $A$. Using Sage, we determine that $[\O_K:\TT_A]=3$. Moreover, by a
+    theorem of Mazur~\cite{}, $\TT=\End(J_0(499)$. There is a 2-isogeny from
+    $A\times (B+C)$ to $J_0(499)$, therefore, $\TT_A=\End(A)$. So by a theorem
+    of Shimura, there is a rational 3-isogeny from $A\to A'$ with
+    $\End(A')=\O_K$. This isogeny is not Eisenstein as $3$ does not divide $\#
+    \TT/\I = \mathrm{num} \left(\frac{499-1}{12}\right)$.
 \end{example}
 
 \subsection{Finite odd-order Galois Modules are Hecke}%
@@ -516,7 +515,7 @@ such that
 \subsection{Enumerating isogenies}%
 \label{sub:enumerating_isogenies}
 
-In this section, we give an algorithm to enumerating the isogeny class of $A$
+In this section, we give the final ingredient for enumerating the isogeny class of $A$
 when $\TT_A$ is integrally closed. Using Corollary~\ref{cor:set_of_reps}, we
 can determine $Q$ and $k$ such that the set of $G_\QQ$-submodules of $A[Q^k]$
 is a set of representatives for $\M(A(\QQbar)_\odd)$. It remains to show how to
@@ -561,7 +560,10 @@ $G_\QQ$-submodules of $A[\p]^t$.
         know Galois action explicitly on $A[\p]^t$ so we can determine the
         $G_\QQ$-modules of $A[\p]^t$.
     \item
-        If $\p$ is no Eisenstein, 
+        If $\p$ is not Eisenstein, things are much harder. We have to computing
+        the action of Galois using
+        (https://hal.archives-ouvertes.fr/hal-01110451/document) or
+        (https://arxiv.org/pdf/math/0605244)
 \end{itemize}
 
 
@@ -577,6 +579,7 @@ The $G$-submodules of $A[\p^s]$ are the $\ZZ$-submodules $X$ of $A[\p^s]$ with
 the property $\phi(X)$ is a $G$-submodule of $A[\p]^t$ and $X\cap A[\p^{s-1}]$
 is a $G$-submodule of $A[\p^{s-1}]$. So by induction, we can determine the
 $G$-submodules of $A[\p^s]$ for any $s$. 
+
 
 \bibliography{biblio}
 \end{document}

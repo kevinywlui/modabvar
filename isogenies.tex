@@ -421,8 +421,8 @@ $\M(A[Q^k]) = \M(A(\QQbar)_\odd$. We start with a lemma on valuations.
     A/A[C]$, as desired.
 \end{proof}
 
-Let $H=\{C_i\}$ be a set of integral representatives for $\Cl(\TT_A)$.
-
+Let $H=\{C_i\}$ be a set of integral representatives for $\Cl(\TT_A)$ and
+${S=S_1\cup\bigcup_{C\in H}V(C)}$.
 \begin{proposition}%
     \label{prop:bound_support}
     Every finite odd $G_\QQ$-submodule is equivalent to one supported on $S$.
@@ -445,14 +445,12 @@ Let $H=\{C_i\}$ be a set of integral representatives for $\Cl(\TT_A)$.
     $\phi(M_S)_\p = 0$. Therefore, $A[\q]+\phi(M_S)$ is supported on $S$.
 \end{proof}
 
-We now will further assume that $\TT_A$ is integrally closed. As before, let
-$H=\{\q_i\}$ be a set of integral representatives of $\Cl(\TT_A)$ of odd
-residue characteristic, and let ${S=S_1\cup\bigcup_{\q\in H}V(\q)}$.
-
-Let $Q = (\prod_{\q\in H} \q)(\prod_{\p\in S_1} \p)$. Since $V(Q)=S$, the finite
-$G_\QQ$-submodules supported on $S$ are exactly the finite $G_\QQ$-submodules of
-exactly the finite $G_\QQ$-submodules of $A[Q^\infty]$. The goal now is to find $k$
-such that 
+From henceforth, we assume that $\TT_A$ is integrally closed. We can now choose
+$H=\{C_i\}$ to be a set of integral representatives for $\Cl(\TT_A)$ of odd
+norm. Let $Q=\lcm(\{C:C\in H\}\cup \{\p:\p\in S_1\})$. We have that $V(Q)=S$
+so, in light of Proposition~\ref{prop:bound_support},
+$\M(A[Q^\infty])=\M(A(\QQbar)_\odd)$. Isogeny class are finite so there exists
+some $k$ so that $\M(A[Q^k])=\M(A(\QQbar)_\odd)$.
 
 \begin{corollary}
     \label{cor:set_of_reps}

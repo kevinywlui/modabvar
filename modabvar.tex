@@ -37,7 +37,8 @@
 \section{Introduction}
 In this paper, we lay the foundations for a computational theory of
 abelian varieties over $\Q$ of $\GL_2$-type.  This will support
-generalizing Cremona's highly influential tables \cite{cremona:algs}
+generalizing Cremona's highly influential tables
+\cite{cremona:algorithms-modular}
 of elliptic curves to higher dimension.  We describe algorithms for
 enumerating and decomposing $\GL_2$-type abelian varieties,
 isomorphism testing, computation of endomorphism and homomorphism
@@ -53,8 +54,8 @@ As mentioned above, a distinctive feature of our approach is that we
 do not use explicit defining equations. This is in stark contrast to the
 approach taken by many previous papers and theses \cite{empirical}
 that treat only small dimensions.  We also hope that some of the ideas
-in this paper may be applicable to \cite{MR2282913} and
-\cite{jordiquer}.  The methods in this paper are also used in the
+in this paper may be applicable to \cite{edixhoven:modular_form:2006} and
+\cite{TODO:jordiquer}.  The methods in this paper are also used in the
 forthcoming paper \cite{calegari-stein:eisenstein}.  The author has
 implemented all of the algorithms described here, and they are
 included in Sage (which is free open source software \cite{sage}).
@@ -90,13 +91,13 @@ $X_1(N)$, which is an abelian variety over $\Q$.  An abelian variety
 $A$ over $\QQ$ is \defn{modular} if there is a homomorphism $A \to
 J_1(N)$ with finite kernel.
 
-Ribet observed in \cite[\S3]{ribet:abvars} that every modular abelian
+Ribet observed in \cite[\S3]{ribet:abelian_varieties} that every modular abelian
 variety is of $\GL_2$-type.  His paper also shows
-\cite[Thm.~4.4]{ribet:abvars} that Serre's conjectures
+\cite[Thm.~4.4]{ribet:abelian_varieties} that Serre's conjectures
 \cite{serre:conjectures} on modularity of odd irreducible
 two-dimensional mod~$p$ Galois representations imply the converse.
-Since Khare and Wintenberger~\cite{MR2827796} have now completely proved
-Serre's conjecture, we have the following theorem.
+Since Khare and Wintenberger~\cite{khare-wintenberger:serre} have now
+completely proved Serre's conjecture, we have the following theorem.
 
 \begin{theorem}[Khare, Wintenberger]\label{conj:ribmod}
     Every $\GL_2$-type abelian variety over $\Q$ is modular.
@@ -116,7 +117,7 @@ rest of this paper.
     $N$. The main complication is that the endomorphism ring over
     $\Qbar$ of a simple modular abelian variety $A$ over $\Q$ need not
     be commutative.  Fortunately, much is known about its structure (see
-    \cite{ribet:twistsendoalg}).
+    \cite{ribet:twists}).
 
     Also many of the algorithms in this paper naturally generalize to
     he context of Grothendieck motives attached to modular forms.  This
@@ -147,7 +148,7 @@ $$
 In other words we can represent any modular abelian variety by giving $G\subset
 B\subset J$, all defined over $\QQ$. We explicitly specify $J$ by computing a
 basis for $\H_1(J,\Z)$ and $\H_1(J,\Q)=\H_1(J,\Z)\tensor \QQ$ using modular
-symbols \cite{stein:modform}. It remains to explain how we explicitly specify
+symbols \cite{stein:modular_forms:2007}. It remains to explain how we explicitly specify
 $B$ and $G$.
 
 {\em We specify $B$ as follows.}  The inclusion $B \hookrightarrow J$
@@ -203,7 +204,7 @@ pair $(L, J)$. We refer to $L$ as the \emph{defining lattice} of $A$.
 \label{sec:amb_modabvar}
 
 Let $\Gamma_0(N)$ and $\Gamma_1(N)$ be the usual congruence subgroups of level
-$N$ (see~\cite{stein:modform}). In this article, we will consider subgroups of
+$N$ (see~\cite{stein:modular_forms:2007}). In this article, we will consider subgroups of
 the form $\Gamma_H(N)$ with $\Gamma_1(N)\subseteq \Gamma_H(N)\subseteq
 \Gamma_0(N)$ defined by
 \[
@@ -234,7 +235,7 @@ generators.
         \item{} [Compute new modular symbols space]
             Compute the new cuspidal modular symbol space
             $\mathbb{S}_2(N)_\mathrm{new}$ using the techniques in \cite[\S
-            8]{stein:modform}.
+            8]{stein:modular_forms:2007}.
         \item{} [Factor into Hecke eigenspaces]
             The new modular symbol space decomposes into simultaneous
             multiplcity 1 eigenspaces for the Hecke algebra $\T$. 
@@ -458,7 +459,8 @@ Every every modular symbol of $S_2(\Gamma_1(N))$ can be written as
 \]
 using~\cite[Corollary 4.1]{verrill:intersection}. This step requires writing
 elements of $\SL_2(\ZZ)$ in terms of $ \langle S, T^{-1} \rangle$ which can be
-done by dissecting Serre's proof~\cite[Chapter 7, Theorem 2]{MR0344216}.
+done by dissecting Serre's proof~\cite[Chapter 7, Theorem
+2]{serre:course_arithmetic}.
 
 The intersection pairing is then given formally on the summands by
 \[
@@ -547,14 +549,14 @@ by
 \end{align*}
 By Pic functoriality, this induces a map $s_N: J_0(N)\to J_1(N)$. The kernel of
 this map is the \emph{Shimura subgroup}, denoted $\Sigma(N)$.
-Ribet~\cite[Theorem 4.3]{ribet:congrel} shows that for any prime $p$ coprime to
-$N$, $\Sigma(N)=\ker(d_1 - d_p)$, where $d_1,d_p :J_0(N)\to J_0(pN)$ are the
-degeneracy maps (See Section~\ref{sec:natural_maps}.
+Ribet~\cite[Theorem 4.3]{ribet:congruence_relations} shows that for any prime
+$p$ coprime to $N$, $\Sigma(N)=\ker(d_1 - d_p)$, where $d_1,d_p :J_0(N)\to
+J_0(pN)$ are the degeneracy maps (See Section~\ref{sec:natural_maps}.
 
-Ling and Oesterle~\cite[Theorem 1,2]{MR1141458} gives a formula for the group
-invariants of the Shimura subgroup as an abstract abelian group. Roughly
-speaking, the Shimura subgroup is $(\ZZ/N\ZZ)^*$ quotiented out by a small
-subgroup of order a product of powers of 2 and 3. Moreover, if $e$ is the
+Ling and Oesterle~\cite[Theorem 1,2]{ling-oesterle:shimura} gives a formula for
+the group invariants of the Shimura subgroup as an abstract abelian group.
+Roughly speaking, the Shimura subgroup is $(\ZZ/N\ZZ)^*$ quotiented out by a
+small subgroup of order a product of powers of 2 and 3. Moreover, if $e$ is the
 exponent of the Shimura subgroup then the points are defined over $\QQ(\mu_e)$
 and the Galois action is given by the cyclotomic character of
 $\Gal(\QQ(\mu_e)/\QQ)$.
@@ -572,7 +574,7 @@ Then the cuspidal subgroup of $A$ is defined to be $(C\cap B)/L$, where $C$ is
 the cuspidal subgroup of $J$.
 
 The Galois structure of the cuspidal subgroup is well-understood~\cite[\S
-1.3]{MR670070}. The points of the cuspidal subgroup are $\QQ(\mu_N)$-rational
+1.3]{stevens:arithmetic_modular}. The points of the cuspidal subgroup are $\QQ(\mu_N)$-rational
 under the following Galois action. There is an abstract group homomorphism
 $\Gal(\QQ(\mu_N)/\QQ)\cong \ZZ/N\ZZ)^*$, let
 \[
@@ -604,7 +606,7 @@ $J$ modulo $\ell$. Let $S = J(\Q)_{\tor}$.
   J(\F_{\ell})$.
 \end{lemma}
 \begin{proof}
-  See \cite[Appendix]{katz:torsion}.
+  See \cite[Appendix]{katz:galois_torsion}.
 \end{proof}
 \begin{remark}
   The above lemma also extends to $\ell\mid N$ if we let
@@ -642,7 +644,7 @@ Lemma~\ref{lem:etakills} implies that $S \subset J[I](\R)$.  Let $C$ be
 the {\em cuspidal subgroup}, which is the subgroup of $J(\Qbar)$
 generated by differences of cusps. When $J[I](\R)\subset C$, we thus have
 $S=C(\Q)$, which is useful in practice since $C(\Q)$ is computable
-(see \cite{stevens:thesis}).
+(see \cite{stevens:arithmetic_modular}).
 
 Passing from $J[I](\C)$ to $J[I](\R)$ is crucial to our strategy,
 because often $J[I]$ is strictly larger than $C$.  For example,
@@ -692,8 +694,9 @@ abelian varieties.
 
 \subsubsection{Natural Maps}
 \label{sec:natural_maps}
-The Hecke operators~\cite[\S 8.3]{stein:modform}, degeneracy maps~\cite[\S
-8.6]{stein:modform}, and star involution~\cite[\S 8.5]{stein:modform} are
+The Hecke operators~\cite[\S 8.3]{stein:modular_forms:2007}, degeneracy maps~\cite[\S
+8.6]{stein:modular_forms:2007}, and star involution~\cite[\S
+8.5]{stein:modular_forms:2007} are
 useful maps defined on modular symbols which, in turn, induce maps on the
 Jacobian.
 
@@ -827,7 +830,7 @@ when computing $\End(A)$ and $\Hom(A,B)$.
 
 Note that one could instead replace $H$ by an LLL reduced basis for
 the rowspace of $M^t$, but this is usually much slower because the
-$p$-adic/modular algorithm \cite{blah} for computing Hermite normal
+$p$-adic/modular algorithm \cite{TODO} for computing Hermite normal
 form is so fast in this case.
 
 
@@ -915,7 +918,7 @@ We will use the following lemma in the proof of Proposition~\ref{prop:end}.
     $\dim(A)$~\cite{primitive_element}, so in practice finding such $\varphi$
     is easy. Then we build $K$ using the primitive element theorem.
 
-    By \cite[Theorem 2.1]{ribet:abvars} because $A$ is simple, modular, and
+    By \cite[Theorem 2.1]{ribet:abelian_varieties} because $A$ is simple, modular, and
     defined over $\Q$, we know that $\End(A)\tensor\Q$ is a number field of
     degree equal to $\dim(A)$.  (If we instead consider $\End(A/\Qbar)$, then
     $\End(A/\Qbar)\tensor\Q$ could be a non-commutative division algebra.
@@ -959,8 +962,8 @@ We will use the following lemma in the proof of Proposition~\ref{prop:end}.
     algebra generates $\End(A_f/\Q) \tensor \Q$. But by
     \cite[Thm.~1]{shimura:factors} the image of $T \tensor \Q$ in
     $\End(A_f/\Q) \tensor \Q$ is a subfield of degree $\dim A_f$. But
-    $A_f$ is simple by \cite[Cor.~4.2]{ribet:twistsendoalg}, so
-    \cite[Thm.~2.1]{ribet:abvars} implies that $\End(A_f/\Q) \tensor \Q$
+    $A_f$ is simple by \cite[Cor.~4.2]{ribet:twists}, so
+    \cite[Thm.~2.1]{ribet:abelian_varieties} implies that $\End(A_f/\Q) \tensor \Q$
     also has dimension $\dim(A_f)$. Thus the Hecke algebra generates
     $\End(A_f/\Q) \tensor \Q$. By Proposition~\ref{prop:end} once we
     have $\End(A_f/\Q) \tensor \Q$ we apply Algorithm~\ref{alg:saturate} to get
@@ -1025,7 +1028,7 @@ $\ZZ$-module
 To compute a $\ZZ$-basis for $\T$, we can naively embed $\T$ in $\Mat_{d\times
 d}(\QQ)$. This then involves computations in a $d^2$-dimensional space.
 Instead, there is a method to embed $\T$ inside of $\QQ^d$ as is done
-here~\cite{MR2137350}.
+here~\cite{calegari-stein:disc}.
 
 \subsubsection{The Hecke Subring}
 computing its index; structure of quotient in full ring.
@@ -1097,7 +1100,7 @@ using~\ref{sec:modabvar_intersections},~\ref{sec:finitegroup_intersection}.
     \end{enumerate}
 \end{algorithm}
 \begin{proof}
-    When $A$ and $B$ are simple, by \cite[\S5]{faltings:finiteness}
+    When $A$ and $B$ are simple, by \cite[\S5]{faltings:finiteness:1986}
     $A\isog A_f$ and $B\isog A_g$ are isogenous if and only if the
     corresponding newforms $f$ and $g$ are Galois conjugate,
     since $f$ and $g$ determine $L(A_f,s)$ ad $L(A_g,s)$.
@@ -1157,7 +1160,7 @@ if don't care about speed!).
         \item{}[Endomorphism ring] Compute the order $\O$ in $K$ equal to $\End(A)$
             using Algorithm~\ref{alg:end_A}.
         \item{}[Solve norm equation] Find solutions (up to units of $\O$) of the norm equations
-            $\Norm(x) = \pm \sqrt{d}$ in $\O$~\cite[\S 5.3, 6.4]{MR1033013}. If there are no solutions, return ``no''.
+            $\Norm(x) = \pm \sqrt{d}$ in $\O$~\cite{TODO}. If there are no solutions, return ``no''.
         \item{}[Lift to $H_f$?]   For each solution (up to units), check whether it lies in $H_f$.
         \item{}[Isomorphic?]   If a solution $x$ lies in $H_f$, then return ``yes'' and $x\circ f^{-1}$.
             (Note that at this point we could also output $x\circ f^{-1}$ and continue
@@ -1174,13 +1177,13 @@ if don't care about speed!).
     the subset $H_f$ of $\End(A)$ contains an element of degree $d$. Embed $\End(A)$ into the
     number field $K =
     \End(A) \otimes \Q$ and let $\O$ be the order in $K$ that is the image of
-    $\End(A)$. By \cite[Prop~12.12]{milne:abvars}, for
+    $\End(A)$. By \cite[Prop~12.12]{milne:abelian_varieties:1986}, for
     $x \in K$ we have $\Norm(x)^2 = \deg(x)$. Thus, finding an element
     of degree $d$ in $H_f$ is equivalent to finding $x \in \O$ with
     $\Norm(x) = \pm \sqrt{d}$, such that $x \in H_f$, where we view
     $H_f$ as a subset of~$K$ using the above inclusions.
 
-    Using~\cite[\S 5.3, 6.4]{MR1033013}, we find all $x$ such that $\Norm(x) = \pm
+    Using~\cite{TODO}, we find all $x$ such that $\Norm(x) = \pm
     \sqrt{d}$, up to units of $\O$. There are may be infinitely many
     units, e.g., if $K$ is a real quadratic field, so there are often
     infinitely many solutions to the norm equation and we cannot directly
@@ -1234,7 +1237,7 @@ of simple abelian varieties~\ref{alg:decomp_and_verify_subvarieties} $A'=\prod
 A_f$. The period lattice of $A$ is related to $A'$ by a $\GL_n(\ZZ)$ action.
 Therefore, the problem of computing the period lattice of $A$ reduces to
 computing period lattices of $A_f$ which is done in the third author's
-book~\cite[\S 10.6]{stein:modform}.
+book~\cite[\S 10.6]{stein:modular_forms:2007}.
 
 
 \subsubsection{The BSD Real Volume}
@@ -1273,7 +1276,7 @@ $N$, character $\epsilon$, and Hecke coefficient field $K_f$.
 via characteristic poly of Frobenius in complete
 generality: factor as newform abvars, use Hecke polys
 
-Shimura~\cite{shimura:intro} proves that the local $L$-factors of $A_f$ at $p$
+Shimura~\cite{shimura:introduction} proves that the local $L$-factors of $A_f$ at $p$
 is 
 \[
     L_p(A_f, s) = 
@@ -1294,10 +1297,10 @@ Tate module of $A_{\F_p}$ for $\ell\not\mid pN$ is given by
 \subsubsection{Numerical Evaluation at any Point}
 anywhere (via Dokchitser)
 
-In~\cite{dokchitser:lfunc}, Dokchitser gives a method of evaluating motivic
+In~\cite{dokchitser:function}, Dokchitser gives a method of evaluating motivic
 $L$-functions and their derivatives at any point using Mellin Transformations.
 This method of made rigorous as part of Robert Bradshaw's Ph.D.
-thesis~\cite{bradshaw:phd}. This has been implemented in PARI by Dokchitser and
+thesis~\cite{bradshaw:provable}. This has been implemented in PARI by Dokchitser and
 given a Sage interface by the third author.
 
 \subsubsection{The Rational Part of the Special Value}
@@ -1320,7 +1323,7 @@ large.
 
 \subsubsection{Zeros in the Critical Strip}
 
-In~\cite{MR2697494}, Rubinstein gives a procedure for finding the zeros of
+In~\cite{rubinstein:zeros:1998}, Rubinstein gives a procedure for finding the zeros of
 various $L$-functions, including those coming from modular forms. In addition,
 Rubinstein has create a C++ library with a SAGE wrapper for doing such
 computations.

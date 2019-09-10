@@ -1,5 +1,0 @@
-* Change title
-* Give examples
-* Cite Agashe-Stein when doing rational torsion
-* Find citation of lemma...if fixed by galois, then in base field...even in
-  transcendental extensions.

@@ -299,12 +299,18 @@ As mentioned in the introduction, not every subspace $V$ of $H_1(J, \QQ)$
 corresponds to an abelian subvariety of $J$. In this section, we will give an
 algorithm for determining when $V$ corresponds to an abelian subvariety. This
 algorithm will also give a decomposition of $(V, J)$ into simple abelian
-subvarieties. 
+subvarieties.
+
+We will accomplish this by first establishing when a subspace of $H_1(J, \QQ)$
+corresponds to to a simple abelian subvariety. We will then attempt to build up
+$V$ from simple abelian subvarieties. If we are successful, then $V$ does
+correspond to an abelian subvariety. Otherwise, $V$ does not correspond to an
+abelian subvariety.
 
 \begin{proposition}
     \label{prop:integral_degen}
-    Let $A$ be a simple subvariety of $J_H(N)$. There exists a divisor $L$ of
-    $N$ and a newform $f$ of level $L$ such that $A_f \sim A$. Let
+    Let $A$ be a simple subvariety of $J_H(N)$. Then there exists a divisor $L$
+    of $N$ and a newform $f$ of level $L$ such that $A_f \sim A$. Let
     $d_1,\ldots,d_r$ be the full collection of degeneracy maps from $J_H(L)$ to
     $J_H(N)$. Then there exists integers $n_1,\ldots,n_r$ such that $S:=\sum
     n_i d_i|_{A_f}: A_f\to A$ is an isogeny from $A_f$ to $A$. Note that $S$ is

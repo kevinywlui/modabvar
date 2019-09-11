@@ -268,11 +268,18 @@ generators.
 \subsection{Decomposition}
 \subsubsection{New and Old Subvarieties and Quotients}
 
+We now give an algorithm to decompose a modular Jacobian $J=J_H(N)$ with Hecke
+algebra $\TT$. The key idea here is that for each divisor $L$ of $N$, we can use
+Algorithm~\ref{alg:new_simple_subs} to compute the decomposition of the new
+abelian subvariety of $J_H(L)$. Then we use degeneracy maps (See
+Section~\ref{sec:natural_maps}) to map this decomposition over to $J_H(N)$.
+Lastly, we take the union of these decompositions.
+
 \begin{algorithm}{Decomposition of modular Jacobians}%
     \label{alg:decomp_jacobian}
     Let $J=J_H(N)$ with Hecke algebra $\T$. This algorithm will give a sequence
     of abelian subvarieties $A_i$ with finite pairwise intersection and that
-    sums to $J$. Let $L_1,\ldots, L_r$ be the divisors of $N$.
+    sum to $J$. Let $L_1,\ldots, L_r$ be the divisors of $N$.
     \begin{enumerate}
         \item{} [Simple factors of level $L_i$]
             For each $L_i$, compute the decomposition $\{W_{ik}\}$ of the new

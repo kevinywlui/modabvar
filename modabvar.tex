@@ -229,8 +229,9 @@ generators.
 
 \begin{algorithm}{Enumerate Modular Abelian Varieties}
     \label{alg:new_simple_subs}
-    Given a modular Jacobian $J$, this algorithm outputs the simple new abelian
-    subvarieties.
+    Given a modular Jacobian $J$ with Hecke algebra $\T$, this algorithm
+    outputs a decomposition of the new abelian subvariety of $J$ into simple
+    abelian subvarieties.
     \begin{enumerate}
         \item{} [Compute new modular symbols space]
             Compute the new cuspidal modular symbol space
@@ -238,24 +239,27 @@ generators.
             8]{stein:modular_forms:2007}.
         \item{} [Factor into Hecke eigenspaces]
             The new modular symbol space decomposes into simultaneous
-            multiplcity 1 eigenspaces for the Hecke algebra $\T$. 
-            We will compute the eigenspace decomposition against random
-            elements of $\T$ until we find one that yields multiplicity 1.
+            multiplicity-one complex eigenspaces for the Hecke algebra $\T$.
+            It suffices to construct $F\in \T$ such that if $F = \prod_{j=1} ^k f_j
+            ^{e_j}$ is a factorization of $F$ with $f_j$ irreducible over
+            $\QQ$, then $e_j\leq 2$. ``Most'' elements of $\T$ satisfies this
+            property so we will use a random algorithm.
             \begin{enumerate}
                 \item{} [Initialize]
-                    Let $i=1$. Set $T=T_1$.
+                    Let $i=1$. Set $F=T_1$.
                 \item{} [Randomly pertub $T$]
                     Let $a$ be some random integer and $p_i$ be the $i$-th
-                    prime. Set $T\to T+aT_{p_i}$.
-                \item{} [Factor characteristic polynomial]
-                    Let $\prod f_j ^{e_j}$ be a factorization of the characteristic
-                    polynomial of $T$ so that each $f_j$ is irreducible and
-                    distinct. Since elements of $\T$ are $\CC$-linear, each
-                    $e_j$ is even.
-                \item{} [Irreducible?]
-                    If the multiplcity $e_j/2>1$, then return to step (b).
-                    Otherwise, return the eigenspace decomposition $\{W_{k}\}$
-                    of $\mathbb{S}_2(N)_\mathrm{new}$
+                    prime. Set $F\to F+aT_{p_i}$.
+                \item{} [Multiplicity-one?]
+                    Let $\prod_{j=1} ^k f_j ^{e_j}$ be a factorization of the
+                    characteristic polynomial of $F$ so that each $f_j$ is
+                    irreducible over $\QQ$. If $e_j>2$ for any $j$, increment
+                    $i$ and repeat the previous step. Otherwise, proceed.
+                \item{} [Output]
+                    The $\QQ$-eigenspaces $\{W_1,\ldots,W_k\}$ of
+                    $\mathbb{S}_2(N)_\mathrm{new}$ correspond to the rational
+                    homology of the simple abelian subvarieties of $J$ so we
+                    output $\{(W_1, J), \ldots, (W_k, J)\}$.
             \end{enumerate}
     \end{enumerate}
 \end{algorithm}

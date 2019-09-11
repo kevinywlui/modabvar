@@ -341,57 +341,34 @@ abelian subvariety.
     $S:=wT'=\sum n_i d_i$ with $n_i\in \ZZ$.
 \end{proof}
 
-%TODO: give algorithm?
+Let $J=J_H(N)=\sum_f V_f$, where $f$ runs through newforms of level dividing
+$N$ and $V_f$ is the sum of all abelian subvarieties of $J$ isogenous to $A_f$.
+We have that $V$ corresponds to an abelian subvariety if and only if $V\cap
+V_f$ corresponds to an abelian subvariety for all $f$. Therefore, we will
+present the decomposition and verification algorithm under the further
+assumption that $V\subseteq V_f$.
 
 \begin{algorithm}{Decomposing and Verifying Abelian Subvarieties}
     \label{alg:decomp_and_verify_subvarieties}
-    Let $J=J_H(N)$ and $V$ be a subspace of $H_1(J, \QQ)$. If $V$ corresponds
-    to a subvariety $A$ of $J$, then this algorithm will return a decomposition
-    into simples $X_i=(V_i, J)$ of $A$, otherwise, this algorithm will return
-    `NO'. Let $\T=\{T_1,\ldots\}$ be the Hecke algebra of $J$.
+    Let $J=J_H(N)$ be a modular Jacobian with Hecke algebra $\TT$. Let
+    $V\subseteq V_f \subseteq H_1(J, \QQ)$. If $V$ corresponds to an abelian
+    subvariety $B$ of $J$, then this algorithm will return a decomposition of
+    $B$ into simple abelian subvarieties. Otherwise, this algorithm will return
+    ``NOT A SUBVARIETY''.
     \begin{enumerate}
-        \item{} [Decompose into potential Hecke eigenspaces]
-            We first decompose $V$ into a direct sum $V=W_1\oplus \cdots \oplus
-            W_r$ so that, for each $W_i$, there exists a newform $f_i$ of level
-            dividing $N$, such that either $W_i$ either corresponds to an
-            abelian subvariety isogenous to a power of $A_{f_i}$ or is not an
-            abelian subvariety and we can return `NO'.
-            \begin{enumerate}
-                \item{} [Initialize]
-                    Set $j=1$.
-                \item{} [Decompose into eigenspaces]
-                    Compute the simultaneous eigenspaces $U_{j,1},\ldots,U_{j,
-                    n_j}$ of $\{T_1,\ldots,T_j\}$. If $\sum_{k=1} ^{n_j}
-                    U_{j, k}\neq V$, return 'NO'.
-                \item{} [Compare with newforms]
-                    Let $S_{j,k}$ be the set of newforms whose $l$th Fourier
-                    coefficient agrees with the eigenvalue of $T_l$ on $U_{j,
-                    k}$ for $l=1,\ldots,j$. If $S_{j, k}$ is empty for any
-                    $k=1,\ldots,n_j$, return `NO'. If $S_{j,k}$ is not
-                    singleton for any $k=1,\ldots, n_j$, increment $j$ and
-                    return to (b). Otherwise, $S_{j,k}$ is singleton for all
-                    $k$ so let $S_{j,k}=\{f_k\}$ and $W_k=U_{j,k}$.
-            \end{enumerate}
-        \item{} [Is isogenous to power?]
-            We now verify that each $W_i$ is isogenous to a power of $A_{f_i}$
-            and give its decomposition. The $W_i$'s are pairwise non-isogenous
-            so we will do this individually for each $W_i$ and consider just a
-            single pair $W$ and $A_f$ with $f$ being a newform of level $L$.
-            Let $d_1,\ldots,d_r:J_H(L)\to J_H(N)$ be the full collection of
-            degeneracy maps from $J_H(L)$ to $J_H(N)$.  Set $U=\{0\}$.
-            \begin{enumerate}
-                \item{} [Image of $\QQ$-combination of $d_j$'s?]
-                    Choose any $v\in V\setminus U$. By
-                    Proposition~\ref{prop:integral_degen}, if $W$ is an abelian
-                    subvariety then there exists $q_1,\ldots,q_r\in \QQ$
-                    such that $v\in \Im \left(\sum_{i=1} ^r q_i
-                    \delta_i\right)$. If this is not the case, return
-                    `NO'. Let $R = \Im \left(\sum_{i=1} ^r q_i
-                    \delta_i\right)$. If $R\not\subset V$, return `NO'.
-                \item{} [Full space?]
-                    Replace $U$ with $U+R$. If $V=U$, we are done. Otherwise,
-                    return to (b).
-            \end{enumerate}
+        \item{} [Initialize]
+            Set $S_0=0$ and $i=0$.
+        \item{} [Add a simple piece]
+            Pick some $x\in V\setminus S_i$. Use Algorithm~\ref{} to determine
+            if there exists $V_i$ such that $x\in V_i$, where $V_i$ is the
+            image of an integral linear combination of degeneracy maps
+            $\delta_j:A_f ^\vee\to J_0(N)$. If not, then $V$ does not
+            correspond to an abelian subvariety and we output ``NOT A
+            SUBVARIETY''.
+        \item{} [Done?]
+            Set $S_{i+1}=S_i + V_i$. If $S_{i+1} = V_f$, we are done and we can
+            output the decomposition $\{(V_k, J)\}_{k=0} ^{i+1}$. Otherwise,
+            increment $i$ and return to the last step.
     \end{enumerate}
 \end{algorithm}
 

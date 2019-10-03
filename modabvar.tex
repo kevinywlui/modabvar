@@ -1017,12 +1017,9 @@ We will use the following lemma in the proof of Proposition~\ref{prop:end}.
 
 Let $A$ be a modular abelian variety of dimension $d$ with Hecke algebra $\T$.
 The Hecke algebra is a $\ZZ$-algebra that is free of finite rank as a
-$\ZZ$-module
+$\ZZ$-module. Therefore, we can compute the discriminant
 
-To compute a $\ZZ$-basis for $\T$, we can naively embed $\T$ in $\Mat_{d\times
-d}(\QQ)$. This then involves computations in a $d^2$-dimensional space.
-Instead, there is a method to embed $\T$ inside of $\QQ^d$ as is done
-here~\cite{calegari-stein:disc}.
+~\cite[\S 2]{calegari-stein:disc}.
 
 \subsubsection{The Hecke Subring}
 computing its index; structure of quotient in full ring.
@@ -1072,13 +1069,13 @@ using~\ref{sec:modabvar_intersections},~\ref{sec:finitegroup_intersection}.
 \subsubsection{Isogenies From $A$ to $B$}
 
 \begin{algorithm}{Test if Isogenous}
-    Given two modular abelian varieties $A$ and $B$, this
-    algorithm decides whether or not $A$ and $B$ are isogenous, and if
-    so returns an isogeny between them.
-
+    \label{alg:isogeny_testing}
+    Given two modular abelian varieties $A$ and $B$, this algorithm decides
+    whether or not $A$ and $B$ are isogenous, and if so, also returns an
+    isogeny between them.
     \begin{enumerate}
         \item{} [$A$, $B$ both simple] When $A$ and $B$ are both simple they
-            are isogenenous to abelian varieties $A_f$ and $A_g$ attached to
+            are isogenous to abelian varieties $A_f$ and $A_g$ attached to
             newforms; we can find explicit isogenies using
             Algorithm~\ref{alg:integral_degen}.
             Then $A$ is isogenous to $B$ if and only if $A_f = A_g$, i.e., $f$
@@ -1140,7 +1137,8 @@ if don't care about speed!).
 
     \begin{enumerate}
         \item{}[Equal?] If $A=B$, return ``yes'' and the identity map.
-        \item{}[Isogenous?]  Determine whether $A$ and $B$ are isogenous using Algorithm~\ref{}.
+        \item{}[Isogenous?]  Determine whether $A$ and $B$ are isogenous using
+            Algorithm~\ref{alg:isogeny_testing}.
             If $A$ and $B$ are not isogenous then return ``no'', and if
             $A$ and $B$ are isogenous, let $f: B \to A$ be an isogeny.
         \item{}[Degree of isogeny]  Compute $d = \deg(f)$. If $d$ is not a square, return ``no''.
@@ -1154,7 +1152,8 @@ if don't care about speed!).
         \item{}[Endomorphism ring] Compute the order $\O$ in $K$ equal to $\End(A)$
             using Algorithm~\ref{alg:end_A}.
         \item{}[Solve norm equation] Find solutions (up to units of $\O$) of the norm equations
-            $\Norm(x) = \pm \sqrt{d}$ in $\O$~\cite{TODO}. If there are no solutions, return ``no''.
+            $\Norm(x) = \pm \sqrt{d}$ in $\O$~\cite[\S 5.3,
+            6.4]{pohst-zassenhaus:algorithmic}. If there are no solutions, return ``no''.
         \item{}[Lift to $H_f$?]   For each solution (up to units), check whether it lies in $H_f$.
         \item{}[Isomorphic?]   If a solution $x$ lies in $H_f$, then return ``yes'' and $x\circ f^{-1}$.
             (Note that at this point we could also output $x\circ f^{-1}$ and continue

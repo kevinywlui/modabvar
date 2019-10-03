@@ -835,14 +835,14 @@ $\Lambda = \H_1(A,\Z)$, we have
 \]
 
 \begin{proposition}\label{prop:end}
-    Let $A$ be a simple abelian variety over a number field $K$,
-    let $\Lambda = \H_1(A,\Z)$ and
-    embed $\End(A/K)$ in $\End(\Lambda)$
-    by the action of endomorphisms on homology. Then
+    Let $A, B$ be simple abelian varieties over $\QQ$, let $\Lambda_1=H_1(A,
+    \ZZ)$, and let $\Lambda_2=H_1(B, \ZZ)$. Embed $\Hom(A, B)$ into
+    $\Hom(\Lambda_1, \Lambda_2)$ by the action on homology. Then
     \[
-    \End(A/K) = (\End(A/K)\tensor \Q)\cap \End(\Lambda),
+        \Hom(A, B) = 
+        (\Hom(A, B) \otimes \QQ)\cap \Hom(\Lambda_1, \Lambda_2)
     \]
-    where  the intersection takes place in $\End(\Lambda)\tensor\Q$.
+    where the intersection takes place in $\Hom(A,B)\otimes \QQ$.
 \end{proposition}
 We will use the following lemma in the proof of Proposition~\ref{prop:end}.
 \begin{lemma}\label{lem:gal}
@@ -859,25 +859,25 @@ We will use the following lemma in the proof of Proposition~\ref{prop:end}.
 \end{proof}
 
 \begin{proof}[Proof of Proposition~\ref{prop:end}]
-    An element of $\End(A/\C)$ is just
-    a complex linear map on $\Tan(A_\C)$  that preserves $\Lambda$.
-    The inclusion of $\End(A/K)$ in the right hand side is obvious,
-    so suppose $\vphi \in (\End(A/K)\tensor \Q)\cap \End(\Lambda)$.
-    Then there is a positive integer $n$ such that $n\vphi\in \End(A/K)$.
-    Thus $n\vphi\in \End(A/K)\tensor\Q$ induces a complex-linear endomorphism of $\Tan(A_\C)$,
-    so $\vphi = (1/n)n\vphi $ also induces a complex-linear endomorphism of $\Tan(A_\C)$;
-    also, by hypothesis $\vphi$ preserves $\Lambda$.
-    Thus $\vphi\in\End(A/\C)$.
+    An element of $\Hom(A, B)$ is certainly an element of $\Hom(A, B)\otimes
+    \QQ$. Moreover, an element of $\Hom(A, B) \subseteq \Hom_\CC (A,B)$ is a
+    complex linear map from $\Tan(A_\CC)\to \Tan(B_\CC)$ that sends $\Lambda_1$
+    to $\Lambda_2$ so it must be in $\Hom(\Lambda_1,\Lambda_2)$. This
+    establishes the forward inclusion.
 
-    There is a nonzero integer $n$ such that $n\vphi$ is defined over $K$,
-    so for any $\sigma\in\Gal(\C/K)$, we have $\sigma([n]\vphi) - [n]\vphi
-    = 0$.  But
-    $$\sigma([n]\vphi) = \sigma([n])\sigma(\vphi) = [n]\sigma(\vphi),$$
-    so
-    $$[n](\sigma(\vphi) - \vphi) = 0,$$
-    which implies $\sigma(\vphi)=\vphi$, since the kernel of $[n]$ is
-    finite and the image of $\sigma(\vphi)-\vphi$ is either infinite or
-    $0$.  By Lemma~\ref{lem:gal}, $\vphi\in \End(A/K)$.
+    Conversely, suppose $\varphi\in (\Hom(A, B)\otimes \QQ)\cap \Hom(\Lambda_1,
+    \Lambda_2)$. Then there exists a positive integer $n$ such that $n\varphi n
+    \Hom(A, B)$. Hence, $n\varphi\in \Hom(A,B)\subseteq \Hom_\CC(A, B)$ is a
+    complex linear map from $\Tan(A_\CC)$ to $\Tan(B_\CC)$. Hence,
+    $\varphi=(1/n)n\varphi$ is also a complex linear map from $\Tan(A_\CC)$ to
+    $\Tan(B_\CC)$. By assumption, $\varphi$ also maps $\Lambda_1$ to
+    $\Lambda_2$ so $\varphi\in \Hom_\CC(A,B)$. It remains to show that
+    $\varphi$ is defined over $\QQ$. Let $\sigma\in \Gal(\CC/\QQ)$. Since
+    $[n]\varphi\in \Hom(A,B)$, $\sigma([n]\varphi)-[n]\varphi=0$. By
+    rearranging, $[n](\sigma\varphi-\varphi)=0$. The image of
+    $\sigma\varphi-\varphi$ is either infinite or 0 and the kernel of $[n]$ is
+    finite so we must have $\sigma\varphi=\varphi$. By Lemma~\ref{lem:gal},
+    $\varphi\in \Hom(A,B)$.
 \end{proof}
 
 \begin{algorithm}{Endomorphism Algebra as Field}

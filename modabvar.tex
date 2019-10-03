@@ -830,18 +830,18 @@ form is so fast in this case.
 
 Let $A$ is an abelian variety of dimension $d$. After chosing a basis for
 $\Lambda = \H_1(A,\Z)$, we have
-$$
+\[
 \End(\Lambda)\isom \Mat_{2d\times 2d}(\Z) \ncisom \Z^{(2d)^2}.
-$$
+\]
 
 \begin{proposition}\label{prop:end}
     Let $A$ be a simple abelian variety over a number field $K$,
     let $\Lambda = \H_1(A,\Z)$ and
     embed $\End(A/K)$ in $\End(\Lambda)$
-    by the action of endomorphisms on homology.   Then
-    $$
+    by the action of endomorphisms on homology. Then
+    \[
     \End(A/K) = (\End(A/K)\tensor \Q)\cap \End(\Lambda),
-    $$
+    \]
     where  the intersection takes place in $\End(\Lambda)\tensor\Q$.
 \end{proposition}
 We will use the following lemma in the proof of Proposition~\ref{prop:end}.
@@ -1164,31 +1164,32 @@ if don't care about speed!).
 \end{algorithm}
 \begin{proof}
     Let $f:B \to A$ be an isogeny and denote its degree by $d$. Define
-    $$H_f = \{f \circ g: g \in \Hom(A,B)\} \subset \End(A).$$
-    Since
-    degree is multiplicative, $A$ and $B$ are isomorphic if and only if
-    the subset $H_f$ of $\End(A)$ contains an element of degree $d$. Embed $\End(A)$ into the
-    number field $K =
-    \End(A) \otimes \Q$ and let $\O$ be the order in $K$ that is the image of
-    $\End(A)$. By \cite[Prop~12.12]{milne:abelian_varieties:1986}, for
-    $x \in K$ we have $\Norm(x)^2 = \deg(x)$. Thus, finding an element
-    of degree $d$ in $H_f$ is equivalent to finding $x \in \O$ with
-    $\Norm(x) = \pm \sqrt{d}$, such that $x \in H_f$, where we view
-    $H_f$ as a subset of~$K$ using the above inclusions.
+    \[
+        H_f = \{f \circ g: g \in \Hom(A,B)\} \subset \End(A).
+    \]
+    Since degree is multiplicative, $A$ and $B$ are isomorphic if and only if
+    the subset $H_f$ of $\End(A)$ contains an element of degree $d$. Embed
+    $\End(A)$ into the number field $K = \End(A) \otimes \Q$ and let $\O$ be
+    the order in $K$ that is the image of $\End(A)$. By
+    \cite[Prop~12.12]{milne:abelian_varieties:1986}, for $x \in K$ we have
+    $\Norm(x)^2 = \deg(x)$. Thus, finding an element of degree $d$ in $H_f$ is
+    equivalent to finding $x \in \O$ with $\Norm(x) = \pm \sqrt{d}$, such that
+    $x \in H_f$, where we view $H_f$ as a subset of~$K$ using the above
+    inclusions.
 
-    Using~\cite{TODO}, we find all $x$ such that $\Norm(x) = \pm
-    \sqrt{d}$, up to units of $\O$. There are may be infinitely many
-    units, e.g., if $K$ is a real quadratic field, so there are often
-    infinitely many solutions to the norm equation and we cannot directly
-    check whether at least one of these infinitely many are in $H_f$.
-    However, because there are only finitely many solutions up to units,
-    it will suffice to show that $H_f$ is stable under units and to check
-    whether each representative solution is in $H_f$.  Thus to finish
-    the proof of correctness of the algorithm, we verify that $x\in H_f$ if
-    and only if $xu \in H_f$, where $u$ is any unit of $\O$.  If $x = f
-    \circ g$ for some $g \in \Hom(A,B)$, then $xu = f \circ (g \circ u)$
-    is in $H_f$ since $g \circ u \in \Hom(A,B)$.  Conversely, if $xu\in
-    H_f$, then by what we have just shown $x = xuu^{-1} \in H_f$.
+    Using~\cite[\S 5.3, 6.4]{pohst-zassenhaus:algorithmic}, we find all $x$
+    such that $\Norm(x) = \pm \sqrt{d}$, up to units of $\O$. There are may be
+    infinitely many units, e.g., if $K$ is a real quadratic field, so there are
+    often infinitely many solutions to the norm equation and we cannot directly
+    check whether at least one of these infinitely many are in $H_f$.  However,
+    because there are only finitely many solutions up to units, it will suffice
+    to show that $H_f$ is stable under units and to check whether each
+    representative solution is in $H_f$.  Thus to finish the proof of
+    correctness of the algorithm, we verify that $x\in H_f$ if and only if $xu
+    \in H_f$, where $u$ is any unit of $\O$.  If $x = f \circ g$ for some $g
+    \in \Hom(A,B)$, then $xu = f \circ (g \circ u)$ is in $H_f$ since $g \circ
+    u \in \Hom(A,B)$.  Conversely, if $xu\in H_f$, then by what we have just
+    shown $x = xuu^{-1} \in H_f$.
 \end{proof}
 
 Discuss how non-simple case works.  Still just need to solve a norm

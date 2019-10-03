@@ -354,7 +354,7 @@ assumption that $V\subseteq V_f$.
     $V\subseteq V_f \subseteq H_1(J, \QQ)$. If $V$ corresponds to an abelian
     subvariety $B$ of $J$, then this algorithm will return a decomposition of
     $B$ into simple abelian subvarieties. Otherwise, this algorithm will return
-    ``NOT A SUBVARIETY''.
+    ``no''.
     \begin{enumerate}
         \item{} [Initialize]
             Set $S_0=0$ and $i=0$.
@@ -363,8 +363,7 @@ assumption that $V\subseteq V_f$.
             if there exists $V_i$ such that $x\in V_i$, where $V_i$ is the
             image of an integral linear combination of degeneracy maps
             $\delta_j:A_f ^\vee\to J_0(N)$. If not, then $V$ does not
-            correspond to an abelian subvariety and we output ``NOT A
-            SUBVARIETY''.
+            correspond to an abelian subvariety and we output ``no''.
         \item{} [Done?]
             Set $S_{i+1}=S_i + V_i$. If $S_{i+1} = V_f$, we are done and we can
             output the decomposition $\{(V_k, J)\}_{k=0} ^{i+1}$. Otherwise,
